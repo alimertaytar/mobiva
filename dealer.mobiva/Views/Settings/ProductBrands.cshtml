@@ -29,6 +29,7 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Brand Name</th>
+                                        <th>Brand Logo</th>
                                         <th class="text-center">Active</th>
                                         <th class="text-center">Actions</th>
                                     </tr>
@@ -39,6 +40,7 @@
                                         <tr>
                                             <td>@item.Id</td>
                                             <td>@item.Name</td>
+                                            <td>@item.Logo</td>
                                             <td class="text-center">@(item.ActiveFlg ? "Yes" : "No")</td>
                                             <td class="text-center">
                                                 <a href="@Url.Action("ProductBrandEdit", "Settings", new {id = item.Id})" class="btn btn-sm btn-primary">Edit</a>

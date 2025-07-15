@@ -10,19 +10,48 @@ using System.Web.Mvc;
 using System.Collections.Generic;
 using Objects;
 using System.Linq;
+using Objects.ViewModel;
 
 namespace dealer.mobiva.Controllers
 {
     public class LoginController : Controller
     {
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             var appUser = SessionManager.CurrentAppUser;
-            //Brada cookie kontrolü yapılacak
-            
+            var apiService = new ApiService();
+
+            // Session boşsa cookie'den AppUserId ve DealerId kontrolü yapılır
+            if (appUser == null)
+            {
+                var appUserIdStr = CookieManager.CookieGet("AppUserId");
+                if (int.TryParse(appUserIdStr, out int appUserId))
+                {
+                    // API'den kullanıcı bilgisi çekilip session'a yazılır
+                    var userResult = await apiService.GetAppUserById(appUserId);
+                    if (userResult?.AppUser != null)
+                        SessionManager.CurrentAppUser = userResult.AppUser;
+                }
+            }
 
             var dealer = SessionManager.CurrentDealer;
 
+            if (dealer == null)
+            {
+                var dealerIdStr = CookieManager.CookieGet("DealerId");
+                if (int.TryParse(dealerIdStr, out int dealerId))
+                {
+                    var dealerResult = await apiService.GetDealerById(dealerId);
+                    if (dealerResult?.Dealer != null)
+                        SessionManager.CurrentDealer = dealerResult.Dealer;
+                }
+            }
+
+            // Yeniden session'lara eriş
+            appUser = SessionManager.CurrentAppUser;
+            dealer = SessionManager.CurrentDealer;
+
+            // Kullanıcı ve bayi varsa Home’a yönlendir
             if (appUser != null)
             {
                 if (dealer != null)
@@ -31,8 +60,10 @@ namespace dealer.mobiva.Controllers
                     return RedirectToAction("DealerSelection", "Login");
             }
 
+            // Hiçbiri yoksa login ekranı gösterilir
             return View(new LoginViewModel());
         }
+
 
 
         [HttpPost]
