@@ -1,0 +1,84 @@
+﻿@model Objects.ViewModel.ProductModelViewModel
+
+@{
+    ViewBag.Title = Model.Id == 0 ? "Yeni Model Ekle" : "Modeli Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var productBrands = ViewBag.ProductBrands as List<Objects.ViewModel.ProductBrandViewModel>;
+    int selectedBrandId = ViewBag.SelectedBrandId != null ? (int)ViewBag.SelectedBrandId : 0;
+}
+
+<div class="content-body">
+    <div class="row">
+        <div class="col-12">
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-@(ViewBag.MessageType ?? "info") alert-dismissible fade show" role="alert">
+                    @ViewBag.Message
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Kapat">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <form action="/Settings/ProductModelEdit" method="post">
+                            @Html.AntiForgeryToken()
+
+                            <input type="hidden" name="Id" value="@Model.Id" />
+
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-info"></i> Model Bilgisi</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Model Adı</label>
+                                            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Model adı giriniz" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Marka Seçin</label>
+                                            <select name="ProductBrandId" class="form-control" required>
+                                                <option value="">-- Marka Seçin --</option>
+                                                @foreach (var brand in productBrands)
+                                                {
+                                                    <option value="@brand.Id" @(brand.Id == Model.ProductBrandId ? "selected" : "")>@brand.Name</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="form-section"><i class="ft-check-circle"></i> Durum</h4>
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        @Html.CheckBoxFor(m => m.ActiveFlg, new { @class = "custom-control-input", id = "ActiveFlgSwitch" })
+                                        <label class="custom-control-label" for="ActiveFlgSwitch">Model Aktif Mi?</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions d-flex justify-content-between">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="la la-check-square-o"></i> Kaydet
+                                </button>
+                                <a href="@Url.Action("ProductModels", "Settings", new { productBrandId = selectedBrandId })" class="btn btn-light">
+                                    <i class="la la-times"></i> İptal
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

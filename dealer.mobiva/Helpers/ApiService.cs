@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using System.Web;
 using dealer.mobiva.Helpers;
 using Objects.ViewModel;
+using Objects;
+using System.Reflection;
 
 namespace dealer.mobiva.Helpers
 {
@@ -125,7 +127,7 @@ namespace dealer.mobiva.Helpers
         }
 
 
-        #region GetProductBrands
+        #region GetProductBrand
         public async Task<GetProductBrandsParameterResult> GetProductBrands()
         {
             return await PostAsync<GetProductBrandsParameterResult>($"{ApiUrl}/api/ProductBrand/GetProductBrands", null);
@@ -139,6 +141,25 @@ namespace dealer.mobiva.Helpers
         {
             var param = new GetProductBrandByIdParameter { Id = id };
             return await PostAsync<GetProductBrandByIdParameterResult>($"{ApiUrl}/api/ProductBrand/GetProductBrandById", param);
+        }
+        #endregion
+
+        #region GetProductModel
+        public async Task<GetProductModelsParameterResult> GetProductModels(int productBrandId)
+        {
+            
+            var param = new GetProductModelsParameter { ProductBrandId = productBrandId };
+            return await PostAsync<GetProductModelsParameterResult>($"{ApiUrl}/api/ProductModel/GetProductModels", param);
+        }
+        public async Task<SaveProductModelParameterResult> SaveProductModel(ProductModelViewModel model)
+        {
+            var param = new SaveProductModelParameter { ProductModel = model };
+            return await PostAsync<SaveProductModelParameterResult>($"{ApiUrl}/api/ProductModel/SaveProductModel", param);
+        }
+        public async Task<GetProductModelByIdParameterResult> GetProductModelById(int id)
+        {
+            var param = new GetProductBrandByIdParameter { Id = id };
+            return await PostAsync<GetProductModelByIdParameterResult>($"{ApiUrl}/api/ProductModel/GetProductModelById", param);
         }
         #endregion
     }

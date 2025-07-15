@@ -1,0 +1,85 @@
+﻿@model List<Objects.ViewModel.ProductModelViewModel>
+
+@{
+    ViewBag.Title = "Model Tanımları";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var selectedBrandId = ViewBag.SelectedBrandId != null ? (int)ViewBag.SelectedBrandId : 0;
+    var productBrands = ViewBag.ProductBrands as List<Objects.ViewModel.ProductBrandViewModel>;
+}
+
+<div class="content-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Model Tanımları</h4>
+                    @if (selectedBrandId > 0)
+                    {
+                        <a href="@Url.Action("ProductModelEdit", "Settings", new { id = 0, productBrandId = selectedBrandId })" class="btn btn-primary btn-sm float-right">+ Yeni Model</a>
+
+                    }
+                </div>
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                        }
+
+                        <!-- Marka Seçimi -->
+                        <form method="get" action="@Url.Action("ProductModels", "Settings")" class="mb-3">
+                            <div class="form-group row">
+                                <label class="col-form-label col-md-2">Marka Seçin:</label>
+                                <div class="col-md-6">
+                                    <select name="productBrandId" class="form-control" onchange="this.form.submit()">
+                                        <option value="">-- Marka Seçin --</option>
+                                        @foreach (var brand in productBrands)
+                                        {
+                                            <option value="@brand.Id" @(brand.Id == selectedBrandId ? "selected" : "")>@brand.Name</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </form>
+
+                        <!-- Listeleme -->
+                        @if (Model.Any())
+                        {
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Model Adı</th>
+                                            <th class="text-center">Aktif</th>
+                                            <th class="text-center">İşlemler</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@item.Id</td>
+                                                <td>@item.Name</td>
+                                                <td class="text-center">@(item.ActiveFlg ? "Evet" : "Hayır")</td>
+                                                <td class="text-center">
+                                                    <a href="@Url.Action("ProductModelEdit", "Settings", new { id = item.Id, productBrandId = selectedBrandId })" class="btn btn-sm btn-primary">Düzenle</a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        }
+                        else
+                        {
+                            <p class="text-muted">Lütfen bir marka seçin veya bu markaya ait model bulunamadı.</p>
+                        }
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

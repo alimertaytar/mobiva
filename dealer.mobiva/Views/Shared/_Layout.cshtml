@@ -363,7 +363,10 @@
                                 <li>
                                     <a class="menu-item" href="@Url.Action("ProductBrands", "Settings")"><i class="la la-tags"></i><span data-i18n="ProductBrands">Ürün Markaları</span></a>
                                 </li>
-                                <!-- Gerekirse başka alt menüler buraya eklenebilir -->
+                                <li>
+                                    <a class="menu-item" href="@Url.Action("ProductModels", "Settings")"><i class="la la-tags"></i><span data-i18n="ProductBrands">Ürün Modelleri</span></a>
+                                </li>
+                               
                             </ul>
                         </li>
 
@@ -473,7 +476,11 @@
 
                             // Buraya extra if ekliyoruz:
                             if (currentUrl === subHref || currentUrl.startsWith(subHref) ||
-                                (currentUrl.includes("productbrandedit") && subHref.includes("productbrand"))) {
+                                (currentUrl.includes("productbrandedit") && subHref.includes("productbrand")) ||
+                                (currentUrl.includes("productmodeledit") && subHref.includes("productmodel"))
+
+                            )
+                            {
                                 subItem.classList.add("active");
                                 item.classList.add("open");
                             }
@@ -486,7 +493,11 @@
 
                         // Aynı şekilde buraya da ekleyebiliriz:
                         if (currentUrl === href || currentUrl.startsWith(href) ||
-                            (currentUrl.includes("productbrandedit") && href.includes("productbrand"))) {
+                            (currentUrl.includes("productbrandedit") && href.includes("productbrand")) ||
+                            (currentUrl.includes("productmodeledit") && href.includes("productmodel"))
+
+                        )
+                        {
                             item.classList.add("active");
                         }
                     }

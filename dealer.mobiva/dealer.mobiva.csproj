@@ -6850,6 +6850,8 @@
     <Content Include="Views\Login\DealerSelection.cshtml" />
     <Content Include="Views\Settings\ProductBrands.cshtml" />
     <Content Include="Views\Settings\ProductBrandEdit.cshtml" />
+    <Content Include="Views\Settings\ProductModels.cshtml" />
+    <Content Include="Views\Settings\ProductModelEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
