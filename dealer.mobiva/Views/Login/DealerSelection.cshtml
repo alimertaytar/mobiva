@@ -1,0 +1,291 @@
+﻿@using dealer.mobiva.Helpers
+@{
+    Layout = null;
+    var dealers = SessionManager.CurrentDealers;
+}
+
+<!DOCTYPE html>
+<html class="loading" lang="tr" data-textdirection="ltr">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>mobiva - Bayi Seçimi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/Content/mobiva/favicon/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/Content/mobiva/favicon/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/Content/mobiva/favicon/favicon-16x16.png">
+    <link rel="manifest" href="/Content/mobiva/favicon/site.webmanifest">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="/Content/app-assets/vendors/css/vendors.min.css">
+    <link rel="stylesheet" type="text/css" href="/Content/app-assets/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="/Content/app-assets/css/bootstrap-extended.css">
+    <link rel="stylesheet" type="text/css" href="/Content/app-assets/css/colors.css">
+    <link rel="stylesheet" type="text/css" href="/Content/app-assets/css/components.css">
+    <link rel="stylesheet" type="text/css" href="/Content/app-assets/css/core/menu/menu-types/vertical-content-menu.css">
+    <link rel="stylesheet" type="text/css" href="/Content/app-assets/css/pages/login-register.css">
+    <link rel="stylesheet" type="text/css" href="/Content/assets/css/style.css">
+
+    <style>
+        .dealer-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            user-select: none;
+            padding: 12px 16px;
+            border: 2px solid transparent;
+            border-radius: 8px;
+            background-color: #f7f9fa;
+            transition: all 0.3s ease;
+            box-shadow: none;
+        }
+
+            .dealer-option:hover {
+                border-color: #00bcd4;
+                box-shadow: 0 4px 8px rgba(0, 188, 212, 0.25);
+                background-color: #e1f5f8;
+            }
+
+            .dealer-option input[type="radio"] {
+                display: none;
+            }
+
+        .dealer-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #00bcd4;
+            color: white;
+            font-weight: 700;
+            font-size: 20px;
+            line-height: 40px;
+            text-align: center;
+            margin-right: 16px;
+            flex-shrink: 0;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        /* Seçili olunca renk değişsin */
+        .dealer-option input[type="radio"]:checked + label {
+            border-color: #0097a7;
+            background-color: #d0f0f5;
+            box-shadow: 0 6px 12px rgba(0, 151, 167, 0.4);
+        }
+
+            .dealer-option input[type="radio"]:checked + label .dealer-number {
+                background-color: #0097a7;
+                box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+            }
+
+        .dealer-label-text {
+            font-size: 1.2rem;
+            color: #007b8f;
+            transition: color 0.3s ease;
+            font-weight: 600;
+        }
+
+        .dealer-option input[type="radio"]:checked + label .dealer-label-text {
+            color: #004c56;
+            font-weight: 700;
+        }
+
+        label {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #selectBtn {
+            font-weight: 700;
+            background-color: #00bcd4;
+            border: none;
+            transition: background-color 0.3s ease;
+            letter-spacing: 0.05em;
+        }
+
+            #selectBtn:hover:enabled {
+                background-color: #0097a7;
+            }
+
+            #selectBtn:disabled {
+                cursor: not-allowed;
+                background-color: #6c757d;
+            }
+    </style>
+    <style>
+        #loadingOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9999;
+            display: none;
+        }
+
+        .overlay-backdrop {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+        }
+
+        .overlay-spinner {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: #fff;
+            animation: fadeInUp 0.5s ease-in-out;
+        }
+
+            .overlay-spinner .mobiva-logo-circle {
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                border: 2px solid #00c4ff;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 15px auto;
+            }
+
+            .overlay-spinner p {
+                font-size: 1.3rem;
+                letter-spacing: 0.8px;
+                color: #cceeff;
+                font-weight: 500;
+            }
+
+                .overlay-spinner p span {
+                    color: #00c4ff;
+                    font-weight: 700;
+                }
+
+        @@keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+    </style>
+</head>
+
+<body class="vertical-layout vertical-content-menu 1-column bg-cyan bg-lighten-2 fixed-navbar" data-open="click" data-menu="vertical-content-menu" data-col="1-column">
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" style="display: none;">
+        <div class="overlay-backdrop"></div>
+        <div class="overlay-spinner">
+            <div class="mobiva-logo-circle">
+                <div class="spinner-border text-light" role="status"></div>
+            </div>
+            <p><span>ChatGPT</span> ve <span>Mobiva</span> sizin için hazırlıyor...</p>
+        </div>
+    </div>
+
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="content-wrapper">
+            <div class="content-body">
+
+                <section class="row flexbox-container">
+                    <div class="col-12 d-flex align-items-center justify-content-center flex-column">
+                        <div class="col-lg-4 col-md-6 col-10 box-shadow-2 p-0">
+                            <div class="card border-grey border-lighten-3 m-0">
+                                <div class="card-header border-0 text-center">
+                                    @*<h3 class="brand-text">mobiva</h3>*@
+                                    <img src="~/Content/mobiva/logo/mobiva_logo_v2.png" style="width: 60%" />
+                                    <p class="card-subtitle line-on-side text-muted font-small-3 pt-2">
+                                        <span>Bayi Seçimi</span>
+                                    </p>
+                                </div>
+
+                                <div class="card-content">
+                                    <div class="card-body pt-0">
+                                        @if (dealers != null && dealers.Count > 1)
+                                        {
+                                            using (Html.BeginForm("DealerSelection", "Login", FormMethod.Post, new { @class = "form-horizontal", @id = "dealerForm" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+
+                                                <div class="form-group">
+                                                    @for (int i = 0; i < dealers.Count; i++)
+                                                    {
+                                                        var dealer = dealers[i];
+                                                        <div class="dealer-option">
+                                                            <input type="radio" name="SelectedDealerId" id="dealer_@dealer.Id" value="@dealer.Id" required />
+                                                            <label for="dealer_@dealer.Id">
+                                                                <div class="dealer-number">@((i+1))</div>
+                                                                <div class="dealer-label-text">@dealer.Name</div>
+                                                            </label>
+                                                        </div>
+                                                    }
+                                                </div>
+
+                                                <button type="submit" id="selectBtn" class="btn btn-info btn-lg btn-block mt-2">
+                                                    <i class="ft-check-square"></i> Devam Et
+                                                </button>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            <div class="alert alert-warning">
+                                                Seçilecek bayi bulunamadı.
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer fixed-bottom footer-dark navbar-border">
+        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
+            <span class="float-md-left d-block d-md-inline-block">
+                © @DateTime.Now.Year <a href="https://mobiva" class="text-bold-800 grey darken-2" target="_blank">Mobiva</a>
+            </span>
+            <span class="float-md-right d-none d-lg-block">ChatGPT + İnsan Zekası = Mobiva <i class="ft-heart pink"></i></span>
+        </p>
+    </footer>
+
+    <script src="/Content/app-assets/vendors/js/vendors.min.js"></script>
+    <script src="/Content/app-assets/js/core/app-menu.js"></script>
+    <script src="/Content/app-assets/js/core/app.js"></script>
+
+    <!-- Spinner ve Submit Kilitleme -->
+    <script>
+        document.getElementById("dealerForm").addEventListener("submit", function (e) {
+            e.preventDefault(); // Formun anında submit edilmesini durdur
+
+            var btn = document.getElementById("selectBtn");
+            btn.disabled = true;
+            btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Giriş Yapılıyor...';
+
+            // 1. Loading ekranını hemen göster
+            document.getElementById("loadingOverlay").style.display = "block";
+
+            // 2. 1 saniye bekle, sonra formu gönder
+            setTimeout(function () {
+                e.target.submit(); // Formu manuel olarak gönder
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

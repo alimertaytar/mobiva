@@ -1,0 +1,371 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{7AC89DC1-2C21-4EFA-84B0-F994E877739D}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Objects</RootNamespace>
+    <AssemblyName>Objects</AssemblyName>
+    <TargetFrameworkVersion>v4.8.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Abstractions, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Abstractions.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.Http.Features, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.Http.Features.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNetCore.WebUtilities, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNetCore.WebUtilities.2.3.0\lib\netstandard2.0\Microsoft.AspNetCore.WebUtilities.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Bcl.AsyncInterfaces.8.0.0\lib\net462\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.DependencyInjection.Abstractions, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.DependencyInjection.Abstractions.8.0.0\lib\net462\Microsoft.Extensions.DependencyInjection.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.ObjectPool, Version=8.0.11.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.ObjectPool.8.0.11\lib\net462\Microsoft.Extensions.ObjectPool.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Options, Version=8.0.0.2, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Options.8.0.2\lib\net462\Microsoft.Extensions.Options.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Extensions.Primitives, Version=8.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Extensions.Primitives.8.0.0\lib\net462\Microsoft.Extensions.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Net.Http.Headers, Version=2.3.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Net.Http.Headers.2.3.0\lib\netstandard2.0\Microsoft.Net.Http.Headers.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.6.0\lib\net462\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\net462\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ApiModel\BaseParameterResult.cs" />
+    <Compile Include="ApiModel\GetAppUserLoginParameter.cs" />
+    <Compile Include="ApiModel\GetAppUserByIdParameter.cs" />
+    <Compile Include="ApiModel\GetAppUserLoginParameterResult.cs" />
+    <Compile Include="ApiModel\GetAppUserByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetAppUserToDoByIdParameter.cs" />
+    <Compile Include="ApiModel\GetAppUserToDoByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetAppUserToDosParameter.cs" />
+    <Compile Include="ApiModel\GetAppUserToDosParameterResult.cs" />
+    <Compile Include="ApiModel\GetAppUserTypeByIdParameter.cs" />
+    <Compile Include="ApiModel\GetAppUserTypeByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetAppUserTypesParameterResult.cs" />
+    <Compile Include="ApiModel\GetCountiesParameter.cs" />
+    <Compile Include="ApiModel\GetCountiesParameterResult.cs" />
+    <Compile Include="ApiModel\GetCountyByIdParameter.cs" />
+    <Compile Include="ApiModel\GetCountyByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetCustomerByIdParameter.cs" />
+    <Compile Include="ApiModel\GetCustomerByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetCustomerOrderByIdParameter.cs" />
+    <Compile Include="ApiModel\GetCustomerOrderByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetCustomerOrdersParameter.cs" />
+    <Compile Include="ApiModel\GetCustomerOrdersParameterResult.cs" />
+    <Compile Include="ApiModel\GetCustomersParameter.cs" />
+    <Compile Include="ApiModel\GetCustomersParameterResult.cs" />
+    <Compile Include="ApiModel\GetDealerByIdParameter.cs" />
+    <Compile Include="ApiModel\GetDealerByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductBrandByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductBrandByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductBrandsParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductColorByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductColorByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductColorsParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductDetailByProductIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductDetailByProductIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductDocumentByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductDocumentByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductDocumentsParameter.cs" />
+    <Compile Include="ApiModel\GetProductDocumentsParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductDocumentTypeByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductDocumentTypeByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductDocumentTypesParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductFeatureListByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductFeatureListByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductFeatureListsParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductModelByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductModelByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetDealersByAppUserIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductModelsParameter.cs" />
+    <Compile Include="ApiModel\GetDealersByAppUserIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductModelsParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductsParameter.cs" />
+    <Compile Include="ApiModel\GetProductsParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductStatusByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductStatusByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductStatusesParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductTypeByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductTypeByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductTypesParameterResult.cs" />
+    <Compile Include="ApiModel\GetProvinceByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProvinceByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProvincesParameterResult.cs" />
+    <Compile Include="ApiModel\GetTechnicalServiceByIdParameter.cs" />
+    <Compile Include="ApiModel\GetTechnicalServiceByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetTechnicalServiceHistoriesParameter.cs" />
+    <Compile Include="ApiModel\GetTechnicalServiceHistoriesParameterResult.cs" />
+    <Compile Include="ApiModel\GetTechnicalServiceHistoryByIdParameter.cs" />
+    <Compile Include="ApiModel\GetTechnicalServiceHistoryByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetTechnicalServicesParameter.cs" />
+    <Compile Include="ApiModel\GetTechnicalServicesParameterResult.cs" />
+    <Compile Include="ApiModel\GetTechnicalServiceStatusByIdParameter.cs" />
+    <Compile Include="ApiModel\GetTechnicalServiceStatusByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetTechnicalServiceStatusesParameterResult.cs" />
+    <Compile Include="ApiModel\LoginParameter.cs" />
+    <Compile Include="ApiModel\LoginParameterResult.cs" />
+    <Compile Include="ApiModel\SaveAppUserParameter.cs" />
+    <Compile Include="ApiModel\SaveAppUserParameterResult.cs" />
+    <Compile Include="ApiModel\SaveAppUserToDoParameter.cs" />
+    <Compile Include="ApiModel\SaveAppUserToDoParameterResult.cs" />
+    <Compile Include="ApiModel\SaveAppUserTypeParameter.cs" />
+    <Compile Include="ApiModel\SaveAppUserTypeParameterResult.cs" />
+    <Compile Include="ApiModel\SaveCountyParameter.cs" />
+    <Compile Include="ApiModel\SaveCountyParameterResult.cs" />
+    <Compile Include="ApiModel\SaveCustomerOrderParameter.cs" />
+    <Compile Include="ApiModel\SaveCustomerOrderParameterResult.cs" />
+    <Compile Include="ApiModel\SaveCustomerParameter.cs" />
+    <Compile Include="ApiModel\SaveCustomerParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductBrandParameter.cs" />
+    <Compile Include="ApiModel\SaveProductBrandParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductColorParameter.cs" />
+    <Compile Include="ApiModel\SaveProductColorParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductDetailParameter.cs" />
+    <Compile Include="ApiModel\SaveProductDetailParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductDocumentFormParameter.cs" />
+    <Compile Include="ApiModel\SaveProductDocumentParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductDocumentTypeParameter.cs" />
+    <Compile Include="ApiModel\SaveProductDocumentTypeParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductFeatureListParameter.cs" />
+    <Compile Include="ApiModel\SaveProductFeatureListParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductModelParameter.cs" />
+    <Compile Include="ApiModel\SaveProductModelParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductParameter.cs" />
+    <Compile Include="ApiModel\SaveProductParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductStatusParameter.cs" />
+    <Compile Include="ApiModel\SaveProductStatusParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductTypeParameter.cs" />
+    <Compile Include="ApiModel\SaveProductTypeParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProvinceParameter.cs" />
+    <Compile Include="ApiModel\SaveProvinceParameterResult.cs" />
+    <Compile Include="ApiModel\SaveTechnicalServiceHistoryParameter.cs" />
+    <Compile Include="ApiModel\SaveTechnicalServiceHistoryParameterResult.cs" />
+    <Compile Include="ApiModel\SaveTechnicalServiceParameter.cs" />
+    <Compile Include="ApiModel\SaveTechnicalServiceParameterResult.cs" />
+    <Compile Include="ApiModel\SaveTechnicalServiceStatusParameter.cs" />
+    <Compile Include="ApiModel\SaveTechnicalServiceStatusParameterResult.cs" />
+    <Compile Include="AppUser.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppUserToDo.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="AppUserType.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CashTransaction.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="County.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Customer.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerOrder.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Dealer.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DealerAppUser.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="ObjectHelper.cs" />
+    <Compile Include="Product.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductBrand.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductColor.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDetail.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDocument.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductDocumentType.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductFeature.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductFeatureList.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductModel.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductStatus.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductType.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProductTypeSub.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Province.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sale.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Sales.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TechnicalService.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TechnicalServiceHistory.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="TechnicalServiceStatus.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\AppUserToDoViewModel.cs" />
+    <Compile Include="ViewModel\AppUserTypeViewModel.cs" />
+    <Compile Include="ViewModel\AppUserViewModel.cs" />
+    <Compile Include="ViewModel\CountyViewModel.cs" />
+    <Compile Include="ViewModel\CustomerOrderViewModel.cs" />
+    <Compile Include="ViewModel\CustomerViewModel.cs" />
+    <Compile Include="ViewModel\DealerViewModel.cs" />
+    <Compile Include="ViewModel\ProductBrandViewModel.cs" />
+    <Compile Include="ViewModel\ProductDetailViewModel.cs" />
+    <Compile Include="ViewModel\ProductDocumentTypeViewModel.cs" />
+    <Compile Include="ViewModel\ProductDocumentViewModel.cs" />
+    <Compile Include="ViewModel\ProductFeatureListViewModel.cs" />
+    <Compile Include="ViewModel\ProductModelViewModel.cs" />
+    <Compile Include="ViewModel\ProductStatusViewModel.cs" />
+    <Compile Include="ViewModel\ProductTypeSubViewModel.cs" />
+    <Compile Include="ViewModel\ProductColorViewModel.cs" />
+    <Compile Include="ViewModel\ProductTypeViewModel.cs" />
+    <Compile Include="ViewModel\ProductViewModel.cs" />
+    <Compile Include="ViewModel\ProvinceViewModel.cs" />
+    <Compile Include="ViewModel\TechnicalServiceHistoryViewModel.cs" />
+    <Compile Include="ViewModel\TechnicalServiceStatusViewModel.cs" />
+    <Compile Include="ViewModel\TechnicalServiceViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EntityDeploy Include="Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.Config" />
+    <None Include="Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Content>
+    <Content Include="Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
