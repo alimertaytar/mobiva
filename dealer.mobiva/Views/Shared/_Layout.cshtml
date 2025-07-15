@@ -464,30 +464,35 @@
                 const hasSub = item.classList.contains("has-sub");
 
                 if (hasSub) {
-                    // Alt menüde eşleşme varsa: üst li'ye open, alt li'ye active
                     const subItems = item.querySelectorAll("ul.menu-content > li");
                     subItems.forEach(function (subItem) {
                         const subLink = subItem.querySelector("a[href]");
                         if (subLink) {
                             const subHref = subLink.getAttribute("href").toLowerCase();
-                            if (currentUrl === subHref || currentUrl.startsWith(subHref)) {
-                                subItem.classList.add("active"); // alt li'ye active
-                                item.classList.add("open");     // üst li'ye open
+
+                            // Buraya extra if ekliyoruz:
+                            if (currentUrl === subHref || currentUrl.startsWith(subHref) ||
+                                (currentUrl.includes("productbrandedit") && subHref.includes("productbrand"))) {
+                                subItem.classList.add("active");
+                                item.classList.add("open");
                             }
                         }
                     });
                 } else {
-                    // Sub yoksa, ana menü li'ye active
                     const link = item.querySelector("a[href]");
                     if (link) {
                         const href = link.getAttribute("href").toLowerCase();
-                        if (currentUrl === href || currentUrl.startsWith(href)) {
+
+                        // Aynı şekilde buraya da ekleyebiliriz:
+                        if (currentUrl === href || currentUrl.startsWith(href) ||
+                            (currentUrl.includes("productbrandedit") && href.includes("productbrand"))) {
                             item.classList.add("active");
                         }
                     }
                 }
             });
         });
+
     </script>
 
 

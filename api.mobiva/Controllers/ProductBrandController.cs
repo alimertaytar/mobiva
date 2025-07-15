@@ -28,7 +28,7 @@ namespace api.mobiva.Controllers
 
             try
             {
-                var filtered = await _helper.GetAllAsync<ProductBrand>(x => x.ActiveFlg);
+                var filtered = await _helper.GetAllAsync<ProductBrand>();
                 result.ProductBrands = ObjectHelper.MapList<ProductBrand, ProductBrandViewModel>(filtered);
                 result.Result = true;
                 result.Message = "Success";
@@ -70,7 +70,7 @@ namespace api.mobiva.Controllers
             {
                 var entity = await _helper.GetByIdAsync<ProductBrand>(param.Id);
 
-                if (entity != null && entity.ActiveFlg)
+                if (entity != null)
                     result.ProductBrand = ObjectHelper.Map<ProductBrand, ProductBrandViewModel>(entity);
 
                 result.Result = true;

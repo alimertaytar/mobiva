@@ -1,0 +1,81 @@
+﻿@model Objects.ViewModel.ProductBrandViewModel
+
+@{
+    ViewBag.Title = Model.Id == 0 ? "Yeni Marka Ekle" : "Markayı Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" type="text/css" href="/Content/app-assets/css/core/menu/menu-types/vertical-content-menu.css">
+
+<div class="content-body">
+
+    <div class="row">
+        <div class="col-12">
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-@(ViewBag.MessageType ?? "info") alert-dismissible fade show" role="alert">
+                    @ViewBag.Message
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Kapat">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">@ViewBag.Title</h4>
+            </div>
+            <div class="card-content collapse show">
+                <div class="card-body">
+                    <form action="/Settings/ProductBrandEdit" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" name="Id" value="@Model.Id" />
+
+                        <div class="form-body">
+                            <h4 class="form-section"><i class="ft-info"></i> Marka Bilgisi</h4>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Marka Adı</label>
+                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control", placeholder = "Marka adı giriniz" })
+
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Logo URL</label>
+                                        @Html.TextBoxFor(model => model.Logo, new { @class = "form-control", placeholder = "Logo giriniz" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h4 class="form-section"><i class="ft-check-circle"></i> Durum</h4>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    @Html.CheckBoxFor(model => model.ActiveFlg, new { @class = "custom-control-input", id = "ActiveFlgSwitch" })
+                                    <label class="custom-control-label" for="ActiveFlgSwitch">Marka Aktif Mi?</label>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="form-actions d-flex justify-content-between">
+                            <button type="submit" class="btn btn-success">
+                                <i class="la la-check-square-o"></i> Kaydet
+                            </button>
+                            <a href="/Settings/ProductBrands" class="btn btn-light">
+                                <i class="la la-times"></i> İptal
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</div>
+
+@*@section Scripts {
+        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    }*@

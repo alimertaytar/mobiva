@@ -1,7 +1,8 @@
 ﻿using System.Web.Mvc;
 using dealer.mobiva.Helpers;
-using Newtonsoft.Json;
 using Objects.ViewModel;
+using System.Threading.Tasks;
+using System;
 
 namespace dealer.mobiva.Controllers
 {
@@ -23,17 +24,16 @@ namespace dealer.mobiva.Controllers
                         return;
                     }
 
-                    var userResult = apiService.GetAppUserById(userId).GetAwaiter().GetResult();
+                    // ConfigureAwait(false) ile deadlock riskini azaltıyoruz
+                    var userResult = Task.Run(() => apiService.GetAppUserById(userId).ConfigureAwait(false).GetAwaiter().GetResult()).Result;
                     if (userResult?.Result == true && userResult.AppUser != null)
                     {
                         SessionManager.CurrentAppUser = userResult.AppUser;
 
-                        // Bayi listesi de doldurulsun
-                        var dealersResult = apiService.GetDealersByAppUserId(userId).GetAwaiter().GetResult();
+                        var dealersResult = Task.Run(() => apiService.GetDealersByAppUserId(userId).ConfigureAwait(false).GetAwaiter().GetResult()).Result;
                         if (dealersResult?.Result == true && dealersResult.Dealers != null)
                             SessionManager.CurrentDealers = dealersResult.Dealers;
                     }
-                    // API’den veri alınmazsa logout yok, sadece session boş kalır.
                 }
 
                 // 2. Dealer kontrolü
@@ -46,17 +46,18 @@ namespace dealer.mobiva.Controllers
                         return;
                     }
 
-                    var dealerResult = apiService.GetDealerById(dealerId).GetAwaiter().GetResult();
+                    var dealerResult = Task.Run(() => apiService.GetDealerById(dealerId).ConfigureAwait(false).GetAwaiter().GetResult()).Result;
                     if (dealerResult?.Result == true && dealerResult.Dealer != null)
                     {
                         SessionManager.CurrentDealer = dealerResult.Dealer;
                     }
-                    // API’den veri alınmazsa logout yok.
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // İstersen buraya log ekle, ama logout yapma
+                // Hata detayını logla, istersen kendi log sistemini entegre et
+                System.Diagnostics.Debug.WriteLine($"OnActionExecuting hata: {ex}");
+                // Burada logout yapma, sadece session boş kalır
             }
 
             base.OnActionExecuting(filterContext);
@@ -67,10 +68,9 @@ namespace dealer.mobiva.Controllers
             filterContext.Result = new RedirectToRouteResult(
                 new System.Web.Routing.RouteValueDictionary
                 {
-            { "controller", "Login" },
-            { "action", "Logout" }
+                    { "controller", "Login" },
+                    { "action", "Logout" }
                 });
         }
-
     }
 }
