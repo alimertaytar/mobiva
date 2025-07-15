@@ -16,13 +16,16 @@ namespace dealer.mobiva.Controllers
 
             var result = await apiService.GetProductBrands(); // .Result kullandık sen async ise await yaparsın
 
-            if (!result.Result)
+            if (result.Result)
             {
                 return View(result.ProductBrands);
             }
+            else
+            {
+                TempData["ErrorMessage"] = result.Message;
+                return View(new List<ProductBrandViewModel>());
+            }
 
-            TempData["ErrorMessage"] = result.Message;
-            return View(new List<ProductBrandViewModel>());
         }
 
       
