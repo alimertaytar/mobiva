@@ -9,6 +9,7 @@ namespace api.mobiva
     {
         public ContextApi()
         {
+            //
         }
         public ContextApi(DbContextOptions<ContextApi> options) : base(options)
         {
