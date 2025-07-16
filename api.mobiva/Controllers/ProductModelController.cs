@@ -4,6 +4,7 @@ using Objects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Objects.ApiModel;
+using System.Linq;
 
 namespace api.mobiva.Controllers
 {
@@ -28,11 +29,22 @@ namespace api.mobiva.Controllers
 
             try
             {
+                var productBrands = await _helper.GetAllAsync<ProductBrand>();
                 var filtered = await _helper.GetAllAsync<ProductModel>(
                     x => x.ActiveFlg && x.ProductBrandId == param.ProductBrandId
                 );
 
                 result.ProductModels = ObjectHelper.MapList<ProductModel, ProductModelViewModel>(filtered);
+
+                result.ProductModels = filtered.Select(m => new ProductModelViewModel
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    ProductBrandId = m.ProductBrandId,
+                    ProductBrand = productBrands.FirstOrDefault(b => b.Id == m.ProductBrandId)?.Name,
+                    ActiveFlg = m.ActiveFlg
+                }).ToList();
+
                 result.Result = true;
                 result.Message = "Success";
             }

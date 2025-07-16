@@ -113,5 +113,45 @@ namespace api.mobiva.Controllers
 
 
         #endregion
+
+        #region GetAppUsersbyDealerId
+        [HttpPost("GetAppUsersbyDealerId")]
+        public async Task<GetAppUsersbyDealerIdParameterResult> GetAppUsersbyDealerId([FromBody] GetAppUsersbyDealerIdParameter param)
+        {
+            var result = new GetAppUsersbyDealerIdParameterResult();
+
+            try
+            {
+                var userTypes = await _helper.GetAllAsync<AppUserType>();
+
+                var filtered = await _helper.GetAllAsync<AppUser>(
+     x => x.ActiveFlg && x.DealerAppUser.Any(y => y.DealerId == param.DealerId)
+ );
+
+                result.AppUsers = filtered.Select(u => new AppUserViewModel
+                {
+                    Id = u.Id,
+                    NameSurname = u.NameSurname,
+                    Email = u.Email,
+                    Password = u.Password,
+                    AppUserTypeId = u.AppUserTypeId,
+                    UserType = userTypes.FirstOrDefault(t => t.Id == u.AppUserTypeId)?.Name,
+                    CreateDate = u.CreateDate,
+                    ActiveFlg = u.ActiveFlg
+                }).ToList();
+                result.Result = true;
+                result.Message = "Success";
+            }
+            catch (System.Exception ex)
+            {
+                result.Result = false;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
+
+        #endregion
     }
 }

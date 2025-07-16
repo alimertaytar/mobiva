@@ -11,6 +11,7 @@ namespace Objects.ViewModel
         public int Id { get; set; }
         public string Name { get; set; }
         public int ProductBrandId { get; set; }
+        public string ProductBrand { get; set; }
         public bool ActiveFlg { get; set; }
     }
 

@@ -13,6 +13,7 @@ namespace Objects.ViewModel
         public string Email { get; set; }
         public string Password { get; set; }
         public int AppUserTypeId { get; set; }
+        public string UserType { get; set; }
         public System.DateTime CreateDate { get; set; }
         public bool ActiveFlg { get; set; }
     }

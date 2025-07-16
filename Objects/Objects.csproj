@@ -107,6 +107,8 @@
     <Compile Include="ApiModel\GetAppUserByIdParameter.cs" />
     <Compile Include="ApiModel\GetAppUserLoginParameterResult.cs" />
     <Compile Include="ApiModel\GetAppUserByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetAppUsersbyDealerIdParameter.cs" />
+    <Compile Include="ApiModel\GetAppUsersbyDealerIdParameterResult.cs" />
     <Compile Include="ApiModel\GetAppUserToDoByIdParameter.cs" />
     <Compile Include="ApiModel\GetAppUserToDoByIdParameterResult.cs" />
     <Compile Include="ApiModel\GetAppUserToDosParameter.cs" />
