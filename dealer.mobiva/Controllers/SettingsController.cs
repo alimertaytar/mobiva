@@ -121,21 +121,28 @@ namespace dealer.mobiva.Controllers
             {
                 var result = await apiService.GetProductModelById(id);
                 if (result != null && result.Result && result.ProductModel != null)
+                {
                     model = result.ProductModel;
+                    ViewBag.OriginalBrandId = model.ProductBrandId; // ← iptal butonu için
+                }
             }
             else
             {
-                // Yeni model için productBrandId parametresi gelmişse seçili yap
                 if (productBrandId.HasValue && productBrandId > 0)
+                {
                     model.ProductBrandId = productBrandId.Value;
+                    ViewBag.OriginalBrandId = productBrandId.Value;
+                }
                 else if (ViewBag.ProductBrands.Count == 1)
+                {
                     model.ProductBrandId = ViewBag.ProductBrands[0].Id;
+                    ViewBag.OriginalBrandId = model.ProductBrandId;
+                }
             }
-
-            ViewBag.SelectedBrandId = model.ProductBrandId;
 
             return View(model);
         }
+
 
 
         [HttpPost]

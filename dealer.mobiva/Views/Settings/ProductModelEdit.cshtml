@@ -70,9 +70,15 @@
                                 <button type="submit" class="btn btn-success">
                                     <i class="la la-check-square-o"></i> Kaydet
                                 </button>
-                                <a href="@Url.Action("ProductModels", "Settings", new { productBrandId = selectedBrandId })" class="btn btn-light">
+
+                                @{
+                                    int brandIdForCancel = ViewBag.OriginalBrandId != null ? (int)ViewBag.OriginalBrandId : 0;
+                                }
+                                ...
+                                <a href="@Url.Action("ProductModels", "Settings", new { productBrandId = brandIdForCancel })" class="btn btn-light">
                                     <i class="la la-times"></i> İptal
                                 </a>
+
                             </div>
                         </form>
                     </div>
