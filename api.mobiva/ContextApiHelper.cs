@@ -35,6 +35,7 @@ namespace api.mobiva
                 var changes = new List<ChangeLogEntry>();
                 string operation;
 
+                // Insert işlemi
                 if (idValue == 0)
                 {
                     var createDateProp = typeof(T).GetProperty("CreateDate");
@@ -44,23 +45,23 @@ namespace api.mobiva
 
                         if (value is DateTime dt)
                         {
-                            if (dt == DateTime.MinValue || dt < new DateTime(1753, 1, 1)) //"0001-01-01T00:00:00"
+                            if (dt == DateTime.MinValue || dt < new DateTime(1753, 1, 1))
                             {
                                 createDateProp.SetValue(entity, DateTime.Now);
                             }
                         }
-                        else if (value is null)
+                        else if (value == null)
                         {
                             createDateProp.SetValue(entity, DateTime.Now);
                         }
                     }
-
 
                     dbSet.Add(entity);
                     operation = "INSERT";
                 }
                 else
                 {
+                    // Update işlemi
                     var existingEntity = await dbSet.AsNoTracking()
                         .FirstOrDefaultAsync(e => EF.Property<int>(e, "Id") == idValue);
 
@@ -80,8 +81,8 @@ namespace api.mobiva
 
                         if (prop.PropertyType == typeof(DateTime) || prop.PropertyType == typeof(DateTime?))
                         {
-                            var dt = (DateTime?)newValue;
-                            if (!dt.HasValue || dt.Value < new DateTime(1753, 1, 1))
+                            var newDt = (DateTime?)newValue;
+                            if (!newDt.HasValue || newDt.Value < new DateTime(1753, 1, 1))
                                 continue;
                         }
 
@@ -123,24 +124,42 @@ namespace api.mobiva
                     Timestamp = DateTime.Now,
                     Operation = "ERROR",
                     Entity = typeof(T).Name,
-                    Error = GetFullExceptionMessage(ex)
+                    Error = GetFormattedExceptionMessage(ex, typeof(T).Name)
                 };
 
                 await LogToJsonFileAsync(errorLog);
                 return OperationResult<int>.Fail("Hata oluştu: " + ex.Message);
             }
         }
-        private string GetFullExceptionMessage(Exception ex)
+
+        private string GetFormattedExceptionMessage(Exception ex, string entityName)
         {
             var sb = new StringBuilder();
-            while (ex != null)
+            sb.AppendLine("🛑 Hata Türü: Entity Framework SaveChanges hatası");
+            sb.AppendLine($"🔹 Entity: {entityName}");
+
+            Exception current = ex;
+            while (current != null)
             {
-                sb.AppendLine(ex.Message);
-                sb.AppendLine(ex.StackTrace);
-                ex = ex.InnerException;
+                sb.AppendLine($"🔹 Hata: {current.Message}");
+                current = current.InnerException;
             }
+
+            var innerMost = ex;
+            while (innerMost.InnerException != null)
+            {
+                innerMost = innerMost.InnerException;
+            }
+
+            if (!string.IsNullOrEmpty(innerMost.StackTrace))
+            {
+                sb.AppendLine("🔹 Detay:");
+                sb.AppendLine(innerMost.StackTrace);
+            }
+
             return sb.ToString();
         }
+
 
         public async Task<OperationResult<bool>> DeleteAsync<T>(int id) where T : class
         {
@@ -150,7 +169,7 @@ namespace api.mobiva
                 var entity = await dbSet.FindAsync(id);
 
                 if (entity == null)
-                    return OperationResult<bool>.Fail("Silinecek kayıt bulunamadı.");
+                    return OperationResult<bool>.Fail("❌ Silinecek kayıt bulunamadı.");
 
                 dbSet.Remove(entity);
                 await _context.SaveChangesAsync();
@@ -165,19 +184,22 @@ namespace api.mobiva
 
                 await LogToJsonFileAsync(log);
 
-                return OperationResult<bool>.Ok(true, "Kayıt silindi.");
+                return OperationResult<bool>.Ok(true, "✅ Kayıt başarıyla silindi.");
             }
             catch (Exception ex)
             {
-                await LogToJsonFileAsync(new LogEntry
+                var errorLog = new LogEntry
                 {
                     Timestamp = DateTime.Now,
                     Operation = "ERROR",
                     Entity = typeof(T).Name,
-                    Error = GetFullExceptionMessage(ex)
-                });
+                    EntityId = id,
+                    Error = GetFormattedExceptionMessage(ex, typeof(T).Name)
+                };
 
-                return OperationResult<bool>.Fail("Silme hatası: " + ex.Message);
+                await LogToJsonFileAsync(errorLog);
+
+                return OperationResult<bool>.Fail("🛑 Silme hatası: " + ex.Message);
             }
         }
 
