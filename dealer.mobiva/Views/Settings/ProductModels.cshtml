@@ -51,6 +51,7 @@
                                     <thead>
                                         <tr>
                                             <th>#</th>
+                                            <th>Marka Adı</th>
                                             <th>Model Adı</th>
                                             <th class="text-center">Aktif</th>
                                             <th class="text-center">İşlemler</th>
@@ -61,6 +62,7 @@
                                         {
                                             <tr>
                                                 <td>@item.Id</td>
+                                                <td>@item.ProductBrand</td>
                                                 <td>@item.Name</td>
                                                 <td class="text-center">@(item.ActiveFlg ? "Evet" : "Hayır")</td>
                                                 <td class="text-center">

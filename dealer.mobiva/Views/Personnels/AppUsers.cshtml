@@ -1,0 +1,61 @@
+﻿@model List<Objects.ViewModel.AppUserViewModel>
+
+@{
+    ViewBag.Title = "Çalışanlar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-body">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Çalışanlar</h4>
+                    <a href="@Url.Action("AppUserEdit", "Personnels", new { id = 0 })" class="btn btn-primary btn-sm float-right">+ Yeni Kullanıcı</a>
+                </div>
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                        }
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Ad Soyad</th>
+                                        <th>Email</th>
+                                        <th>Kullanıcı Tipi</th>
+                                        <th class="text-center">Durum</th>
+                                        <th class="text-center">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var user in Model)
+                                    {
+                                        <tr>
+                                            <td>@user.Id</td>
+                                            <td>@user.NameSurname</td>
+                                            <td>@user.Email</td>
+                                            <td>@user.UserType</td>
+                                            <td class="text-center">@(user.ActiveFlg ? "Aktif" : "Pasif")</td>
+                                            <td class="text-center">
+                                                <a href="@Url.Action("AppUserEdit", "Personnels", new { id = user.Id })" class="btn btn-sm btn-primary">Düzenle</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

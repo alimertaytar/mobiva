@@ -116,9 +116,9 @@ namespace api.mobiva.Controllers
 
         #region GetAppUsersbyDealerId
         [HttpPost("GetAppUsersbyDealerId")]
-        public async Task<GetAppUsersbyDealerIdParameterResult> GetAppUsersbyDealerId([FromBody] GetAppUsersbyDealerIdParameter param)
+        public async Task<GetAppUsersByDealerIdParameterResult> GetAppUsersbyDealerId([FromBody] GetAppUsersByDealerIdParameter param)
         {
-            var result = new GetAppUsersbyDealerIdParameterResult();
+            var result = new GetAppUsersByDealerIdParameterResult();
 
             try
             {

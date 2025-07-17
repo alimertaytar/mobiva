@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -36,6 +37,25 @@ namespace api.mobiva
 
                 if (idValue == 0)
                 {
+                    var createDateProp = typeof(T).GetProperty("CreateDate");
+                    if (createDateProp != null)
+                    {
+                        var value = createDateProp.GetValue(entity);
+
+                        if (value is DateTime dt)
+                        {
+                            if (dt == DateTime.MinValue || dt < new DateTime(1753, 1, 1)) //"0001-01-01T00:00:00"
+                            {
+                                createDateProp.SetValue(entity, DateTime.Now);
+                            }
+                        }
+                        else if (value is null)
+                        {
+                            createDateProp.SetValue(entity, DateTime.Now);
+                        }
+                    }
+
+
                     dbSet.Add(entity);
                     operation = "INSERT";
                 }
@@ -103,12 +123,23 @@ namespace api.mobiva
                     Timestamp = DateTime.Now,
                     Operation = "ERROR",
                     Entity = typeof(T).Name,
-                    Error = ex.Message
+                    Error = GetFullExceptionMessage(ex)
                 };
 
                 await LogToJsonFileAsync(errorLog);
-                return OperationResult<int>.Fail("Hata: " + ex.Message);
+                return OperationResult<int>.Fail("Hata oluştu: " + ex.Message);
             }
+        }
+        private string GetFullExceptionMessage(Exception ex)
+        {
+            var sb = new StringBuilder();
+            while (ex != null)
+            {
+                sb.AppendLine(ex.Message);
+                sb.AppendLine(ex.StackTrace);
+                ex = ex.InnerException;
+            }
+            return sb.ToString();
         }
 
         public async Task<OperationResult<bool>> DeleteAsync<T>(int id) where T : class
@@ -143,7 +174,7 @@ namespace api.mobiva
                     Timestamp = DateTime.Now,
                     Operation = "ERROR",
                     Entity = typeof(T).Name,
-                    Error = ex.Message
+                    Error = GetFullExceptionMessage(ex)
                 });
 
                 return OperationResult<bool>.Fail("Silme hatası: " + ex.Message);

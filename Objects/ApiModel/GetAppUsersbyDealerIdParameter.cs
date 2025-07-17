@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Objects.ApiModel
 {
-    public class GetAppUsersbyDealerIdParameter
+    public class GetAppUsersByDealerIdParameter
     {
         public int DealerId { get; set; }
     }

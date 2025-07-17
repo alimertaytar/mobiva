@@ -5807,6 +5807,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PersonnelsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -6852,6 +6853,8 @@
     <Content Include="Views\Settings\ProductBrandEdit.cshtml" />
     <Content Include="Views\Settings\ProductModels.cshtml" />
     <Content Include="Views\Settings\ProductModelEdit.cshtml" />
+    <Content Include="Views\Personnels\AppUsers.cshtml" />
+    <Content Include="Views\Personnels\AppUserEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

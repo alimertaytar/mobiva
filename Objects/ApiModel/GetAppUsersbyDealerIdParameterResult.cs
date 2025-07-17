@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Objects.ApiModel
 {
-    public class GetAppUsersbyDealerIdParameterResult : BaseParameterResult
+    public class GetAppUsersByDealerIdParameterResult : BaseParameterResult
     {
         public List<AppUserViewModel> AppUsers { get; set; }
     }

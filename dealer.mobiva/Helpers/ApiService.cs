@@ -10,6 +10,7 @@ using dealer.mobiva.Helpers;
 using Objects.ViewModel;
 using Objects;
 using System.Reflection;
+using System.Web.Mvc;
 
 namespace dealer.mobiva.Helpers
 {
@@ -114,18 +115,18 @@ namespace dealer.mobiva.Helpers
             var param = new { id };
             return await PostAsync<GetDealerByIdParameterResult>($"{ApiUrl}/api/Dealer/GetDealerById", param);
         }
-        public async Task<GetDealersByAppUserIdParameterResult> GetDealersByAppUserId(int appUserId)
-        {
-            var getDealersByAppUserIdParameter = new { appUserId };
-            return await PostAsync<GetDealersByAppUserIdParameterResult>($"{ApiUrl}/api/Dealer/GetDealersByAppUserId", getDealersByAppUserIdParameter);
-        }
+       
 
         public async Task<GetProductsParameterResult> GetProducts(int dealerId)
         {
             var param = new { dealerId };
             return await PostAsync<GetProductsParameterResult>($"{ApiUrl}/api/Product/GetProducts", param);
         }
-
+        public async Task<GetDealersByAppUserIdParameterResult> GetDealersByAppUserId(int appUserId)
+        {
+            var getDealersByAppUserIdParameter = new { appUserId };
+            return await PostAsync<GetDealersByAppUserIdParameterResult>($"{ApiUrl}/api/Dealer/GetDealersByAppUserId", getDealersByAppUserIdParameter);
+        }
 
         #region GetProductBrand
         public async Task<GetProductBrandsParameterResult> GetProductBrands()
@@ -162,5 +163,30 @@ namespace dealer.mobiva.Helpers
             return await PostAsync<GetProductModelByIdParameterResult>($"{ApiUrl}/api/ProductModel/GetProductModelById", param);
         }
         #endregion
+
+
+        #region AppUser
+       
+
+        public async Task<GetAppUsersByDealerIdParameterResult> GetAppUsersByDealerId(int dealerId)
+        {
+            var param = new GetAppUsersByDealerIdParameter { DealerId = dealerId };
+            return await PostAsync<GetAppUsersByDealerIdParameterResult>($"{ApiUrl}/api/AppUser/GetAppUsersByDealerId", param);
+        }
+
+        public async Task<SaveAppUserParameterResult> SaveAppUser(AppUserViewModel model)
+        {
+            var jsonString = JsonConvert.SerializeObject(model);
+            var param = new SaveAppUserParameter { AppUser = model };
+            return await PostAsync<SaveAppUserParameterResult>($"{ApiUrl}/api/AppUser/SaveAppUser", param);
+        }
+
+
+        #endregion
+
+        public async Task<GetAppUserTypesParameterResult> GetAppUserTypes()
+        {
+            return await PostAsync<GetAppUserTypesParameterResult>($"{ApiUrl}/api/AppUserType/GetAppUserTypes", null);
+        }
     }
 }
