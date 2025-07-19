@@ -5803,6 +5803,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
@@ -6914,6 +6915,7 @@
     <Folder Include="Content\src\scss\plugins\menu\mmenu\extensions\borderstyle\" />
     <Folder Include="Content\src\scss\plugins\menu\mmenu\extensions\justifiedlistview\" />
     <Folder Include="Content\src\scss\plugins\menu\mmenu\extensions\positioning\" />
+    <Folder Include="Views\Customer\" />
     <Folder Include="Views\Inventory\" />
   </ItemGroup>
   <ItemGroup>
