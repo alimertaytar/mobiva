@@ -1,0 +1,100 @@
+﻿@model List<Objects.ViewModel.AppUserToDoViewModel>
+@using dealer.mobiva.Helpers
+@{
+    ViewBag.Title = "Yapılacaklar Listesi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var appUser = SessionManager.CurrentAppUser;
+}
+
+<div class="content-body">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Yapılacaklar Listesi</h4>
+                    <a href="@Url.Action("ToDoEdit", "ToDos", new { id = 0 })" class="btn btn-primary btn-sm float-right">+ Yeni Yapılacak</a>
+                </div>
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                        }
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Oluşturan</th>
+                                        <th>Yapacak</th>
+                                        <th>Açıklama</th>
+                                        <th>Durum</th>
+                                        <th>Başlangıç</th>
+                                        <th>Bitiş</th>
+                                        <th>Aktif</th>
+                                        <th class="text-center">İşlem</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @if (Model != null && Model.Any())
+                                    {
+                                        int index = 1;
+                                        foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>@index</td>
+                                                <td>@item.CreateUser</td>
+                                                <td>@item.ToDoUser</td>
+                                                <td>@item.ToDoDetail</td>
+                                                <td>
+                                                    @if (item.IsDone)
+                                                    {
+                                                        <span class="badge badge-success">Tamamlandı</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-warning">Beklemede</span>
+                                                    }
+                                                </td>
+                                                <td>@(item.CreateDate.ToString("dd.MM.yyyy"))</td>
+                                                <td>@(item.DoneDate.HasValue ? item.DoneDate.Value.ToString("dd.MM.yyyy") : "")</td>
+
+                                                <td>
+                                                    @if (item.ActiveFlg)
+                                                    {
+                                                        <span class="badge badge-primary">Aktif</span>
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="badge badge-secondary">Pasif</span>
+                                                    }
+                                                </td>
+
+                                                <td class="text-center">
+                                                    <a href="@Url.Action("ToDoEdit", "ToDos", new { id = item.Id })" class="btn btn-sm btn-info">Düzenle</a>
+                                                </td>
+                                            </tr>
+
+                                            index++;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <tr>
+                                            <td colspan="8" class="text-center">Kayıt bulunamadı.</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -26,7 +26,6 @@ namespace Objects
         }
     
         public virtual DbSet<AppUser> AppUser { get; set; }
-        public virtual DbSet<AppUserToDo> AppUserToDo { get; set; }
         public virtual DbSet<AppUserType> AppUserType { get; set; }
         public virtual DbSet<Dealer> Dealer { get; set; }
         public virtual DbSet<DealerAppUser> DealerAppUser { get; set; }
@@ -52,5 +51,6 @@ namespace Objects
         public virtual DbSet<TechnicalServiceStatus> TechnicalServiceStatus { get; set; }
         public virtual DbSet<TechnicalServiceHistory> TechnicalServiceHistory { get; set; }
         public virtual DbSet<CashTransaction> CashTransaction { get; set; }
+        public virtual DbSet<AppUserToDo> AppUserToDo { get; set; }
     }
 }

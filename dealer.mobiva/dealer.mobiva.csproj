@@ -5809,6 +5809,7 @@
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\PersonnelsController.cs" />
     <Compile Include="Controllers\SettingsController.cs" />
+    <Compile Include="Controllers\ToDosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -6855,6 +6856,8 @@
     <Content Include="Views\Settings\ProductModelEdit.cshtml" />
     <Content Include="Views\Personnels\AppUsers.cshtml" />
     <Content Include="Views\Personnels\AppUserEdit.cshtml" />
+    <Content Include="Views\ToDos\Index.cshtml" />
+    <Content Include="Views\ToDos\ToDoEdit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

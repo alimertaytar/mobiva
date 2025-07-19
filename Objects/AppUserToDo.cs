@@ -20,7 +20,7 @@ namespace Objects
         public int ToDoUserId { get; set; }
         public System.DateTime CreateDate { get; set; }
         public bool IsDone { get; set; }
-        public System.DateTime DoneDate { get; set; }
+        public Nullable<System.DateTime> DoneDate { get; set; }
         public string DoneDetail { get; set; }
         public bool ActiveFlg { get; set; }
     

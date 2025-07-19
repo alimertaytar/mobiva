@@ -184,6 +184,31 @@ namespace dealer.mobiva.Helpers
 
         #endregion
 
+        #region AppUserToDos
+
+
+        public async Task<GetAppUserToDosParameterResult> GetAppUserToDos(int appUserId)
+        {
+            var param = new GetAppUserToDosParameter { AppUserId = appUserId };
+            return await PostAsync<GetAppUserToDosParameterResult>($"{ApiUrl}/api/AppUserToDo/GetAppUserToDos", param);
+        }
+
+        public async Task<GetAppUserToDoByIdParameterResult> GetAppUserToDoById(int appUserId)
+        {
+            var param = new GetAppUserToDoByIdParameter { Id = appUserId };
+            return await PostAsync<GetAppUserToDoByIdParameterResult>($"{ApiUrl}/api/AppUserToDo/GetAppUserToDoById", param);
+        }
+
+
+        public async Task<SaveAppUserToDoParameterResult> SaveAppUserToDo(AppUserToDoViewModel model)
+        {
+            var param = new SaveAppUserToDoParameter { AppUserToDo = model };
+            return await PostAsync<SaveAppUserToDoParameterResult>($"{ApiUrl}/api/AppUserToDo/SaveAppUserToDo", param);
+        }
+
+
+        #endregion
+
         public async Task<GetAppUserTypesParameterResult> GetAppUserTypes()
         {
             return await PostAsync<GetAppUserTypesParameterResult>($"{ApiUrl}/api/AppUserType/GetAppUserTypes", null);

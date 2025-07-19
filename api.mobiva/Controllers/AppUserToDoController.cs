@@ -4,6 +4,8 @@ using Objects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Objects.ApiModel;
+using System.Linq;
+using System;
 
 namespace api.mobiva.Controllers
 {
@@ -28,12 +30,45 @@ namespace api.mobiva.Controllers
 
             try
             {
+                var appUsers = await _helper.GetAllAsync<AppUser>();
+
                 var filtered = await _helper.GetAllAsync<AppUserToDo>(
-                    x => x.ActiveFlg && x.ToDoUserId == param.AppUserId
+                    x =>  (x.ToDoUserId == param.AppUserId || x.CreateUserId == param.AppUserId)
                 );
 
                 result.AppUserToDos = ObjectHelper.MapList<AppUserToDo, AppUserToDoViewModel>(filtered);
-                result.Result = true;
+
+                result.AppUserToDos = filtered.Select(m => new AppUserToDoViewModel
+                {
+                    Id = m.Id,
+                    ToDoDetail = m.ToDoDetail,
+                    CreateUserId = m.CreateUserId,
+                    CreateUser = appUsers.FirstOrDefault(b => b.Id == m.CreateUserId)?.NameSurname,
+                    ToDoUserId = m.ToDoUserId,
+                    ToDoUser = appUsers.FirstOrDefault(b => b.Id == m.ToDoUserId)?.NameSurname,
+                    CreateDate = m.CreateDate,
+                    IsDone = m.IsDone,
+                    DoneDate = m.DoneDate,
+                    DoneDetail = m.DoneDetail,
+                    ActiveFlg = m.ActiveFlg
+                }).ToList();
+
+
+
+        //        public int Id { get; set; }
+        //public string ToDoDetail { get; set; }
+        //public int CreateUserId { get; set; }
+        //public string CreateUser { get; set; }
+        //public int ToDoUserId { get; set; }
+        //public string ToDoUser { get; set; }
+        //public DateTime CreateDate { get; set; }
+        //public bool IsDone { get; set; }
+        //public DateTime DoneDate { get; set; }
+        //public string DoneDetail { get; set; }
+        //public bool ActiveFlg { get; set; }
+
+
+        result.Result = true;
                 result.Message = "Success";
             }
             catch (System.Exception ex)

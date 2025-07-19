@@ -346,16 +346,23 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#"><i class="la la-check-square"></i><span class="menu-title">Yapılacaklar</span></a>
+                            <a href="@Url.Action("Index", "ToDos")"><i class="la la-check-square"></i><span class="menu-title">Yapılacaklar</span></a>
                         </li>
 
                         <li class="nav-item">
                             <a href="@Url.Action("AppUsers", "Personnels")"><i class="la la-user-plus"></i><span class="menu-title">Çalışanlar</span></a>
                         </li>
 
+
                         <li class="nav-item">
-                            <a href="#"><i class="la la-bar-chart"></i><span class="menu-title">Raporlar</span></a>
+                            <a href="#"><i class="la la-bar-chart"></i><span class="menu-title" data-i18n="Settings">Raporlar</span></a>
+                            <ul class="menu-content">
+                                <li>
+                                    <a class="menu-item" href="#"><i class="la la-arrow-circle-o-up"></i><span data-i18n="ProductBrands">Günlük Akış</span></a>
+                                </li>
+                            </ul>
                         </li>
+
 
                         <li class="nav-item">
                             <a href="#"><i class="la la-cog"></i><span class="menu-title" data-i18n="Settings">Ayarlar</span></a>
@@ -366,7 +373,7 @@
                                 <li>
                                     <a class="menu-item" href="@Url.Action("ProductModels", "Settings")"><i class="la la-tags"></i><span data-i18n="ProductBrands">Ürün Modelleri</span></a>
                                 </li>
-                               
+
                             </ul>
                         </li>
 
@@ -390,7 +397,16 @@
 
     <!-- BEGIN: Footer-->
     <footer class="footer footer-static footer-light navbar-border">
-        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright &copy; 2019 <a class="text-bold-800 grey darken-2" href="https://1.envato.market/modern_admin" target="_blank">PIXINVENT</a></span><span class="float-md-right d-none d-lg-block">Hand-crafted & Made with<i class="ft-heart pink"></i><span id="scroll-top"></span></span></p>
+        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2">
+            <span class="float-md-left d-block d-md-inline-block">
+                © @DateTime.Now.Year <a href="https://mobiva" class="text-bold-800 grey darken-2" target="_blank">Mobiva</a>
+            </span>
+            <span class="float-md-right d-none d-lg-block">
+                ChatGPT + İnsan Zekası = Mobiva <i class="ft-heart pink"></i>
+                <span id="scroll-top"></span>
+            </span>
+        </p>
+
     </footer>
     <!-- END: Footer-->
     <!-- BEGIN: Vendor JS-->
@@ -479,8 +495,7 @@
                                 (currentUrl.includes("productbrandedit") && subHref.includes("productbrand")) ||
                                 (currentUrl.includes("productmodeledit") && subHref.includes("productmodel"))
 
-                            )
-                            {
+                            ) {
                                 subItem.classList.add("active");
                                 item.classList.add("open");
                             }
@@ -496,8 +511,7 @@
                             (currentUrl.includes("productbrandedit") && href.includes("productbrand")) ||
                             (currentUrl.includes("productmodeledit") && href.includes("productmodel"))
 
-                        )
-                        {
+                        ) {
                             item.classList.add("active");
                         }
                     }

@@ -11,10 +11,12 @@ namespace Objects.ViewModel
         public int Id { get; set; }
         public string ToDoDetail { get; set; }
         public int CreateUserId { get; set; }
+        public string CreateUser { get; set; }
         public int ToDoUserId { get; set; }
+        public string ToDoUser { get; set; }
         public DateTime CreateDate { get; set; }
         public bool IsDone { get; set; }
-        public DateTime DoneDate { get; set; }
+        public Nullable<System.DateTime> DoneDate { get; set; }
         public string DoneDetail { get; set; }
         public bool ActiveFlg { get; set; }
     }

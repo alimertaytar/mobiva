@@ -27,7 +27,7 @@
           <Property Name="ToDoUserId" Type="int" Nullable="false" />
           <Property Name="CreateDate" Type="datetime" Nullable="false" />
           <Property Name="IsDone" Type="bit" Nullable="false" />
-          <Property Name="DoneDate" Type="datetime" Nullable="false" />
+          <Property Name="DoneDate" Type="datetime" />
           <Property Name="DoneDetail" Type="nvarchar" MaxLength="1000" />
           <Property Name="ActiveFlg" Type="bit" Nullable="false" />
         </EntityType>
@@ -1027,8 +1027,6 @@
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AppUserType" Relationship="Self.FK_AppUser_AppUserType" FromRole="AppUser" ToRole="AppUserType" />
-          <NavigationProperty Name="AppUserToDo" Relationship="Self.FK_AppUserToDo_CreateUserId" FromRole="AppUser" ToRole="AppUserToDo" />
-          <NavigationProperty Name="AppUserToDo1" Relationship="Self.FK_AppUserToDo_ToDoUserId" FromRole="AppUser" ToRole="AppUserToDo" />
           <NavigationProperty Name="DealerAppUser" Relationship="Self.FK_DealerAppUser_AppUser" FromRole="AppUser" ToRole="DealerAppUser" />
           <NavigationProperty Name="CustomerOrder" Relationship="Model.FK_CustomerOrder_AppUser" FromRole="AppUser" ToRole="CustomerOrder" />
           <NavigationProperty Name="ProductDocument" Relationship="Model.FK_ProductDocument_AppUser" FromRole="AppUser" ToRole="ProductDocument" />
@@ -1039,22 +1037,8 @@
           <NavigationProperty Name="TechnicalService" Relationship="Model.FK_TechnicalService_AppUser" FromRole="AppUser" ToRole="TechnicalService" />
           <NavigationProperty Name="CashTransaction" Relationship="Model.FK_CaseOperation_AppUser" FromRole="AppUser" ToRole="CashTransaction" />
           <NavigationProperty Name="CashTransaction1" Relationship="Model.FK_CaseOperation_DeletedUserId" FromRole="AppUser" ToRole="CashTransaction" />
-        </EntityType>
-        <EntityType Name="AppUserToDo">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ToDoDetail" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="CreateUserId" Type="Int32" Nullable="false" />
-          <Property Name="ToDoUserId" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="IsDone" Type="Boolean" Nullable="false" />
-          <Property Name="DoneDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DoneDetail" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AppUser" Relationship="Self.FK_AppUserToDo_CreateUserId" FromRole="AppUserToDo" ToRole="AppUser" />
-          <NavigationProperty Name="AppUser1" Relationship="Self.FK_AppUserToDo_ToDoUserId" FromRole="AppUserToDo" ToRole="AppUser" />
+          <NavigationProperty Name="AppUserToDo" Relationship="Model.FK_AppUserToDo_CreateUserId" FromRole="AppUser" ToRole="AppUserToDo" />
+          <NavigationProperty Name="AppUserToDo1" Relationship="Model.FK_AppUserToDo_ToDoUserId" FromRole="AppUser" ToRole="AppUserToDo" />
         </EntityType>
         <EntityType Name="AppUserType">
           <Key>
@@ -1109,30 +1093,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_AppUserToDo_CreateUserId">
-          <End Role="AppUser" Type="Self.AppUser" Multiplicity="1" />
-          <End Role="AppUserToDo" Type="Self.AppUserToDo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AppUserToDo">
-              <PropertyRef Name="CreateUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AppUserToDo_ToDoUserId">
-          <End Role="AppUser" Type="Self.AppUser" Multiplicity="1" />
-          <End Role="AppUserToDo" Type="Self.AppUserToDo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AppUserToDo">
-              <PropertyRef Name="ToDoUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DealerAppUser_AppUser">
           <End Role="AppUser" Type="Self.AppUser" Multiplicity="1" />
           <End Role="DealerAppUser" Type="Self.DealerAppUser" Multiplicity="*" />
@@ -1159,21 +1119,12 @@
         </Association>
         <EntityContainer Name="DbManager" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="AppUser" EntityType="Self.AppUser" />
-          <EntitySet Name="AppUserToDo" EntityType="Self.AppUserToDo" />
           <EntitySet Name="AppUserType" EntityType="Self.AppUserType" />
           <EntitySet Name="Dealer" EntityType="Self.Dealer" />
           <EntitySet Name="DealerAppUser" EntityType="Self.DealerAppUser" />
           <AssociationSet Name="FK_AppUser_AppUserType" Association="Self.FK_AppUser_AppUserType">
             <End Role="AppUserType" EntitySet="AppUserType" />
             <End Role="AppUser" EntitySet="AppUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AppUserToDo_CreateUserId" Association="Self.FK_AppUserToDo_CreateUserId">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="AppUserToDo" EntitySet="AppUserToDo" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AppUserToDo_ToDoUserId" Association="Self.FK_AppUserToDo_ToDoUserId">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="AppUserToDo" EntitySet="AppUserToDo" />
           </AssociationSet>
           <AssociationSet Name="FK_DealerAppUser_AppUser" Association="Self.FK_DealerAppUser_AppUser">
             <End Role="AppUser" EntitySet="AppUser" />
@@ -1348,6 +1299,15 @@
           <AssociationSet Name="FK_CaseOperation_Sale" Association="Model.FK_CaseOperation_Sale">
             <End Role="Sale" EntitySet="Sale" />
             <End Role="CashTransaction" EntitySet="CashTransaction" />
+          </AssociationSet>
+          <EntitySet Name="AppUserToDo" EntityType="Model.AppUserToDo" />
+          <AssociationSet Name="FK_AppUserToDo_CreateUserId" Association="Model.FK_AppUserToDo_CreateUserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="AppUserToDo" EntitySet="AppUserToDo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AppUserToDo_ToDoUserId" Association="Model.FK_AppUserToDo_ToDoUserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="AppUserToDo" EntitySet="AppUserToDo" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ProductType">
@@ -2103,6 +2063,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AppUserToDo">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToDoDetail" Type="String" Nullable="false" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUserId" Type="Int32" Nullable="false" />
+          <Property Name="ToDoUserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsDone" Type="Boolean" Nullable="false" />
+          <Property Name="DoneDate" Type="DateTime" Precision="3" />
+          <Property Name="DoneDetail" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AppUser" Relationship="Model.FK_AppUserToDo_CreateUserId" FromRole="AppUserToDo" ToRole="AppUser" />
+          <NavigationProperty Name="AppUser1" Relationship="Model.FK_AppUserToDo_ToDoUserId" FromRole="AppUserToDo" ToRole="AppUser" />
+        </EntityType>
+        <Association Name="FK_AppUserToDo_CreateUserId">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.AppUserToDo" Role="AppUserToDo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppUserToDo">
+              <PropertyRef Name="CreateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AppUserToDo_ToDoUserId">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.AppUserToDo" Role="AppUserToDo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppUserToDo">
+              <PropertyRef Name="ToDoUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2118,21 +2118,6 @@
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="AppUserTypeId" ColumnName="AppUserTypeId" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="AppUserToDo">
-            <EntityTypeMapping TypeName="Model.AppUserToDo">
-              <MappingFragment StoreEntitySet="AppUserToDo">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ToDoDetail" ColumnName="ToDoDetail" />
-                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
-                <ScalarProperty Name="ToDoUserId" ColumnName="ToDoUserId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
-                <ScalarProperty Name="DoneDate" ColumnName="DoneDate" />
-                <ScalarProperty Name="DoneDetail" ColumnName="DoneDetail" />
                 <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2453,6 +2438,21 @@
                 <ScalarProperty Name="IsEntry" ColumnName="IsEntry" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
                 <ScalarProperty Name="DealerId" ColumnName="DealerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppUserToDo">
+            <EntityTypeMapping TypeName="Model.AppUserToDo">
+              <MappingFragment StoreEntitySet="AppUserToDo">
+                <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
+                <ScalarProperty Name="DoneDetail" ColumnName="DoneDetail" />
+                <ScalarProperty Name="DoneDate" ColumnName="DoneDate" />
+                <ScalarProperty Name="IsDone" ColumnName="IsDone" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ToDoUserId" ColumnName="ToDoUserId" />
+                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+                <ScalarProperty Name="ToDoDetail" ColumnName="ToDoDetail" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

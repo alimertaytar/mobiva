@@ -1,0 +1,146 @@
+﻿@model Objects.ViewModel.AppUserToDoViewModel
+
+@{
+    ViewBag.Title = Model.Id == 0 ? "Yeni Yapılacak Görev Ekle" : "Yapılacak Görev Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var appUsers = ViewBag.AppUsers as List<Objects.ViewModel.AppUserViewModel> ?? new List<Objects.ViewModel.AppUserViewModel>();
+}
+
+<div class="content-body">
+
+    <div class="row">
+        <div class="col-12">
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-@(ViewBag.MessageType ?? "info") alert-dismissible fade show" role="alert">
+                    @ViewBag.Message
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Kapat">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <form action="@Url.Action("ToDoEdit", "ToDos")" method="post" autocomplete="off">
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(x => x.CreateUserId)
+                            <input type="hidden" name="Id" value="@Model.Id" />
+
+                            <div class="form-body">
+
+                                <h4 class="form-section"><i class="fa fa-tasks"></i> Görev Bilgisi</h4>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Açıklama</label>
+                                            @Html.TextAreaFor(m => m.ToDoDetail, new { @class = "form-control", rows = 3, placeholder = "Yapılacak işin açıklamasını girin..." })
+                                            @Html.ValidationMessageFor(m => m.ToDoDetail, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    @{
+                                        bool isAssignedToAnotherUser = Model.ToDoUserId != 0 && Model.ToDoUserId != Model.CreateUserId;
+                                        var htmlAttributes = new Dictionary<string, object>
+                                {
+        { "class", "form-control" }
+    };
+
+                                        if (isAssignedToAnotherUser)
+                                        {
+                                            htmlAttributes.Add("disabled", "disabled");
+                                        }
+                                    }
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Atanan Kullanıcı</label>
+                                            @Html.DropDownListFor(m => m.ToDoUserId,
+     new SelectList(appUsers, "Id", "NameSurname", Model.ToDoUserId),
+     "-- Seçiniz --",
+     htmlAttributes)
+                                            @Html.ValidationMessageFor(m => m.ToDoUserId, "", new { @class = "text-danger" })
+
+                                            @* Eğer disable yapıldıysa seçilen kullanıcı id’sini yine formda gizli input olarak gönderiyoruz *@
+                                            @if (isAssignedToAnotherUser)
+                                            {
+                                                <input type="hidden" name="ToDoUserId" value="@Model.ToDoUserId" />
+                                            }
+                                        </div>
+                                    </div>
+
+
+                                    @* Oluşturulma tarihi sadece güncelleme modunda gösterilir *@
+                                    @if (Model.Id > 0)
+                                    {
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>Oluşturulma Tarihi</label>
+                                                @Html.TextBoxFor(m => m.CreateDate, "{0:yyyy-MM-dd}", new { @class = "form-control", type = "date", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+
+                                <h4 class="form-section"><i class="fa fa-check-circle"></i> Durum</h4>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        @Html.CheckBoxFor(m => m.IsDone, new { @class = "custom-control-input", id = "IsDoneSwitch" })
+                                        <label class="custom-control-label" for="IsDoneSwitch">Görev Tamamlandı</label>
+                                    </div>
+                                </div>
+
+                                <div class="form-group" id="doneDetailSection" style="@(Model.IsDone ? "display:block;" : "display:none;")">
+                                    <label>Tamamlanma Açıklaması</label>
+                                    @Html.TextAreaFor(m => m.DoneDetail, new { @class = "form-control", rows = 2 })
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        @Html.CheckBoxFor(m => m.ActiveFlg, new { @class = "custom-control-input", id = "ActiveFlgSwitch" })
+                                        <label class="custom-control-label" for="ActiveFlgSwitch">Aktif</label>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="form-actions d-flex justify-content-between">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="la la-check-square-o"></i> Kaydet
+                                </button>
+                                <a href="@Url.Action("Index", "ToDos")" class="btn btn-light">
+                                    <i class="la la-times"></i> İptal
+                                </a>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Script {
+    <script>
+        $(document).ready(function () {
+            $('#IsDoneSwitch').change(function () {
+                if ($(this).is(':checked')) {
+                    $('#doneDetailSection').slideDown(200);
+                } else {
+                    $('#doneDetailSection').slideUp(200);
+                }
+            });
+        });
+    </script>
+}
