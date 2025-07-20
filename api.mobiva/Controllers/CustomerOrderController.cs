@@ -4,6 +4,8 @@ using Objects;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Objects.ApiModel;
+using System;
+using System.Linq;
 
 namespace api.mobiva.Controllers
 {
@@ -20,23 +22,68 @@ namespace api.mobiva.Controllers
             _helper = new ContextApiHelper(_context);
         }
 
-        #region GetCustomerOrders
-        [HttpPost("GetCustomerOrders")]
-        public async Task<GetCustomerOrdersParameterResult> GetCustomerOrders([FromBody] GetCustomerOrdersParameter param)
+        [HttpPost("GetCustomerOrdersByDealerId")]
+        public async Task<GetCustomerOrdersByDealerIdParameterResult> GetCustomerOrdersByDealerId([FromBody] GetCustomerOrdersByDealerIdParameter param)
         {
-            var result = new GetCustomerOrdersParameterResult();
+            var result = new GetCustomerOrdersByDealerIdParameterResult();
 
             try
             {
-                var filtered = await _helper.GetAllAsync<CustomerOrder>(
-                    x => x.ActiveFlg && x.DealerId == param.DealerId
-                );
+                var orders = await _helper.GetAllAsync<CustomerOrder>(x => x.DealerId == param.DealerId);
+                var customers = await _helper.GetAllAsync<Customer>();
+                var appUsers = await _helper.GetAllAsync<AppUser>();
 
-                result.CustomerOrders = ObjectHelper.MapList<CustomerOrder, CustomerOrderViewModel>(filtered);
+                var mappedOrders = orders.Select(order =>
+                {
+                    var customerName = customers.FirstOrDefault(c => c.Id == order.CustomerId)?.Name ?? "Bilinmiyor";
+                    var createUserName = appUsers.FirstOrDefault(u => u.Id == order.CreateUserId)?.NameSurname ?? "Bilinmiyor";
+
+                    return new CustomerOrderViewModel
+                    {
+                        Id = order.Id,
+                        DealerId = order.DealerId,
+                        CustomerId = order.CustomerId,
+                        Customer = customerName,
+                        OrderNote = order.OrderNote,
+                        CreateUserId = order.CreateUserId,
+                        CreateUser = createUserName,
+                        CreateDate = order.CreateDate,
+                        ActiveFlg = order.ActiveFlg
+                    };
+                }).ToList();
+
+                result.CustomerOrders = mappedOrders;
                 result.Result = true;
                 result.Message = "Success";
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Message = "Veriler alınırken hata oluştu.";
+                result.InternalMessage = ex.ToString();
+            }
+
+            return result;
+        }
+
+
+        #region SaveCustomerOrder
+        [HttpPost("SaveCustomerOrder")]
+        public async Task<SaveCustomerOrderParameterResult> SaveCustomerOrder([FromBody] SaveCustomerOrderParameter param)
+        {
+            var result = new SaveCustomerOrderParameterResult();
+
+            try
+            {
+                var entity = ObjectHelper.Map<CustomerOrderViewModel, CustomerOrder>(param.CustomerOrder);
+
+                var opResult = await _helper.SaveAsync(entity);
+
+                result.Result = opResult.Success;
+                result.Message = opResult.Message;
+                result.Id = opResult.Data;
+            }
+            catch (Exception ex)
             {
                 result.Result = false;
                 result.Message = ex.Message;
@@ -44,24 +91,6 @@ namespace api.mobiva.Controllers
 
             return result;
         }
-
-
-        #endregion
-
-        #region SaveCustomerOrder
-        [HttpPost("SaveCustomerOrder")]
-        public async Task<SaveCustomerOrderParameterResult> SaveCustomerOrder([FromBody] SaveCustomerOrderParameter param)
-        {
-            var result = new SaveCustomerOrderParameterResult();
-            var entity = ObjectHelper.Map<CustomerOrderViewModel, CustomerOrder>(param.CustomerOrder);
-            var opResult = await _helper.SaveAsync(entity);
-            result.Result = opResult.Success;
-            result.Message = opResult.Message;
-            result.Id = opResult.Data;
-            return result;
-        }
-
-
         #endregion
 
         #region GetCustomerOrderById
@@ -72,15 +101,21 @@ namespace api.mobiva.Controllers
 
             try
             {
-                var entity = await _helper.GetByIdAsync<CustomerOrder>(param.CustomerOrderId);
+                var entity = await _helper.GetByIdAsync<CustomerOrder>(param.Id);
 
-                if (entity != null && entity.ActiveFlg)
+                if (entity != null)
+                {
                     result.CustomerOrder = ObjectHelper.Map<CustomerOrder, CustomerOrderViewModel>(entity);
-
-                result.Result = true;
-                result.Message = "Success";
+                    result.Result = true;
+                    result.Message = "Kayıt getirildi.";
+                }
+                else
+                {
+                    result.Result = false;
+                    result.Message = "Kayıt bulunamadı.";
+                }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 result.Result = false;
                 result.Message = ex.Message;
@@ -88,8 +123,7 @@ namespace api.mobiva.Controllers
 
             return result;
         }
-
-
         #endregion
+
     }
 }

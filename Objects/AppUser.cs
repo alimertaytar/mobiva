@@ -17,18 +17,18 @@ namespace Objects
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AppUser()
         {
-            this.DealerAppUser = new HashSet<DealerAppUser>();
+            this.AppUserToDo = new HashSet<AppUserToDo>();
+            this.AppUserToDo1 = new HashSet<AppUserToDo>();
+            this.CashTransaction = new HashSet<CashTransaction>();
+            this.CashTransaction1 = new HashSet<CashTransaction>();
             this.CustomerOrder = new HashSet<CustomerOrder>();
+            this.DealerAppUser = new HashSet<DealerAppUser>();
             this.ProductDocument = new HashSet<ProductDocument>();
             this.Sale = new HashSet<Sale>();
             this.Sale1 = new HashSet<Sale>();
             this.Sale2 = new HashSet<Sale>();
             this.Sales = new HashSet<Sales>();
             this.TechnicalService = new HashSet<TechnicalService>();
-            this.CashTransaction = new HashSet<CashTransaction>();
-            this.CashTransaction1 = new HashSet<CashTransaction>();
-            this.AppUserToDo = new HashSet<AppUserToDo>();
-            this.AppUserToDo1 = new HashSet<AppUserToDo>();
         }
     
         public int Id { get; set; }
@@ -41,9 +41,17 @@ namespace Objects
     
         public virtual AppUserType AppUserType { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<DealerAppUser> DealerAppUser { get; set; }
+        public virtual ICollection<AppUserToDo> AppUserToDo { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AppUserToDo> AppUserToDo1 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CashTransaction> CashTransaction { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CashTransaction> CashTransaction1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerOrder> CustomerOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DealerAppUser> DealerAppUser { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ProductDocument> ProductDocument { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -56,13 +64,5 @@ namespace Objects
         public virtual ICollection<Sales> Sales { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TechnicalService> TechnicalService { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CashTransaction> CashTransaction { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CashTransaction> CashTransaction1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AppUserToDo> AppUserToDo { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AppUserToDo> AppUserToDo1 { get; set; }
     }
 }

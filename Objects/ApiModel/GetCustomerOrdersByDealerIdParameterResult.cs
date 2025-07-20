@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Objects.ApiModel
 {
-    public class GetCustomerOrdersParameterResult : BaseParameterResult
+    public class GetCustomerOrdersByDealerIdParameterResult : BaseParameterResult
     {
         public List<CustomerOrderViewModel> CustomerOrders { get; set; }
     }

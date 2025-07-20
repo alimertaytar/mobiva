@@ -17,8 +17,8 @@ namespace Objects
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Customer()
         {
-            this.TechnicalService = new HashSet<TechnicalService>();
             this.CustomerOrder = new HashSet<CustomerOrder>();
+            this.TechnicalService = new HashSet<TechnicalService>();
         }
     
         public int Id { get; set; }
@@ -34,8 +34,8 @@ namespace Objects
     
         public virtual Dealer Dealer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TechnicalService> TechnicalService { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CustomerOrder> CustomerOrder { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TechnicalService> TechnicalService { get; set; }
     }
 }

@@ -84,7 +84,7 @@
           <Key>
             <PropertyRef Name="Id" />
           </Key>
-          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="DealerId" Type="int" Nullable="false" />
           <Property Name="CustomerId" Type="int" Nullable="false" />
           <Property Name="OrderNote" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -434,7 +434,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CustomerOrder_AppUser">
+        <Association Name="FK_CustomerOrder_CreateUserId">
           <End Role="AppUser" Type="Self.AppUser" Multiplicity="1" />
           <End Role="CustomerOrder" Type="Self.CustomerOrder" Multiplicity="*" />
           <ReferentialConstraint>
@@ -882,7 +882,7 @@
             <End Role="Dealer" EntitySet="Dealer" />
             <End Role="Customer" EntitySet="Customer" />
           </AssociationSet>
-          <AssociationSet Name="FK_CustomerOrder_AppUser" Association="Self.FK_CustomerOrder_AppUser">
+          <AssociationSet Name="FK_CustomerOrder_CreateUserId" Association="Self.FK_CustomerOrder_CreateUserId">
             <End Role="AppUser" EntitySet="AppUser" />
             <End Role="CustomerOrder" EntitySet="CustomerOrder" />
           </AssociationSet>
@@ -1015,39 +1015,14 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AppUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameSurname" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AppUserTypeId" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AppUserType" Relationship="Self.FK_AppUser_AppUserType" FromRole="AppUser" ToRole="AppUserType" />
-          <NavigationProperty Name="DealerAppUser" Relationship="Self.FK_DealerAppUser_AppUser" FromRole="AppUser" ToRole="DealerAppUser" />
-          <NavigationProperty Name="CustomerOrder" Relationship="Model.FK_CustomerOrder_AppUser" FromRole="AppUser" ToRole="CustomerOrder" />
-          <NavigationProperty Name="ProductDocument" Relationship="Model.FK_ProductDocument_AppUser" FromRole="AppUser" ToRole="ProductDocument" />
-          <NavigationProperty Name="Sale" Relationship="Model.FK_Sale_CreateUserId" FromRole="AppUser" ToRole="Sale" />
-          <NavigationProperty Name="Sale1" Relationship="Model.FK_Sale_DeletedUserId" FromRole="AppUser" ToRole="Sale" />
-          <NavigationProperty Name="Sale2" Relationship="Model.FK_Sale_SaleUserId" FromRole="AppUser" ToRole="Sale" />
-          <NavigationProperty Name="Sales" Relationship="Model.FK_Sales_AppUser" FromRole="AppUser" ToRole="Sales" />
-          <NavigationProperty Name="TechnicalService" Relationship="Model.FK_TechnicalService_AppUser" FromRole="AppUser" ToRole="TechnicalService" />
-          <NavigationProperty Name="CashTransaction" Relationship="Model.FK_CaseOperation_AppUser" FromRole="AppUser" ToRole="CashTransaction" />
-          <NavigationProperty Name="CashTransaction1" Relationship="Model.FK_CaseOperation_DeletedUserId" FromRole="AppUser" ToRole="CashTransaction" />
-          <NavigationProperty Name="AppUserToDo" Relationship="Model.FK_AppUserToDo_CreateUserId" FromRole="AppUser" ToRole="AppUserToDo" />
-          <NavigationProperty Name="AppUserToDo1" Relationship="Model.FK_AppUserToDo_ToDoUserId" FromRole="AppUser" ToRole="AppUserToDo" />
-        </EntityType>
         <EntityType Name="AppUserType">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="AppUser" Relationship="Self.FK_AppUser_AppUserType" FromRole="AppUserType" ToRole="AppUser" />
           <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AppUser" Relationship="Model.FK_AppUser_AppUserType" FromRole="AppUserType" ToRole="AppUser" />
         </EntityType>
         <EntityType Name="Dealer">
           <Key>
@@ -1064,11 +1039,11 @@
           <NavigationProperty Name="DealerAppUser" Relationship="Self.FK_DealerAppUser_Dealer" FromRole="Dealer" ToRole="DealerAppUser" />
           <NavigationProperty Name="Product" Relationship="Model.FK_Product_Dealer" FromRole="Dealer" ToRole="Product" />
           <NavigationProperty Name="County" Relationship="Model.FK_Dealer_County" FromRole="Dealer" ToRole="County" />
-          <NavigationProperty Name="Customer" Relationship="Model.FK_Customer_Dealer" FromRole="Dealer" ToRole="Customer" />
           <NavigationProperty Name="Province" Relationship="Model.FK_Dealer_Province" FromRole="Dealer" ToRole="Province" />
           <NavigationProperty Name="Sale" Relationship="Model.FK_Sale_Dealer" FromRole="Dealer" ToRole="Sale" />
           <NavigationProperty Name="TechnicalService" Relationship="Model.FK_TechnicalService_Dealer" FromRole="Dealer" ToRole="TechnicalService" />
           <NavigationProperty Name="CashTransaction" Relationship="Model.FK_CaseOperation_Dealer" FromRole="Dealer" ToRole="CashTransaction" />
+          <NavigationProperty Name="Customer" Relationship="Model.FK_Customer_Dealer" FromRole="Dealer" ToRole="Customer" />
         </EntityType>
         <EntityType Name="DealerAppUser">
           <Key>
@@ -1077,34 +1052,10 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="DealerId" Type="Int32" Nullable="false" />
           <Property Name="AppUserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AppUser" Relationship="Self.FK_DealerAppUser_AppUser" FromRole="DealerAppUser" ToRole="AppUser" />
           <NavigationProperty Name="Dealer" Relationship="Self.FK_DealerAppUser_Dealer" FromRole="DealerAppUser" ToRole="Dealer" />
           <NavigationProperty Name="Sales" Relationship="Model.FK_Sales_DealerAppUser" FromRole="DealerAppUser" ToRole="Sales" />
+          <NavigationProperty Name="AppUser" Relationship="Model.FK_DealerAppUser_AppUser" FromRole="DealerAppUser" ToRole="AppUser" />
         </EntityType>
-        <Association Name="FK_AppUser_AppUserType">
-          <End Role="AppUserType" Type="Self.AppUserType" Multiplicity="1" />
-          <End Role="AppUser" Type="Self.AppUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUserType">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AppUser">
-              <PropertyRef Name="AppUserTypeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DealerAppUser_AppUser">
-          <End Role="AppUser" Type="Self.AppUser" Multiplicity="1" />
-          <End Role="DealerAppUser" Type="Self.DealerAppUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DealerAppUser">
-              <PropertyRef Name="AppUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_DealerAppUser_Dealer">
           <End Role="Dealer" Type="Self.Dealer" Multiplicity="1" />
           <End Role="DealerAppUser" Type="Self.DealerAppUser" Multiplicity="*" />
@@ -1118,18 +1069,9 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="DbManager" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AppUser" EntityType="Self.AppUser" />
           <EntitySet Name="AppUserType" EntityType="Self.AppUserType" />
           <EntitySet Name="Dealer" EntityType="Self.Dealer" />
           <EntitySet Name="DealerAppUser" EntityType="Self.DealerAppUser" />
-          <AssociationSet Name="FK_AppUser_AppUserType" Association="Self.FK_AppUser_AppUserType">
-            <End Role="AppUserType" EntitySet="AppUserType" />
-            <End Role="AppUser" EntitySet="AppUser" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DealerAppUser_AppUser" Association="Self.FK_DealerAppUser_AppUser">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="DealerAppUser" EntitySet="DealerAppUser" />
-          </AssociationSet>
           <AssociationSet Name="FK_DealerAppUser_Dealer" Association="Self.FK_DealerAppUser_Dealer">
             <End Role="Dealer" EntitySet="Dealer" />
             <End Role="DealerAppUser" EntitySet="DealerAppUser" />
@@ -1150,8 +1092,6 @@
             <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <EntitySet Name="County" EntityType="Model.County" />
-          <EntitySet Name="Customer" EntityType="Model.Customer" />
-          <EntitySet Name="CustomerOrder" EntityType="Model.CustomerOrder" />
           <EntitySet Name="ProductBrand" EntityType="Model.ProductBrand" />
           <EntitySet Name="ProductColor" EntityType="Model.ProductColor" />
           <EntitySet Name="ProductDetail" EntityType="Model.ProductDetail" />
@@ -1166,34 +1106,6 @@
           <EntitySet Name="Sales" EntityType="Model.Sales" />
           <EntitySet Name="TechnicalService" EntityType="Model.TechnicalService" />
           <EntitySet Name="TechnicalServiceStatus" EntityType="Model.TechnicalServiceStatus" />
-          <AssociationSet Name="FK_CustomerOrder_AppUser" Association="Model.FK_CustomerOrder_AppUser">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="CustomerOrder" EntitySet="CustomerOrder" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ProductDocument_AppUser" Association="Model.FK_ProductDocument_AppUser">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="ProductDocument" EntitySet="ProductDocument" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sale_CreateUserId" Association="Model.FK_Sale_CreateUserId">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="Sale" EntitySet="Sale" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sale_DeletedUserId" Association="Model.FK_Sale_DeletedUserId">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="Sale" EntitySet="Sale" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sale_SaleUserId" Association="Model.FK_Sale_SaleUserId">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="Sale" EntitySet="Sale" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Sales_AppUser" Association="Model.FK_Sales_AppUser">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="Sales" EntitySet="Sales" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TechnicalService_AppUser" Association="Model.FK_TechnicalService_AppUser">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="TechnicalService" EntitySet="TechnicalService" />
-          </AssociationSet>
           <AssociationSet Name="FK_County_Province" Association="Model.FK_County_Province">
             <End Role="Province" EntitySet="Province" />
             <End Role="County" EntitySet="County" />
@@ -1201,14 +1113,6 @@
           <AssociationSet Name="FK_Dealer_County" Association="Model.FK_Dealer_County">
             <End Role="County" EntitySet="County" />
             <End Role="Dealer" EntitySet="Dealer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customer_Dealer" Association="Model.FK_Customer_Dealer">
-            <End Role="Dealer" EntitySet="Dealer" />
-            <End Role="Customer" EntitySet="Customer" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TechnicalService_Product" Association="Model.FK_TechnicalService_Product">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="TechnicalService" EntitySet="TechnicalService" />
           </AssociationSet>
           <AssociationSet Name="FK_Dealer_Province" Association="Model.FK_Dealer_Province">
             <End Role="Province" EntitySet="Province" />
@@ -1266,10 +1170,6 @@
             <End Role="ProductBrand" EntitySet="ProductBrand" />
             <End Role="ProductModel" EntitySet="ProductModel" />
           </AssociationSet>
-          <AssociationSet Name="FK_CustomerOrder_Customer" Association="Model.FK_CustomerOrder_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="CustomerOrder" EntitySet="CustomerOrder" />
-          </AssociationSet>
           <AssociationSet Name="FK_TechnicalService_Dealer" Association="Model.FK_TechnicalService_Dealer">
             <End Role="Dealer" EntitySet="Dealer" />
             <End Role="TechnicalService" EntitySet="TechnicalService" />
@@ -1284,14 +1184,6 @@
             <End Role="TechnicalServiceHistory" EntitySet="TechnicalServiceHistory" />
           </AssociationSet>
           <EntitySet Name="CashTransaction" EntityType="Model.CashTransaction" />
-          <AssociationSet Name="FK_CaseOperation_AppUser" Association="Model.FK_CaseOperation_AppUser">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="CashTransaction" EntitySet="CashTransaction" />
-          </AssociationSet>
-          <AssociationSet Name="FK_CaseOperation_DeletedUserId" Association="Model.FK_CaseOperation_DeletedUserId">
-            <End Role="AppUser" EntitySet="AppUser" />
-            <End Role="CashTransaction" EntitySet="CashTransaction" />
-          </AssociationSet>
           <AssociationSet Name="FK_CaseOperation_Dealer" Association="Model.FK_CaseOperation_Dealer">
             <End Role="Dealer" EntitySet="Dealer" />
             <End Role="CashTransaction" EntitySet="CashTransaction" />
@@ -1301,6 +1193,13 @@
             <End Role="CashTransaction" EntitySet="CashTransaction" />
           </AssociationSet>
           <EntitySet Name="AppUserToDo" EntityType="Model.AppUserToDo" />
+          <EntitySet Name="AppUser" EntityType="Model.AppUser" />
+          <EntitySet Name="Customer" EntityType="Model.Customer" />
+          <EntitySet Name="CustomerOrder" EntityType="Model.CustomerOrder" />
+          <AssociationSet Name="FK_AppUser_AppUserType" Association="Model.FK_AppUser_AppUserType">
+            <End Role="AppUserType" EntitySet="AppUserType" />
+            <End Role="AppUser" EntitySet="AppUser" />
+          </AssociationSet>
           <AssociationSet Name="FK_AppUserToDo_CreateUserId" Association="Model.FK_AppUserToDo_CreateUserId">
             <End Role="AppUser" EntitySet="AppUser" />
             <End Role="AppUserToDo" EntitySet="AppUserToDo" />
@@ -1308,6 +1207,58 @@
           <AssociationSet Name="FK_AppUserToDo_ToDoUserId" Association="Model.FK_AppUserToDo_ToDoUserId">
             <End Role="AppUser" EntitySet="AppUser" />
             <End Role="AppUserToDo" EntitySet="AppUserToDo" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CaseOperation_AppUser" Association="Model.FK_CaseOperation_AppUser">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="CashTransaction" EntitySet="CashTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CaseOperation_DeletedUserId" Association="Model.FK_CaseOperation_DeletedUserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="CashTransaction" EntitySet="CashTransaction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_CreateUserId" Association="Model.FK_CustomerOrder_CreateUserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DealerAppUser_AppUser" Association="Model.FK_DealerAppUser_AppUser">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="DealerAppUser" EntitySet="DealerAppUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductDocument_AppUser" Association="Model.FK_ProductDocument_AppUser">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="ProductDocument" EntitySet="ProductDocument" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_CreateUserId" Association="Model.FK_Sale_CreateUserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_DeletedUserId" Association="Model.FK_Sale_DeletedUserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sale_SaleUserId" Association="Model.FK_Sale_SaleUserId">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="Sale" EntitySet="Sale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Sales_AppUser" Association="Model.FK_Sales_AppUser">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="Sales" EntitySet="Sales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalService_AppUser" Association="Model.FK_TechnicalService_AppUser">
+            <End Role="AppUser" EntitySet="AppUser" />
+            <End Role="TechnicalService" EntitySet="TechnicalService" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Dealer" Association="Model.FK_Customer_Dealer">
+            <End Role="Dealer" EntitySet="Dealer" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CustomerOrder_Customer" Association="Model.FK_CustomerOrder_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="CustomerOrder" EntitySet="CustomerOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TechnicalService_Product" Association="Model.FK_TechnicalService_Product">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="TechnicalService" EntitySet="TechnicalService" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="ProductType">
@@ -1408,38 +1359,6 @@
           <NavigationProperty Name="Dealer" Relationship="Model.FK_Dealer_County" FromRole="County" ToRole="Dealer" />
           <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
         </EntityType>
-        <EntityType Name="Customer">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DealerId" Type="Int32" Nullable="false" />
-          <Property Name="NationalIdentity" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="DeleteDate" Type="DateTime" Precision="0" />
-          <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Dealer" Relationship="Model.FK_Customer_Dealer" FromRole="Customer" ToRole="Dealer" />
-          <NavigationProperty Name="TechnicalService" Relationship="Model.FK_TechnicalService_Product" FromRole="Customer" ToRole="TechnicalService" />
-          <NavigationProperty Name="CustomerOrder" Relationship="Model.FK_CustomerOrder_Customer" FromRole="Customer" ToRole="CustomerOrder" />
-        </EntityType>
-        <EntityType Name="CustomerOrder">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="CustomerId" Type="Int32" Nullable="false" />
-          <Property Name="OrderNote" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="CreateUserId" Type="Int32" Nullable="false" />
-          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AppUser" Relationship="Model.FK_CustomerOrder_AppUser" FromRole="CustomerOrder" ToRole="AppUser" />
-          <Property Name="DealerId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Model.FK_CustomerOrder_Customer" FromRole="CustomerOrder" ToRole="Customer" />
-        </EntityType>
         <EntityType Name="ProductBrand">
           <Key>
             <PropertyRef Name="Id" />
@@ -1496,8 +1415,8 @@
           <Property Name="CreateUserId" Type="Int32" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AppUser" Relationship="Model.FK_ProductDocument_AppUser" FromRole="ProductDocument" ToRole="AppUser" />
           <NavigationProperty Name="ProductDocumentType" Relationship="Model.FK_ProductDocument_ProductDocumentType" FromRole="ProductDocument" ToRole="ProductDocumentType" />
+          <NavigationProperty Name="AppUser" Relationship="Model.FK_ProductDocument_AppUser" FromRole="ProductDocument" ToRole="AppUser" />
         </EntityType>
         <EntityType Name="ProductDocumentType">
           <Key>
@@ -1580,12 +1499,12 @@
           <Property Name="DeletedReason" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AppUser" Relationship="Model.FK_Sale_CreateUserId" FromRole="Sale" ToRole="AppUser" />
-          <NavigationProperty Name="AppUser1" Relationship="Model.FK_Sale_DeletedUserId" FromRole="Sale" ToRole="AppUser" />
-          <NavigationProperty Name="AppUser2" Relationship="Model.FK_Sale_SaleUserId" FromRole="Sale" ToRole="AppUser" />
           <NavigationProperty Name="Dealer" Relationship="Model.FK_Sale_Dealer" FromRole="Sale" ToRole="Dealer" />
           <NavigationProperty Name="Product" Relationship="Model.FK_Sale_Product" FromRole="Sale" ToRole="Product" />
           <NavigationProperty Name="CashTransaction" Relationship="Model.FK_CaseOperation_Sale" FromRole="Sale" ToRole="CashTransaction" />
+          <NavigationProperty Name="AppUser" Relationship="Model.FK_Sale_CreateUserId" FromRole="Sale" ToRole="AppUser" />
+          <NavigationProperty Name="AppUser1" Relationship="Model.FK_Sale_DeletedUserId" FromRole="Sale" ToRole="AppUser" />
+          <NavigationProperty Name="AppUser2" Relationship="Model.FK_Sale_SaleUserId" FromRole="Sale" ToRole="AppUser" />
         </EntityType>
         <EntityType Name="Sales">
           <Key>
@@ -1594,8 +1513,8 @@
           <Property Name="Id" Type="Int32" Nullable="false" />
           <Property Name="DealerId" Type="Int32" Nullable="false" />
           <Property Name="AppUserId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="AppUser" Relationship="Model.FK_Sales_AppUser" FromRole="Sales" ToRole="AppUser" />
           <NavigationProperty Name="DealerAppUser" Relationship="Model.FK_Sales_DealerAppUser" FromRole="Sales" ToRole="DealerAppUser" />
+          <NavigationProperty Name="AppUser" Relationship="Model.FK_Sales_AppUser" FromRole="Sales" ToRole="AppUser" />
         </EntityType>
         <EntityType Name="TechnicalService">
           <Key>
@@ -1616,12 +1535,12 @@
           <Property Name="TechnicalServiceUserId" Type="Int32" Nullable="false" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AppUser" Relationship="Model.FK_TechnicalService_AppUser" FromRole="TechnicalService" ToRole="AppUser" />
-          <NavigationProperty Name="Customer" Relationship="Model.FK_TechnicalService_Product" FromRole="TechnicalService" ToRole="Customer" />
           <NavigationProperty Name="TechnicalServiceStatus" Relationship="Model.FK_TechnicalService_TechnicalServiceStatus" FromRole="TechnicalService" ToRole="TechnicalServiceStatus" />
           <Property Name="DealerId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Dealer" Relationship="Model.FK_TechnicalService_Dealer" FromRole="TechnicalService" ToRole="Dealer" />
           <NavigationProperty Name="TechnicalServiceHistory" Relationship="Model.FK_TecnicalServiceHistory_TechnicalService" FromRole="TechnicalService" ToRole="TechnicalServiceHistory" />
+          <NavigationProperty Name="AppUser" Relationship="Model.FK_TechnicalService_AppUser" FromRole="TechnicalService" ToRole="AppUser" />
+          <NavigationProperty Name="Customer" Relationship="Model.FK_TechnicalService_Product" FromRole="TechnicalService" ToRole="Customer" />
         </EntityType>
         <EntityType Name="TechnicalServiceStatus">
           <Key>
@@ -1633,90 +1552,6 @@
           <NavigationProperty Name="TechnicalService" Relationship="Model.FK_TechnicalService_TechnicalServiceStatus" FromRole="TechnicalServiceStatus" ToRole="TechnicalService" />
           <NavigationProperty Name="TechnicalServiceHistory" Relationship="Model.FK_TecnicalServiceHistory_TechnicalServiceStatus" FromRole="TechnicalServiceStatus" ToRole="TechnicalServiceHistory" />
         </EntityType>
-        <Association Name="FK_CustomerOrder_AppUser">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CustomerOrder">
-              <PropertyRef Name="CreateUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ProductDocument_AppUser">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.ProductDocument" Role="ProductDocument" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ProductDocument">
-              <PropertyRef Name="CreateUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sale_CreateUserId">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.Sale" Role="Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sale">
-              <PropertyRef Name="CreateUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sale_DeletedUserId">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.Sale" Role="Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sale">
-              <PropertyRef Name="DeletedUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sale_SaleUserId">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.Sale" Role="Sale" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sale">
-              <PropertyRef Name="SaleUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Sales_AppUser">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.Sales" Role="Sales" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Sales">
-              <PropertyRef Name="AppUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TechnicalService_AppUser">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.TechnicalService" Role="TechnicalService" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TechnicalService">
-              <PropertyRef Name="TechnicalServiceUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_County_Province">
           <End Type="Model.Province" Role="Province" Multiplicity="1" />
           <End Type="Model.County" Role="County" Multiplicity="*" />
@@ -1738,30 +1573,6 @@
             </Principal>
             <Dependent Role="Dealer">
               <PropertyRef Name="CountyId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Customer_Dealer">
-          <End Type="Model.Dealer" Role="Dealer" Multiplicity="1" />
-          <End Type="Model.Customer" Role="Customer" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Dealer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Customer">
-              <PropertyRef Name="DealerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TechnicalService_Product">
-          <End Type="Model.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="Model.TechnicalService" Role="TechnicalService" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="TechnicalService">
-              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1933,18 +1744,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CustomerOrder_Customer">
-          <End Type="Model.Customer" Role="Customer" Multiplicity="1" />
-          <End Type="Model.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CustomerOrder">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TechnicalService_Dealer">
           <End Type="Model.Dealer" Role="Dealer" Multiplicity="1" />
           <End Type="Model.TechnicalService" Role="TechnicalService" Multiplicity="*" />
@@ -2010,35 +1809,11 @@
           <Property Name="DeletedReason" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
           <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AppUser" Relationship="Model.FK_CaseOperation_AppUser" FromRole="CashTransaction" ToRole="AppUser" />
-          <NavigationProperty Name="AppUser1" Relationship="Model.FK_CaseOperation_DeletedUserId" FromRole="CashTransaction" ToRole="AppUser" />
           <NavigationProperty Name="Dealer" Relationship="Model.FK_CaseOperation_Dealer" FromRole="CashTransaction" ToRole="Dealer" />
           <NavigationProperty Name="Sale" Relationship="Model.FK_CaseOperation_Sale" FromRole="CashTransaction" ToRole="Sale" />
+          <NavigationProperty Name="AppUser" Relationship="Model.FK_CaseOperation_AppUser" FromRole="CashTransaction" ToRole="AppUser" />
+          <NavigationProperty Name="AppUser1" Relationship="Model.FK_CaseOperation_DeletedUserId" FromRole="CashTransaction" ToRole="AppUser" />
         </EntityType>
-        <Association Name="FK_CaseOperation_AppUser">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.CashTransaction" Role="CashTransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CashTransaction">
-              <PropertyRef Name="UserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_CaseOperation_DeletedUserId">
-          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
-          <End Type="Model.CashTransaction" Role="CashTransaction" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AppUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="CashTransaction">
-              <PropertyRef Name="DeletedUserId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_CaseOperation_Dealer">
           <End Type="Model.Dealer" Role="Dealer" Multiplicity="1" />
           <End Type="Model.CashTransaction" Role="CashTransaction" Multiplicity="*" />
@@ -2078,7 +1853,76 @@
           <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="AppUser" Relationship="Model.FK_AppUserToDo_CreateUserId" FromRole="AppUserToDo" ToRole="AppUser" />
           <NavigationProperty Name="AppUser1" Relationship="Model.FK_AppUserToDo_ToDoUserId" FromRole="AppUserToDo" ToRole="AppUser" />
+          </EntityType>
+        <EntityType Name="AppUser">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameSurname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AppUserTypeId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AppUserType" Relationship="Model.FK_AppUser_AppUserType" FromRole="AppUser" ToRole="AppUserType" />
+          <NavigationProperty Name="AppUserToDo" Relationship="Model.FK_AppUserToDo_CreateUserId" FromRole="AppUser" ToRole="AppUserToDo" />
+          <NavigationProperty Name="AppUserToDo1" Relationship="Model.FK_AppUserToDo_ToDoUserId" FromRole="AppUser" ToRole="AppUserToDo" />
+          <NavigationProperty Name="CashTransaction" Relationship="Model.FK_CaseOperation_AppUser" FromRole="AppUser" ToRole="CashTransaction" />
+          <NavigationProperty Name="CashTransaction1" Relationship="Model.FK_CaseOperation_DeletedUserId" FromRole="AppUser" ToRole="CashTransaction" />
+          <NavigationProperty Name="CustomerOrder" Relationship="Model.FK_CustomerOrder_CreateUserId" FromRole="AppUser" ToRole="CustomerOrder" />
+          <NavigationProperty Name="DealerAppUser" Relationship="Model.FK_DealerAppUser_AppUser" FromRole="AppUser" ToRole="DealerAppUser" />
+          <NavigationProperty Name="ProductDocument" Relationship="Model.FK_ProductDocument_AppUser" FromRole="AppUser" ToRole="ProductDocument" />
+          <NavigationProperty Name="Sale" Relationship="Model.FK_Sale_CreateUserId" FromRole="AppUser" ToRole="Sale" />
+          <NavigationProperty Name="Sale1" Relationship="Model.FK_Sale_DeletedUserId" FromRole="AppUser" ToRole="Sale" />
+          <NavigationProperty Name="Sale2" Relationship="Model.FK_Sale_SaleUserId" FromRole="AppUser" ToRole="Sale" />
+          <NavigationProperty Name="Sales" Relationship="Model.FK_Sales_AppUser" FromRole="AppUser" ToRole="Sales" />
+          <NavigationProperty Name="TechnicalService" Relationship="Model.FK_TechnicalService_AppUser" FromRole="AppUser" ToRole="TechnicalService" />
         </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DealerId" Type="Int32" Nullable="false" />
+          <Property Name="NationalIdentity" Type="String" MaxLength="11" FixedLength="false" Unicode="true" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Note" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="DeleteDate" Type="DateTime" Precision="0" />
+          <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Dealer" Relationship="Model.FK_Customer_Dealer" FromRole="Customer" ToRole="Dealer" />
+          <NavigationProperty Name="CustomerOrder" Relationship="Model.FK_CustomerOrder_Customer" FromRole="Customer" ToRole="CustomerOrder" />
+          <NavigationProperty Name="TechnicalService" Relationship="Model.FK_TechnicalService_Product" FromRole="Customer" ToRole="TechnicalService" />
+        </EntityType>
+        <EntityType Name="CustomerOrder">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="DealerId" Type="Int32" Nullable="false" />
+          <Property Name="CustomerId" Type="Int32" Nullable="false" />
+          <Property Name="OrderNote" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateUserId" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ActiveFlg" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="AppUser" Relationship="Model.FK_CustomerOrder_CreateUserId" FromRole="CustomerOrder" ToRole="AppUser" />
+          <NavigationProperty Name="Customer" Relationship="Model.FK_CustomerOrder_Customer" FromRole="CustomerOrder" ToRole="Customer" />
+        </EntityType>
+        <Association Name="FK_AppUser_AppUserType">
+          <End Type="Model.AppUserType" Role="AppUserType" Multiplicity="1" />
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUserType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AppUser">
+              <PropertyRef Name="AppUserTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_AppUserToDo_CreateUserId">
           <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
           <End Type="Model.AppUserToDo" Role="AppUserToDo" Multiplicity="*" />
@@ -2103,25 +1947,168 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_CaseOperation_AppUser">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.CashTransaction" Role="CashTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CashTransaction">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CaseOperation_DeletedUserId">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.CashTransaction" Role="CashTransaction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CashTransaction">
+              <PropertyRef Name="DeletedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_CreateUserId">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
+              <PropertyRef Name="CreateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DealerAppUser_AppUser">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.DealerAppUser" Role="DealerAppUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DealerAppUser">
+              <PropertyRef Name="AppUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductDocument_AppUser">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.ProductDocument" Role="ProductDocument" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ProductDocument">
+              <PropertyRef Name="CreateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_CreateUserId">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="CreateUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_DeletedUserId">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="DeletedUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sale_SaleUserId">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.Sale" Role="Sale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sale">
+              <PropertyRef Name="SaleUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Sales_AppUser">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.Sales" Role="Sales" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Sales">
+              <PropertyRef Name="AppUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalService_AppUser">
+          <End Type="Model.AppUser" Role="AppUser" Multiplicity="1" />
+          <End Type="Model.TechnicalService" Role="TechnicalService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AppUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechnicalService">
+              <PropertyRef Name="TechnicalServiceUserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Dealer">
+          <End Type="Model.Dealer" Role="Dealer" Multiplicity="1" />
+          <End Type="Model.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Dealer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="DealerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CustomerOrder_Customer">
+          <End Type="Model.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Model.CustomerOrder" Role="CustomerOrder" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="CustomerOrder">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TechnicalService_Product">
+          <End Type="Model.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="Model.TechnicalService" Role="TechnicalService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TechnicalService">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="ModelStoreContainer" CdmEntityContainer="DbManager">
-          <EntitySetMapping Name="AppUser">
-            <EntityTypeMapping TypeName="Model.AppUser">
-              <MappingFragment StoreEntitySet="AppUser">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="Password" ColumnName="Password" />
-                <ScalarProperty Name="AppUserTypeId" ColumnName="AppUserTypeId" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="AppUserType">
             <EntityTypeMapping TypeName="Model.AppUserType">
               <MappingFragment StoreEntitySet="AppUserType">
@@ -2205,35 +2192,6 @@
                 <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ProvinceId" ColumnName="ProvinceId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Customer">
-            <EntityTypeMapping TypeName="Model.Customer">
-              <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
-                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="Note" ColumnName="Note" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="NationalIdentity" ColumnName="NationalIdentity" />
-                <ScalarProperty Name="DealerId" ColumnName="DealerId" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="CustomerOrder">
-            <EntityTypeMapping TypeName="Model.CustomerOrder">
-              <MappingFragment StoreEntitySet="CustomerOrder">
-                <ScalarProperty Name="DealerId" ColumnName="DealerId" />
-                <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
-                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
-                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
-                <ScalarProperty Name="OrderNote" ColumnName="OrderNote" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2453,6 +2411,48 @@
                 <ScalarProperty Name="ToDoUserId" ColumnName="ToDoUserId" />
                 <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
                 <ScalarProperty Name="ToDoDetail" ColumnName="ToDoDetail" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AppUser">
+            <EntityTypeMapping TypeName="Model.AppUser">
+              <MappingFragment StoreEntitySet="AppUser">
+                <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="AppUserTypeId" ColumnName="AppUserTypeId" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="NameSurname" ColumnName="NameSurname" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customer">
+            <EntityTypeMapping TypeName="Model.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
+                <ScalarProperty Name="DeleteDate" ColumnName="DeleteDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="Note" ColumnName="Note" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="NationalIdentity" ColumnName="NationalIdentity" />
+                <ScalarProperty Name="DealerId" ColumnName="DealerId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CustomerOrder">
+            <EntityTypeMapping TypeName="Model.CustomerOrder">
+              <MappingFragment StoreEntitySet="CustomerOrder">
+                <ScalarProperty Name="ActiveFlg" ColumnName="ActiveFlg" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="CreateUserId" ColumnName="CreateUserId" />
+                <ScalarProperty Name="OrderNote" ColumnName="OrderNote" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="DealerId" ColumnName="DealerId" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

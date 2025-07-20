@@ -27,9 +27,9 @@ namespace Objects
         public System.DateTime CreateDate { get; set; }
         public bool ActiveFlg { get; set; }
     
-        public virtual AppUser AppUser { get; set; }
-        public virtual AppUser AppUser1 { get; set; }
         public virtual Dealer Dealer { get; set; }
         public virtual Sale Sale { get; set; }
+        public virtual AppUser AppUser { get; set; }
+        public virtual AppUser AppUser1 { get; set; }
     }
 }

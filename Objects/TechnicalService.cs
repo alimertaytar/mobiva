@@ -37,11 +37,11 @@ namespace Objects
         public bool ActiveFlg { get; set; }
         public int DealerId { get; set; }
     
-        public virtual AppUser AppUser { get; set; }
-        public virtual Customer Customer { get; set; }
         public virtual TechnicalServiceStatus TechnicalServiceStatus { get; set; }
         public virtual Dealer Dealer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TechnicalServiceHistory> TechnicalServiceHistory { get; set; }
+        public virtual AppUser AppUser { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

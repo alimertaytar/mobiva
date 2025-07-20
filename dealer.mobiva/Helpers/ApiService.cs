@@ -236,5 +236,27 @@ namespace dealer.mobiva.Helpers
 
         #endregion
 
+        #region CustomerOrders
+
+        public async Task<GetCustomerOrderByIdParameterResult> GetCustomerOrderById(int id)
+        {
+            var param = new GetCustomerOrderByIdParameter { Id = id };
+            return await PostAsync<GetCustomerOrderByIdParameterResult>($"{ApiUrl}/api/CustomerOrder/GetCustomerOrderById", param);
+        }
+
+        public async Task<GetCustomerOrdersByDealerIdParameterResult> GetCustomerOrdersByDealerId(int dealerId)
+        {
+            var param = new GetCustomerOrdersByDealerIdParameter { DealerId = dealerId };
+            return await PostAsync<GetCustomerOrdersByDealerIdParameterResult>($"{ApiUrl}/api/CustomerOrder/GetCustomerOrdersByDealerId", param);
+        }
+
+        public async Task<SaveCustomerOrderParameterResult> SaveCustomerOrder(CustomerOrderViewModel model)
+        {
+            var param = new SaveCustomerOrderParameter { CustomerOrder = model };
+            return await PostAsync<SaveCustomerOrderParameterResult>($"{ApiUrl}/api/CustomerOrder/SaveCustomerOrder", param);
+        }
+
+        #endregion
+
     }
 }

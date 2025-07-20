@@ -15,12 +15,12 @@ namespace Objects
     public partial class CustomerOrder
     {
         public int Id { get; set; }
+        public int DealerId { get; set; }
         public int CustomerId { get; set; }
         public string OrderNote { get; set; }
         public int CreateUserId { get; set; }
         public System.DateTime CreateDate { get; set; }
         public bool ActiveFlg { get; set; }
-        public int DealerId { get; set; }
     
         public virtual AppUser AppUser { get; set; }
         public virtual Customer Customer { get; set; }

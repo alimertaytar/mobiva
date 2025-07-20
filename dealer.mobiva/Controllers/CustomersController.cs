@@ -1,4 +1,5 @@
 ﻿using dealer.mobiva.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Web.Mvc;
@@ -39,7 +40,6 @@ namespace dealer.mobiva.Controllers
 
             return View(model);
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> CustomerEdit(CustomerViewModel model)
@@ -50,6 +50,13 @@ namespace dealer.mobiva.Controllers
                 ViewBag.MessageType = "danger";
                 return View(model);
             }
+
+            // DealerId'yi sessiondan al ve modele ata
+            model.DealerId = SessionManager.CurrentDealer?.Id ?? 0;
+
+            // Yeni kayıt ise CreateDate'i doldur
+            if (model.Id == 0 && model.CreateDate == default)
+                model.CreateDate = DateTime.Now;
 
             var apiService = new ApiService();
             var result = await apiService.SaveCustomer(model);
@@ -67,5 +74,7 @@ namespace dealer.mobiva.Controllers
 
             return View(model);
         }
+
+
     }
 }

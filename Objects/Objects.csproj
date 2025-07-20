@@ -124,8 +124,8 @@
     <Compile Include="ApiModel\GetCustomerByIdParameterResult.cs" />
     <Compile Include="ApiModel\GetCustomerOrderByIdParameter.cs" />
     <Compile Include="ApiModel\GetCustomerOrderByIdParameterResult.cs" />
-    <Compile Include="ApiModel\GetCustomerOrdersParameter.cs" />
-    <Compile Include="ApiModel\GetCustomerOrdersParameterResult.cs" />
+    <Compile Include="ApiModel\GetCustomerOrdersByDealerIdParameter.cs" />
+    <Compile Include="ApiModel\GetCustomerOrdersByDealerIdParameterResult.cs" />
     <Compile Include="ApiModel\GetCustomersByDealerIdParameter.cs" />
     <Compile Include="ApiModel\GetCustomersByDealerIdParameterResult.cs" />
     <Compile Include="ApiModel\GetDealerByIdParameter.cs" />

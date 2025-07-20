@@ -334,7 +334,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a href="#"><i class="la la-file-text"></i><span class="menu-title">Müşteri Siparişleri</span></a>
+                            <a href="@Url.Action("Index", "CustomerOrders")"><i class="la la-file-text"></i><span class="menu-title">Müşteri Siparişleri</span></a>
                         </li>
 
                         <li class="nav-item">
@@ -421,14 +421,16 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Tüm <a> linklerini yakala
-            const links = document.querySelectorAll("a[href]:not([target='_blank'])");
+            // Sayfa geçmişten geri gelirse overlay'i gizle
+            window.addEventListener("pageshow", function (event) {
+                const overlay = document.getElementById("loadingOverlay");
+                if (overlay) overlay.style.display = "none";
+            });
 
+            const links = document.querySelectorAll("a[href]:not([target='_blank'])");
             links.forEach(link => {
                 link.addEventListener("click", function (e) {
                     const href = this.getAttribute("href");
-
-                    // "#" veya boş href'leri atla
                     if (!href || href === "#") return;
 
                     e.preventDefault();
@@ -438,13 +440,11 @@
 
                     setTimeout(() => {
                         window.location.href = href;
-                    }, 1000);
+                    }, 500);
                 });
             });
 
-            // Tüm <button type="button"> butonlarına da uygula (form submit harici)
             const buttons = document.querySelectorAll("button:not([type='submit'])");
-
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
                     const overlay = document.getElementById("loadingOverlay");
@@ -456,9 +456,7 @@
                 });
             });
 
-            // <form> submit olayını da kapsayacak şekilde
             const forms = document.querySelectorAll("form");
-
             forms.forEach(form => {
                 form.addEventListener("submit", function (e) {
                     e.preventDefault();
@@ -473,6 +471,7 @@
             });
         });
     </script>
+
 
 
     <script>

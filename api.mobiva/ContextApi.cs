@@ -46,6 +46,8 @@ namespace api.mobiva
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<CustomerOrder>().Ignore(t => t.AppUser);
+
             modelBuilder.Entity<CashTransaction>().Ignore(t => t.AppUser);
             modelBuilder.Entity<CashTransaction>().Ignore(t => t.AppUser1);
 
@@ -54,6 +56,7 @@ namespace api.mobiva
             modelBuilder.Entity<AppUser>().Ignore(t => t.Sale);
             modelBuilder.Entity<AppUser>().Ignore(t => t.Sale1);
             modelBuilder.Entity<AppUser>().Ignore(t => t.Sale2);
+            modelBuilder.Entity<AppUser>().Ignore(t => t.CustomerOrder);
 
             modelBuilder.Entity<Sale>().Ignore(t => t.AppUser);
             modelBuilder.Entity<Sale>().Ignore(t => t.AppUser1);

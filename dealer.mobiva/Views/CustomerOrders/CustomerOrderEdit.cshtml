@@ -1,0 +1,96 @@
+﻿@model Objects.ViewModel.CustomerOrderViewModel
+
+@{
+    ViewBag.Title = Model.Id == 0 ? "Yeni Sipariş Ekle" : "Siparişi Güncelle";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var customerSelectList = ViewBag.CustomerSelectList as IEnumerable<SelectListItem>;
+    bool customerExists = customerSelectList != null && customerSelectList.Any();
+}
+
+<div class="content-body">
+    <div class="row">
+        <div class="col-12">
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="alert alert-@(ViewBag.MessageType ?? "info") alert-dismissible fade show" role="alert">
+                    @ViewBag.Message
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Kapat">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+
+            @if (!customerExists)
+            {
+                <div class="alert alert-warning">
+                    Sipariş ekleyebilmek için önce bir müşteri oluşturmanız gerekmektedir.
+                    <br />
+                    <a href="/Customers/CustomerEdit" class="btn btn-primary btn-sm mt-1">Yeni Müşteri Ekle</a>
+                </div>
+            }
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">@ViewBag.Title</h4>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <form action="/CustomerOrders/CustomerOrderEdit" method="post">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="Id" value="@Model.Id" />
+
+                            <div class="form-body">
+                                <h4 class="form-section"><i class="ft-edit"></i> Sipariş Bilgisi</h4>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Müşteri</label>
+                                            <select name="CustomerId" class="form-control" @(customerExists ? "" : "disabled") required>
+                                                <option value="">-- Müşteri Seçin --</option>
+                                                @if (customerExists)
+                                                {
+                                                    foreach (var customer in customerSelectList)
+                                                    {
+                                                        <option value="@customer.Value" @(customer.Selected ? "selected" : "")>@customer.Text</option>
+                                                    }
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Sipariş Notu</label>
+                                            @Html.TextAreaFor(m => m.OrderNote, new { @class = "form-control", placeholder = "Sipariş notu giriniz", rows = 3 })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <h4 class="form-section"><i class="ft-check-circle"></i> Durum</h4>
+                                <div class="form-group">
+                                    <div class="custom-control custom-switch">
+                                        @Html.CheckBoxFor(m => m.ActiveFlg, new { @class = "custom-control-input", id = "ActiveFlgSwitch" })
+                                        <label class="custom-control-label" for="ActiveFlgSwitch">Sipariş Aktif Mi?</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-actions d-flex justify-content-between">
+                                <button type="submit" class="btn btn-success" @(customerExists ? "" : "disabled")>
+                                    <i class="la la-check-square-o"></i> Kaydet
+                                </button>
+                                <a href="/CustomerOrders" class="btn btn-light">
+                                    <i class="la la-times"></i> İptal / Geri
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

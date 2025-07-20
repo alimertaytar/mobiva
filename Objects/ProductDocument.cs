@@ -25,7 +25,7 @@ namespace Objects
         public System.DateTime CreateDate { get; set; }
         public bool ActiveFlg { get; set; }
     
-        public virtual AppUser AppUser { get; set; }
         public virtual ProductDocumentType ProductDocumentType { get; set; }
+        public virtual AppUser AppUser { get; set; }
     }
 }
