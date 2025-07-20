@@ -20,11 +20,11 @@ namespace api.mobiva.Controllers
             _helper = new ContextApiHelper(_context);
         }
 
-        #region GetCustomers
-        [HttpPost("GetCustomers")]
-        public async Task<GetCustomersParameterResult> GetCustomers([FromBody] GetCustomersParameter param)
+        #region GetCustomersByDealerId
+        [HttpPost("GetCustomersByDealerId")]
+        public async Task<GetCustomersByDealerIdParameterResult> GetCustomersByDealerId([FromBody] GetCustomersByDealerIdParameter param)
         {
-            var result = new GetCustomersParameterResult();
+            var result = new GetCustomersByDealerIdParameterResult();
 
             try
             {

@@ -5803,7 +5803,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\CustomersController.cs" />
     <Compile Include="Controllers\DefaultController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
@@ -6859,6 +6859,8 @@
     <Content Include="Views\Personnels\AppUserEdit.cshtml" />
     <Content Include="Views\ToDos\Index.cshtml" />
     <Content Include="Views\ToDos\ToDoEdit.cshtml" />
+    <Content Include="Views\Customers\CustomerEdit.cshtml" />
+    <Content Include="Views\Customers\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -6915,7 +6917,6 @@
     <Folder Include="Content\src\scss\plugins\menu\mmenu\extensions\borderstyle\" />
     <Folder Include="Content\src\scss\plugins\menu\mmenu\extensions\justifiedlistview\" />
     <Folder Include="Content\src\scss\plugins\menu\mmenu\extensions\positioning\" />
-    <Folder Include="Views\Customer\" />
     <Folder Include="Views\Inventory\" />
   </ItemGroup>
   <ItemGroup>

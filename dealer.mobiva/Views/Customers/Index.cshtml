@@ -1,0 +1,73 @@
+﻿@model List<CustomerViewModel>
+
+@{
+    ViewBag.Title = "Müşteriler";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-body">
+    <div class="row">
+        <div class="col-12">
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Müşteriler</h4>
+                    <a href="@Url.Action("CustomerEdit", "Customers", new { id = 0 })" class="btn btn-success btn-sm float-right">+ Yeni Müşteri</a>
+                </div>
+                <div class="card-content">
+                    <div class="card-body card-dashboard">
+
+                        @if (TempData["ErrorMessage"] != null)
+                        {
+                            <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                        }
+
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Ad</th>
+                                        <th>E-posta</th>
+                                        <th>Telefon</th>
+                                        <th class="text-center">Durum</th>
+                                        <th class="text-center">İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @{
+                                        var index = 1;
+                                    }
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@(index++)</td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Email</td>
+                                            <td>@item.PhoneNumber</td>
+                                            <td class="text-center">
+                                                @if (item.ActiveFlg)
+                                                {
+                                                    <span class="badge badge-success">Aktif</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="badge badge-secondary">Pasif</span>
+                                                }
+                                            </td>
+                                            <td class="text-center">
+                                                <a href="@Url.Action("CustomerEdit", "Customers", new { id = item.Id })" class="btn btn-sm btn-info">Düzenle</a>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

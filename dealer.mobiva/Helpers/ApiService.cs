@@ -105,11 +105,7 @@ namespace dealer.mobiva.Helpers
             return await PostAsync<GetAppUserLoginParameterResult>($"{ApiUrl}/api/AppUser/GetAppUserLogin", param);
         }
 
-        public async Task<GetAppUserByIdParameterResult> GetAppUserById(int id)
-        {
-            var param = new { id };
-            return await PostAsync<GetAppUserByIdParameterResult>($"{ApiUrl}/api/AppUser/GetAppUserById", param);
-        }
+      
         public async Task<GetDealerByIdParameterResult> GetDealerById(int id)
         {
             var param = new { id };
@@ -166,7 +162,11 @@ namespace dealer.mobiva.Helpers
 
 
         #region AppUser
-       
+        public async Task<GetAppUserByIdParameterResult> GetAppUserById(int id)
+        {
+            var param = new { id };
+            return await PostAsync<GetAppUserByIdParameterResult>($"{ApiUrl}/api/AppUser/GetAppUserById", param);
+        }
 
         public async Task<GetAppUsersByDealerIdParameterResult> GetAppUsersByDealerId(int dealerId)
         {
@@ -213,5 +213,28 @@ namespace dealer.mobiva.Helpers
         {
             return await PostAsync<GetAppUserTypesParameterResult>($"{ApiUrl}/api/AppUserType/GetAppUserTypes", null);
         }
+
+        #region Customer
+
+        public async Task<GetCustomerByIdParameterResult> GetCustomerById(int id)
+        {
+            var param = new { id };
+            return await PostAsync<GetCustomerByIdParameterResult>($"{ApiUrl}/api/Customer/GetCustomerById", param);
+        }
+
+        public async Task<GetCustomersByDealerIdParameterResult> GetCustomersByDealerId(int dealerId)
+        {
+            var param = new GetCustomersByDealerIdParameter { DealerId = dealerId };
+            return await PostAsync<GetCustomersByDealerIdParameterResult>($"{ApiUrl}/api/Customer/GetCustomersByDealerId", param);
+        }
+
+        public async Task<SaveCustomerParameterResult> SaveCustomer(CustomerViewModel model)
+        {
+            var param = new SaveCustomerParameter { Customer = model };
+            return await PostAsync<SaveCustomerParameterResult>($"{ApiUrl}/api/Customer/SaveCustomer", param);
+        }
+
+        #endregion
+
     }
 }
