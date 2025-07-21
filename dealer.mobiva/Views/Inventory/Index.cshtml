@@ -1,0 +1,71 @@
+﻿@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-body">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Stok Özeti</h4>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body">
+                        <p class="card-text">
+                            Stoklarınızın türlerine göre adet ve tutar bilgisini aşağıda görebilirsiniz.
+                        </p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped text-center align-middle">
+                            <thead>
+                                <tr>
+                                    <td></td>
+                                    <td>Adet</td>
+                                    <td class="text-danger">Alış</td>
+                                    <td class="text-success">Satış</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Sıfır Cihaz</td>
+                                    <td>2</td>
+                                    <td class="text-danger">200 ₺</td>
+                                    <td class="text-success">500 ₺</td>
+                                </tr>
+                                <tr>
+                                    <td>İkinci El</td>
+                                    <td>3</td>
+                                    <td class="text-danger">150 ₺</td>
+                                    <td class="text-success">300 ₺</td>
+                                </tr>
+                                <tr>
+                                    <td>Temlik</td>
+                                    <td>1</td>
+                                    <td class="text-danger">100 ₺</td>
+                                    <td class="text-success">150 ₺</td>
+                                </tr>
+                                <tr>
+                                    <td>Aksesuar</td>
+                                    <td>1</td>
+                                    <td class="text-danger">10 ₺</td>
+                                    <td class="text-success">100 ₺</td>
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr class="table-light font-weight-bold">
+                                    <th class="text-center">Toplam</th>
+                                    <td>7</td>
+                                    <td class="text-danger">460 ₺</td>
+                                    <td class="text-success">1050 ₺</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
