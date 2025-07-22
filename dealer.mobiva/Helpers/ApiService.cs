@@ -160,7 +160,6 @@ namespace dealer.mobiva.Helpers
         }
         #endregion
 
-
         #region AppUser
         public async Task<GetAppUserByIdParameterResult> GetAppUserById(int id)
         {
@@ -209,10 +208,14 @@ namespace dealer.mobiva.Helpers
 
         #endregion
 
+        #region AppUserType
+
         public async Task<GetAppUserTypesParameterResult> GetAppUserTypes()
         {
             return await PostAsync<GetAppUserTypesParameterResult>($"{ApiUrl}/api/AppUserType/GetAppUserTypes", null);
         }
+
+        #endregion
 
         #region Customer
 
@@ -254,6 +257,36 @@ namespace dealer.mobiva.Helpers
         {
             var param = new SaveCustomerOrderParameter { CustomerOrder = model };
             return await PostAsync<SaveCustomerOrderParameterResult>($"{ApiUrl}/api/CustomerOrder/SaveCustomerOrder", param);
+        }
+
+        #endregion
+
+        #region Product
+
+        public async Task<GetProductByIdParameterResult> GetProductById(int id)
+        {
+            var param = new GetProductByIdParameter { Id = id };
+            return await PostAsync<GetProductByIdParameterResult>($"{ApiUrl}/api/Product/GetProductById", param);
+        }
+
+        public async Task<SaveProductParameterResult> SaveProduct(ProductViewModel model)
+        {
+            var param = new SaveProductParameter { Product = model };
+            return await PostAsync<SaveProductParameterResult>($"{ApiUrl}/api/Product/SaveProduct", param);
+        }
+
+        public async Task<GetProductTypesParameterResult> GetProductTypes()
+        {
+            return await PostAsync<GetProductTypesParameterResult>($"{ApiUrl}/api/ProductType/GetProductTypes", null);
+        }
+
+        public async Task<GetProductStatusesParameterResult> GetProductStatuses()
+        {
+            return await PostAsync<GetProductStatusesParameterResult>($"{ApiUrl}/api/ProductStatus/GetProductStatuses", null);
+        }
+        public async Task<GetProductTypeSubsParameterResult> GetProductTypeSubs()
+        {
+            return await PostAsync<GetProductTypeSubsParameterResult>($"{ApiUrl}/api/ProductTypeSub/GetProductTypeSubs", null);
         }
 
         #endregion

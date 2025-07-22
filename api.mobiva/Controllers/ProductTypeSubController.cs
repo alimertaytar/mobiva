@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Objects.ApiModel;
 
 namespace api.mobiva.Controllers
 {
@@ -21,13 +22,6 @@ namespace api.mobiva.Controllers
             _helper = new ContextApiHelper(_context);
         }
 
-        #region BaseParameterResult
-        public class BaseParameterResult
-        {
-            public bool Result { get; set; }
-            public string Message { get; set; }
-        }
-        #endregion
 
         #region GetProductTypeSubs
         [HttpPost("GetProductTypeSubs")]
@@ -51,10 +45,6 @@ namespace api.mobiva.Controllers
             return result;
         }
 
-        public class GetProductTypeSubsParameterResult : BaseParameterResult
-        {
-            public List<ProductTypeSubViewModel> ProductTypeSubs { get; set; }
-        }
         #endregion
 
         #region SaveProductTypeSub
@@ -70,15 +60,7 @@ namespace api.mobiva.Controllers
             return result;
         }
 
-        public class SaveProductTypeSubParameter
-        {
-            public ProductTypeSubViewModel ProductTypeSub { get; set; }
-        }
 
-        public class SaveProductTypeSubParameterResult : BaseParameterResult
-        {
-            public int Id { get; set; }
-        }
         #endregion
 
 
@@ -107,15 +89,7 @@ namespace api.mobiva.Controllers
             return result;
         }
 
-        public class GetProductTypeSubByIdParameter
-        {
-            public int Id { get; set; }
-        }
 
-        public class GetProductTypeSubByIdParameterResult : BaseParameterResult
-        {
-            public ProductTypeSubViewModel ProductTypeSub { get; set; }
-        }
         #endregion
     }
 }

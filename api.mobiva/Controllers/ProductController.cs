@@ -57,7 +57,7 @@ namespace api.mobiva.Controllers
 
             try
             {
-                var entity = await _helper.GetByIdAsync<Product>(body.ProductId);
+                var entity = await _helper.GetByIdAsync<Product>(body.Id);
 
                 if (entity != null && entity.ActiveFlg)
                 {

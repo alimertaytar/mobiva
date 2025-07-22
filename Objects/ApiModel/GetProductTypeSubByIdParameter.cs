@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Objects.ApiModel
 {
-    public class GetProductByIdParameter
+    public class GetProductTypeSubByIdParameter
     {
         public int Id { get; set; }
     }

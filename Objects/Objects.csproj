@@ -164,6 +164,9 @@
     <Compile Include="ApiModel\GetProductTypeByIdParameter.cs" />
     <Compile Include="ApiModel\GetProductTypeByIdParameterResult.cs" />
     <Compile Include="ApiModel\GetProductTypesParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductTypeSubByIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductTypeSubByIdParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductTypeSubsParameterResult.cs" />
     <Compile Include="ApiModel\GetProvinceByIdParameter.cs" />
     <Compile Include="ApiModel\GetProvinceByIdParameterResult.cs" />
     <Compile Include="ApiModel\GetProvincesParameterResult.cs" />
@@ -212,6 +215,8 @@
     <Compile Include="ApiModel\SaveProductStatusParameterResult.cs" />
     <Compile Include="ApiModel\SaveProductTypeParameter.cs" />
     <Compile Include="ApiModel\SaveProductTypeParameterResult.cs" />
+    <Compile Include="ApiModel\SaveProductTypeSubParameter.cs" />
+    <Compile Include="ApiModel\SaveProductTypeSubParameterResult.cs" />
     <Compile Include="ApiModel\SaveProvinceParameter.cs" />
     <Compile Include="ApiModel\SaveProvinceParameterResult.cs" />
     <Compile Include="ApiModel\SaveTechnicalServiceHistoryParameter.cs" />

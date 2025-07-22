@@ -26,5 +26,7 @@ namespace Objects.ViewModel
         public int CriticalStock { get; set; }
         public string ProductNote { get; set; }
         public int CreateUserId { get; set; }
+
+        public ProductDetail ProductDetail { get; set; }
     }
 }
