@@ -436,7 +436,11 @@
                     e.preventDefault();
 
                     const overlay = document.getElementById("loadingOverlay");
-                    if (overlay) overlay.style.display = "block";
+
+                    // dontshow sınıfı yoksa overlay göster
+                    if (overlay && !this.classList.contains("loadingOverlayOff")) {
+                        overlay.style.display = "block";
+                    }
 
                     setTimeout(() => {
                         window.location.href = href;
@@ -444,17 +448,23 @@
                 });
             });
 
+
             const buttons = document.querySelectorAll("button:not([type='submit'])");
             buttons.forEach(button => {
                 button.addEventListener("click", function () {
                     const overlay = document.getElementById("loadingOverlay");
-                    if (overlay) overlay.style.display = "block";
 
-                    setTimeout(() => {
-                        overlay.style.display = "none";
-                    }, 1000);
+                    // Eğer butonda dontshow class'ı yoksa overlay göster
+                    if (overlay && !this.classList.contains("loadingOverlayOff")) {
+                        overlay.style.display = "block";
+
+                        setTimeout(() => {
+                            overlay.style.display = "none";
+                        }, 500);
+                    }
                 });
             });
+
 
             const forms = document.querySelectorAll("form");
             forms.forEach(form => {
@@ -462,13 +472,18 @@
                     e.preventDefault();
 
                     const overlay = document.getElementById("loadingOverlay");
-                    if (overlay) overlay.style.display = "block";
+
+                    // dontshow class'ı yoksa overlay göster
+                    if (overlay && !this.classList.contains("loadingOverlayOff")) {
+                        overlay.style.display = "block";
+                    }
 
                     setTimeout(() => {
                         form.submit();
-                    }, 1000);
+                    }, 500);
                 });
             });
+
         });
     </script>
 
