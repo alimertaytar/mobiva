@@ -71,7 +71,7 @@ namespace api.mobiva.Controllers
 
             try
             {
-                var entity = await _helper.GetByIdAsync<Customer>(param.CustomerId);
+                var entity = await _helper.GetByIdAsync<Customer>(param.Id);
 
                 if (entity != null && entity.ActiveFlg)
                     result.Customer = ObjectHelper.Map<Customer, CustomerViewModel>(entity);

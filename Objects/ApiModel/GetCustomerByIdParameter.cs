@@ -8,6 +8,6 @@ namespace Objects.ApiModel
 {
     public class GetCustomerByIdParameter
     {
-        public int CustomerId { get; set; }
+        public int Id { get; set; }
     }
 }

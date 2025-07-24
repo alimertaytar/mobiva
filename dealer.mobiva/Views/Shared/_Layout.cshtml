@@ -507,7 +507,8 @@
                             // Buraya extra if ekliyoruz:
                             if (currentUrl === subHref || currentUrl.startsWith(subHref) ||
                                 (currentUrl.includes("productbrandedit") && subHref.includes("productbrand")) ||
-                                (currentUrl.includes("productmodeledit") && subHref.includes("productmodel"))
+                                (currentUrl.includes("productmodeledit") && subHref.includes("productmodel")) ||
+                                (currentUrl.includes("appuseredit") && subHref.includes("personnels"))
 
                             ) {
                                 subItem.classList.add("active");
@@ -519,11 +520,11 @@
                     const link = item.querySelector("a[href]");
                     if (link) {
                         const href = link.getAttribute("href").toLowerCase();
-
                         // Aynı şekilde buraya da ekleyebiliriz:
                         if (currentUrl === href || currentUrl.startsWith(href) ||
                             (currentUrl.includes("productbrandedit") && href.includes("productbrand")) ||
-                            (currentUrl.includes("productmodeledit") && href.includes("productmodel"))
+                            (currentUrl.includes("productmodeledit") && href.includes("productmodel")) ||
+                            (currentUrl.includes("appuseredit") && href.includes("personnels"))
 
                         ) {
                             item.classList.add("active");
