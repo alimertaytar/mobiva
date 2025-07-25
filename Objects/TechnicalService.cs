@@ -21,6 +21,7 @@ namespace Objects
         }
     
         public int Id { get; set; }
+        public int DealerId { get; set; }
         public int ProductId { get; set; }
         public int CustomerId { get; set; }
         public int TechnicalServiceStatusId { get; set; }
@@ -35,13 +36,12 @@ namespace Objects
         public int TechnicalServiceUserId { get; set; }
         public System.DateTime CreateDate { get; set; }
         public bool ActiveFlg { get; set; }
-        public int DealerId { get; set; }
     
-        public virtual TechnicalServiceStatus TechnicalServiceStatus { get; set; }
-        public virtual Dealer Dealer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TechnicalServiceHistory> TechnicalServiceHistory { get; set; }
         public virtual AppUser AppUser { get; set; }
         public virtual Customer Customer { get; set; }
+        public virtual Dealer Dealer { get; set; }
+        public virtual TechnicalServiceStatus TechnicalServiceStatus { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TechnicalServiceHistory> TechnicalServiceHistory { get; set; }
     }
 }

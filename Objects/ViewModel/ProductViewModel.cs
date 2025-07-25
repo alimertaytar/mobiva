@@ -27,6 +27,6 @@ namespace Objects.ViewModel
         public string ProductNote { get; set; }
         public int CreateUserId { get; set; }
 
-        public ProductDetail ProductDetail { get; set; }
+        public ProductDetailViewModel ProductDetail { get; set; }
     }
 }

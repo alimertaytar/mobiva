@@ -7,6 +7,7 @@
     var productSubTypes = ViewBag.ProductTypeSubsList as List<SelectListItem>;
     var productStatuses = ViewBag.ProductStatusList as List<SelectListItem>;
     var productBrands = ViewBag.ProductBrandList as List<SelectListItem>;
+    var productModels = ViewBag.ProductModelList as List<SelectListItem>;
     var dealers = ViewBag.DealersList as List<SelectListItem>;
 }
 
@@ -33,6 +34,8 @@
                         <form action="/Inventory/ProductEdit" method="post">
                             @Html.AntiForgeryToken()
                             @Html.HiddenFor(m => m.Id)
+                            @Html.HiddenFor(m => m.ProductDetail.ProductId)
+                            @Html.HiddenFor(m => m.ProductDetail.Id)
 
                             <div class="form-body">
                                 <h4 class="form-section"><i class="ft-smartphone"></i> Ürün Bilgisi</h4>
@@ -90,7 +93,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Model</label>
-                                            @Html.DropDownListFor(m => m.ProductDetail.ProductModelId, new List<SelectListItem>(), "-- Seçiniz --", new { @class = "form-control", id = "ProductModelId" })
+                                            @Html.DropDownListFor(m => m.ProductDetail.ProductModelId, productModels, "-- Seçiniz --", new { @class = "form-control", id = "ProductModelId" })
                                         </div>
                                     </div>
                                     <div class="col-md-4 ProductTypeSubId">
@@ -200,6 +203,7 @@
     $(document).ready(function () {
         function toggleFields() {
             var productTypeId = parseInt($("#ProductTypeId").val());
+            var id = parseInt($("#Id").val());
 
             // Tüm alanları önce göster
             $("#ProductTypeSubId").prop("disabled", false);
@@ -213,21 +217,18 @@
             // Koşullara göre bazı alanları gizle
             //Telefon
             if (productTypeId === 3) {
-                $("#ProductStatusId").val("");
                 $("#ProductTypeSubId").prop("disabled", true);
                 $("#StockNumber").prop("disabled", true);
                 $("#CriticalStock").prop("disabled", true);
             }
             //Tablet
             if (productTypeId === 4) {
-                $("#ProductStatusId").val("");
                 $("#ProductTypeSubId").prop("disabled", true);
                 $("#StockNumber").prop("disabled", true);
                 $("#CriticalStock").prop("disabled", true);
             }
             //Giyilebilir Teknoloji
             if (productTypeId === 5) {
-                $("#ProductStatusId").val("");
                 $("#ProductTypeSubId").prop("disabled", true);
                 $("#StockNumber").prop("disabled", true);
                 $("#CriticalStock").prop("disabled", true);

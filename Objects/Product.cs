@@ -45,6 +45,7 @@ namespace Objects
         public bool ActiveFlg { get; set; }
     
         public virtual Dealer Dealer { get; set; }
+        public virtual ProductStatus ProductStatus { get; set; }
         public virtual ProductType ProductType { get; set; }
         public virtual ProductTypeSub ProductTypeSub { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -53,6 +54,5 @@ namespace Objects
         public virtual ICollection<ProductFeature> ProductFeature { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sale> Sale { get; set; }
-        public virtual ProductStatus ProductStatus { get; set; }
     }
 }

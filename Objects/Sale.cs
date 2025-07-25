@@ -40,12 +40,12 @@ namespace Objects
         public System.DateTime CreateDate { get; set; }
         public bool ActiveFlg { get; set; }
     
-        public virtual Dealer Dealer { get; set; }
-        public virtual Product Product { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CashTransaction> CashTransaction { get; set; }
         public virtual AppUser AppUser { get; set; }
         public virtual AppUser AppUser1 { get; set; }
         public virtual AppUser AppUser2 { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CashTransaction> CashTransaction { get; set; }
+        public virtual Dealer Dealer { get; set; }
+        public virtual Product Product { get; set; }
     }
 }

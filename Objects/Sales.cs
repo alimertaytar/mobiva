@@ -18,7 +18,7 @@ namespace Objects
         public int DealerId { get; set; }
         public int AppUserId { get; set; }
     
-        public virtual DealerAppUser DealerAppUser { get; set; }
         public virtual AppUser AppUser { get; set; }
+        public virtual DealerAppUser DealerAppUser { get; set; }
     }
 }

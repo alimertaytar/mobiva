@@ -17,7 +17,8 @@ namespace dealer.mobiva.Helpers
     public class ApiService
     {
         private static readonly HttpClient _client = new HttpClient();
-        private const string ApiUrl = "http://localhost"; // Prod ortamda değiştir
+        //private const string ApiUrl = "http://localhost"; // Prod ortamda değiştir
+        private const string ApiUrl = "https://localhost:44316"; // Prod ortamda değiştir
 
         public ApiService()
         {

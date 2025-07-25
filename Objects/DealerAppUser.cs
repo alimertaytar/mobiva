@@ -24,9 +24,9 @@ namespace Objects
         public int DealerId { get; set; }
         public int AppUserId { get; set; }
     
+        public virtual AppUser AppUser { get; set; }
         public virtual Dealer Dealer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Sales> Sales { get; set; }
-        public virtual AppUser AppUser { get; set; }
     }
 }

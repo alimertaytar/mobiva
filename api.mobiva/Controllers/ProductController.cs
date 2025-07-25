@@ -8,6 +8,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Objects.ApiModel;
+using Newtonsoft.Json;
 
 namespace api.mobiva.Controllers
 {
@@ -62,9 +63,15 @@ namespace api.mobiva.Controllers
                 if (entity != null && entity.ActiveFlg)
                 {
                     result.Product = ObjectHelper.Map<Product, ProductViewModel>(entity);
+                    var entityProduct = await _helper.GetSingleAsync<ProductDetail>(
+                    x => x.ProductId == body.Id);
+
+                    result.Product.ProductDetail = ObjectHelper.Map<ProductDetail, ProductDetailViewModel>(entityProduct);
                     result.Result = true;
                     result.Message = "Success";
                 }
+
+
                 else
                 {
                     result.Result = false;
@@ -87,12 +94,27 @@ namespace api.mobiva.Controllers
         [HttpPost("SaveProduct")]
         public async Task<SaveProductParameterResult> SaveProduct([FromBody] SaveProductParameter body)
         {
+            string json = JsonConvert.SerializeObject(body);
+
             var result = new SaveProductParameterResult();
 
             try
             {
                 var entity = ObjectHelper.Map<ProductViewModel, Product>(body.Product);
                 var opResult = await _helper.SaveAsync(entity);
+
+                if (opResult.Success)
+                {
+                    if(body.Product.ProductDetail == null)
+                    {
+                        body.Product.ProductDetail = new ProductDetailViewModel();
+                    }
+
+                    body.Product.ProductDetail.ProductId = opResult.Data;
+                    var entity2 = ObjectHelper.Map<ProductDetailViewModel, ProductDetail>(body.Product.ProductDetail);
+                    var opResult2 = await _helper.SaveAsync(entity2);
+                }
+
 
                 result.Result = opResult.Success;
                 result.Message = opResult.Message;

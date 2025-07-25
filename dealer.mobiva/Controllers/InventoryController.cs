@@ -1,4 +1,5 @@
 ﻿using dealer.mobiva.Helpers;
+using Objects;
 using Objects.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -27,11 +28,18 @@ namespace dealer.mobiva.Controllers
                 var result = await apiService.GetProductById(id);
                 if (result != null && result.Result && result.Product != null)
                     model = result.Product;
+
+                var productModelsResult = await apiService.GetProductModels(result.Product.ProductDetail.ProductBrandId);
+                ViewBag.ProductModelList = productModelsResult?.ProductModels?
+                    .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                    .ToList() ?? new List<SelectListItem>();
             }
             else
             {
                 // Yeni kayıt durumunda URL'den gelen ProductTypeId set edilsin
                 model.ProductTypeId = productTypeId;
+                model.ProductDetail = new ProductDetailViewModel();
+                ViewBag.ProductModelList = new List<SelectListItem>();
             }
 
             // DropDown'lar
@@ -71,14 +79,31 @@ namespace dealer.mobiva.Controllers
         public async Task<ActionResult> ProductEdit(ProductViewModel model)
         {
             var apiService = new ApiService();
-            // DropDown'lar post-back'te de yüklenmeli
+            var appUser = SessionManager.CurrentAppUser;
+            // DropDown'lar
             var productTypesResult = await apiService.GetProductTypes();
-            ViewBag.ProductTypes = productTypesResult?.ProductTypes?
+            ViewBag.ProductTypesList = productTypesResult?.ProductTypes?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
+
+            var productTypeSubsResult = await apiService.GetProductTypeSubs();
+            ViewBag.ProductTypeSubsList = productTypeSubsResult?.ProductTypeSubs?
                 .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
                 .ToList() ?? new List<SelectListItem>();
 
             var productStatusesResult = await apiService.GetProductStatuses();
             ViewBag.ProductStatusList = productStatusesResult?.ProductStatuses?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
+
+            var dealersResult = await apiService.GetDealersByAppUserId(appUser.Id);
+            ViewBag.DealersList = dealersResult?.Dealers?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
+
+
+            var productBrandsResult = await apiService.GetProductBrands();
+            ViewBag.ProductBrandList = productBrandsResult?.ProductBrands?
                 .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
                 .ToList() ?? new List<SelectListItem>();
 
@@ -92,11 +117,17 @@ namespace dealer.mobiva.Controllers
                 return View(model);
             }
 
+
             // DealerId'yi session'dan çek
 
             var result = await apiService.SaveProduct(model);
 
-            
+            var productModelsResult = await apiService.GetProductModels(model.ProductDetail.ProductBrandId);
+            ViewBag.ProductModelList = productModelsResult?.ProductModels?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
+
+
             if (result != null && result.Result)
             {
                 ViewBag.Message = "Ürün başarıyla kaydedildi.";

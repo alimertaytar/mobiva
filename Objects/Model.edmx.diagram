@@ -5,58 +5,33 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="0d18b776914b41a8aa522aaf79316c3a" Name="Diagram1">
-        <EntityTypeShape EntityType="Model.AppUserType" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.Dealer" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="Model.DealerAppUser" Width="1.5" PointX="8.25" PointY="5.125" IsExpanded="true" />
-        <AssociationConnector Association="Model.FK_DealerAppUser_Dealer" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="Model.ProductType" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.ProductTypeSub" Width="1.5" PointX="8.375" PointY="0.75" />
-        <EntityTypeShape EntityType="Model.Product" Width="1.5" PointX="10.625" PointY="0.75" />
-        <AssociationConnector Association="Model.FK_Product_Dealer" />
-        <AssociationConnector Association="Model.FK_Product_ProductType" />
-        <AssociationConnector Association="Model.FK_Product_ProductTypeSub" />
-        <EntityTypeShape EntityType="Model.County" Width="1.5" PointX="6" PointY="1.75" />
-        <EntityTypeShape EntityType="Model.ProductBrand" Width="1.5" PointX="12.875" PointY="13.875" />
-        <EntityTypeShape EntityType="Model.ProductColor" Width="1.5" PointX="12.875" PointY="16.625" />
-        <EntityTypeShape EntityType="Model.ProductDetail" Width="1.5" PointX="15.125" PointY="1.75" />
-        <EntityTypeShape EntityType="Model.ProductDocument" Width="1.5" PointX="7.5" PointY="12.25" />
-        <EntityTypeShape EntityType="Model.ProductDocumentType" Width="1.5" PointX="5.25" PointY="13" />
-        <EntityTypeShape EntityType="Model.ProductFeature" Width="1.5" PointX="18.125" PointY="2.875" />
-        <EntityTypeShape EntityType="Model.ProductFeatureList" Width="1.5" PointX="15.875" PointY="13" />
-        <EntityTypeShape EntityType="Model.ProductModel" Width="1.5" PointX="12.875" PointY="11.375" />
-        <EntityTypeShape EntityType="Model.ProductStatus" Width="1.5" PointX="2.625" PointY="10.75" />
-        <EntityTypeShape EntityType="Model.Province" Width="1.5" PointX="0.75" PointY="1.75" />
-        <EntityTypeShape EntityType="Model.Sale" Width="1.5" PointX="18.125" PointY="6.125" />
-        <EntityTypeShape EntityType="Model.Sales" Width="1.5" PointX="12.75" PointY="8" />
-        <EntityTypeShape EntityType="Model.TechnicalService" Width="1.5" PointX="15.75" PointY="7.125" />
-        <EntityTypeShape EntityType="Model.TechnicalServiceStatus" Width="1.5" PointX="13.5" PointY="19.5" />
-        <AssociationConnector Association="Model.FK_County_Province" />
-        <AssociationConnector Association="Model.FK_Dealer_County" />
-        <AssociationConnector Association="Model.FK_Dealer_Province" />
-        <AssociationConnector Association="Model.FK_Sale_Dealer" />
-        <AssociationConnector Association="Model.FK_Sales_DealerAppUser" />
-        <AssociationConnector Association="Model.FK_ProductDetail_Product" />
-        <AssociationConnector Association="Model.FK_ProductFeature_Product" />
-        <AssociationConnector Association="Model.FK_Sale_Product" />
-        <AssociationConnector Association="Model.FK_ProductDetail_ProductBrand" />
-        <AssociationConnector Association="Model.FK_ProductDetail_ProductColor" />
-        <AssociationConnector Association="Model.FK_ProductDetail_ProductModel" />
-        <AssociationConnector Association="Model.FK_ProductDocument_ProductDocumentType" />
-        <AssociationConnector Association="Model.FK_ProductFeature_ProductFeatureList" />
-        <AssociationConnector Association="Model.FK_TechnicalService_TechnicalServiceStatus" />
-        <AssociationConnector Association="Model.FK_Product_ProductStatus" />
-        <AssociationConnector Association="Model.FK_ProductModel_ProductBrand" />
-        <AssociationConnector Association="Model.FK_TechnicalService_Dealer" />
-        <EntityTypeShape EntityType="Model.TechnicalServiceHistory" Width="1.5" PointX="19" PointY="13" />
-        <AssociationConnector Association="Model.FK_TecnicalServiceHistory_TechnicalService" />
-        <AssociationConnector Association="Model.FK_TecnicalServiceHistory_TechnicalServiceStatus" />
-        <EntityTypeShape EntityType="Model.CashTransaction" Width="1.5" PointX="20.375" PointY="4.25" />
-        <AssociationConnector Association="Model.FK_CaseOperation_Dealer" />
-        <AssociationConnector Association="Model.FK_CaseOperation_Sale" />
-        <EntityTypeShape EntityType="Model.AppUserToDo" Width="1.5" PointX="5.25" PointY="6.375" />
-        <EntityTypeShape EntityType="Model.AppUser" Width="1.5" PointX="3" PointY="3.875" />
-        <EntityTypeShape EntityType="Model.Customer" Width="1.5" PointX="13.5" PointY="22.875" />
-        <EntityTypeShape EntityType="Model.CustomerOrder" Width="1.5" PointX="10.25" PointY="8.875" />
+        <EntityTypeShape EntityType="Model.AppUser" Width="1.5" PointX="3" PointY="16.25" />
+        <EntityTypeShape EntityType="Model.AppUserToDo" Width="1.5" PointX="5.25" PointY="44.75" />
+        <EntityTypeShape EntityType="Model.AppUserType" Width="1.5" PointX="0.75" PointY="17.75" />
+        <EntityTypeShape EntityType="Model.CashTransaction" Width="1.5" PointX="10.5" PointY="13.875" />
+        <EntityTypeShape EntityType="Model.County" Width="1.5" PointX="1.5" PointY="7.5" />
+        <EntityTypeShape EntityType="Model.Customer" Width="1.5" PointX="3" PointY="10.875" />
+        <EntityTypeShape EntityType="Model.CustomerOrder" Width="1.5" PointX="5.25" PointY="12.25" />
+        <EntityTypeShape EntityType="Model.Dealer" Width="1.5" PointX="0.75" PointY="10.625" />
+        <EntityTypeShape EntityType="Model.DealerAppUser" Width="1.5" PointX="8.25" PointY="17.5" />
+        <EntityTypeShape EntityType="Model.Product" Width="1.5" PointX="6" PointY="3.5" />
+        <EntityTypeShape EntityType="Model.ProductBrand" Width="1.5" PointX="9" PointY="1.875" />
+        <EntityTypeShape EntityType="Model.ProductColor" Width="1.5" PointX="9" PointY="25.75" />
+        <EntityTypeShape EntityType="Model.ProductDetail" Width="1.5" PointX="11.25" PointY="4.5" />
+        <EntityTypeShape EntityType="Model.ProductDocument" Width="1.5" PointX="8.25" PointY="21" />
+        <EntityTypeShape EntityType="Model.ProductDocumentType" Width="1.5" PointX="6" PointY="22.75" />
+        <EntityTypeShape EntityType="Model.ProductFeature" Width="1.5" PointX="8.25" PointY="5.625" />
+        <EntityTypeShape EntityType="Model.ProductFeatureList" Width="1.5" PointX="6" PointY="0.75" />
+        <EntityTypeShape EntityType="Model.ProductModel" Width="1.5" PointX="9" PointY="28.25" />
+        <EntityTypeShape EntityType="Model.ProductStatus" Width="1.5" PointX="3.75" PointY="5.75" />
+        <EntityTypeShape EntityType="Model.ProductType" Width="1.5" PointX="3.75" PointY="3.25" />
+        <EntityTypeShape EntityType="Model.ProductTypeSub" Width="1.5" PointX="3.75" PointY="8.25" />
+        <EntityTypeShape EntityType="Model.Province" Width="1.5" PointX="1.5" PointY="4.625" />
+        <EntityTypeShape EntityType="Model.Sale" Width="1.5" PointX="8.25" PointY="10.75" />
+        <EntityTypeShape EntityType="Model.Sales" Width="1.5" PointX="10.5" PointY="19.625" />
+        <EntityTypeShape EntityType="Model.TechnicalService" Width="1.5" PointX="5.25" PointY="16.125" />
+        <EntityTypeShape EntityType="Model.TechnicalServiceHistory" Width="1.5" PointX="10.5" PointY="22.375" />
+        <EntityTypeShape EntityType="Model.TechnicalServiceStatus" Width="1.5" PointX="3" PointY="22.625" />
         <AssociationConnector Association="Model.FK_AppUser_AppUserType" />
         <AssociationConnector Association="Model.FK_AppUserToDo_CreateUserId" />
         <AssociationConnector Association="Model.FK_AppUserToDo_ToDoUserId" />
@@ -70,9 +45,34 @@
         <AssociationConnector Association="Model.FK_Sale_SaleUserId" />
         <AssociationConnector Association="Model.FK_Sales_AppUser" />
         <AssociationConnector Association="Model.FK_TechnicalService_AppUser" />
+        <AssociationConnector Association="Model.FK_CaseOperation_Dealer" />
+        <AssociationConnector Association="Model.FK_CaseOperation_Sale" />
+        <AssociationConnector Association="Model.FK_County_Province" />
+        <AssociationConnector Association="Model.FK_Dealer_County" />
         <AssociationConnector Association="Model.FK_Customer_Dealer" />
         <AssociationConnector Association="Model.FK_CustomerOrder_Customer" />
         <AssociationConnector Association="Model.FK_TechnicalService_Product" />
+        <AssociationConnector Association="Model.FK_Dealer_Province" />
+        <AssociationConnector Association="Model.FK_DealerAppUser_Dealer" />
+        <AssociationConnector Association="Model.FK_Product_Dealer" />
+        <AssociationConnector Association="Model.FK_Sale_Dealer" />
+        <AssociationConnector Association="Model.FK_TechnicalService_Dealer" />
+        <AssociationConnector Association="Model.FK_Sales_DealerAppUser" />
+        <AssociationConnector Association="Model.FK_Product_ProductStatus" />
+        <AssociationConnector Association="Model.FK_Product_ProductType" />
+        <AssociationConnector Association="Model.FK_Product_ProductTypeSub" />
+        <AssociationConnector Association="Model.FK_ProductDetail_Product" />
+        <AssociationConnector Association="Model.FK_ProductFeature_Product" />
+        <AssociationConnector Association="Model.FK_Sale_Product" />
+        <AssociationConnector Association="Model.FK_ProductDetail_ProductBrand" />
+        <AssociationConnector Association="Model.FK_ProductModel_ProductBrand" />
+        <AssociationConnector Association="Model.FK_ProductDetail_ProductColor" />
+        <AssociationConnector Association="Model.FK_ProductDetail_ProductModel" />
+        <AssociationConnector Association="Model.FK_ProductDocument_ProductDocumentType" />
+        <AssociationConnector Association="Model.FK_ProductFeature_ProductFeatureList" />
+        <AssociationConnector Association="Model.FK_TechnicalService_TechnicalServiceStatus" />
+        <AssociationConnector Association="Model.FK_TecnicalServiceHistory_TechnicalService" />
+        <AssociationConnector Association="Model.FK_TecnicalServiceHistory_TechnicalServiceStatus" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

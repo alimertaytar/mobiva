@@ -20,7 +20,7 @@ namespace Objects.ViewModel
         public string CosmicConditionPercentage { get; set; }
         public string BatteryMah { get; set; }
         public string BatteryPercentage { get; set; }
-        public DateTime? WarrantyEndDate { get; set; }
+        public Nullable<System.DateTime> WarrantyEndDate { get; set; }
     }
 
 }
