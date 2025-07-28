@@ -23,6 +23,7 @@ namespace dealer.mobiva.Controllers
             var model = new ProductViewModel();
             var apiService = new ApiService();
             var appUser = SessionManager.CurrentAppUser;
+            model.DealerId = SessionManager.CurrentDealer?.Id ?? 0;
             if (id > 0)
             {
                 var result = await apiService.GetProductById(id);
@@ -38,6 +39,7 @@ namespace dealer.mobiva.Controllers
             {
                 // Yeni kayıt durumunda URL'den gelen ProductTypeId set edilsin
                 model.ProductTypeId = productTypeId;
+                model.ActiveFlg = true;
                 model.ProductDetail = new ProductDetailViewModel();
                 ViewBag.ProductModelList = new List<SelectListItem>();
             }
@@ -63,13 +65,26 @@ namespace dealer.mobiva.Controllers
                 .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
                 .ToList() ?? new List<SelectListItem>();
 
+            var productColorsResult = await apiService.GetProductColors();
+            ViewBag.ProductColorList = productColorsResult?.ProductColors?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
 
             var productBrandsResult = await apiService.GetProductBrands();
             ViewBag.ProductBrandList = productBrandsResult?.ProductBrands?
                 .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
                 .ToList() ?? new List<SelectListItem>();
 
-            model.DealerId = SessionManager.CurrentDealer?.Id ?? 0;
+            var buyingCustomersResult = await apiService.GetCustomersByDealerId(model.DealerId);
+            ViewBag.BuyingCustomerList = buyingCustomersResult?.Customers?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
+
+            var sellingCustomersResult = await apiService.GetCustomersByDealerId(model.DealerId);
+            ViewBag.SellingCustomerList = sellingCustomersResult?.Customers?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
+
 
             return View(model);
         }
@@ -102,10 +117,26 @@ namespace dealer.mobiva.Controllers
                 .ToList() ?? new List<SelectListItem>();
 
 
+            var productColorsResult = await apiService.GetProductColors();
+            ViewBag.ProductColorList = productColorsResult?.ProductColors?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
+
             var productBrandsResult = await apiService.GetProductBrands();
             ViewBag.ProductBrandList = productBrandsResult?.ProductBrands?
                 .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
                 .ToList() ?? new List<SelectListItem>();
+
+            var buyingCustomersResult = await apiService.GetCustomersByDealerId(model.DealerId);
+            ViewBag.BuyingCustomerList = buyingCustomersResult?.Customers?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
+
+            var sellingCustomersResult = await apiService.GetCustomersByDealerId(model.DealerId);
+            ViewBag.SellingCustomerList = sellingCustomersResult?.Customers?
+                .Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
+                .ToList() ?? new List<SelectListItem>();
+
 
             if (!ModelState.IsValid)
             {
@@ -116,9 +147,13 @@ namespace dealer.mobiva.Controllers
 
                 return View(model);
             }
+            // 🔹 Sadece yeni kayıt ise CreateUserId gönder
+            if (model.Id == 0)
+            {
+                model.CreateUserId = appUser.Id;
+                model.CreateDate = DateTime.Now;
+            }
 
-
-            // DealerId'yi session'dan çek
 
             var result = await apiService.SaveProduct(model);
 

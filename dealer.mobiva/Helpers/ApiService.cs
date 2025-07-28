@@ -142,6 +142,23 @@ namespace dealer.mobiva.Helpers
         }
         #endregion
 
+        #region GetProductColor
+        public async Task<GetProductColorsParameterResult> GetProductColors()
+        {
+            return await PostAsync<GetProductColorsParameterResult>($"{ApiUrl}/api/ProductColor/GetProductColors", null);
+        }
+        public async Task<SaveProductColorParameterResult> SaveProductColor(ProductColorViewModel model)
+        {
+            var param = new SaveProductColorParameter { ProductColor = model };
+            return await PostAsync<SaveProductColorParameterResult>($"{ApiUrl}/api/ProductColor/SaveProductColor", param);
+        }
+        public async Task<GetProductColorByIdParameterResult> GetProductColorById(int id)
+        {
+            var param = new GetProductColorByIdParameter { Id = id };
+            return await PostAsync<GetProductColorByIdParameterResult>($"{ApiUrl}/api/ProductColor/GetProductColorById", param);
+        }
+        #endregion
+
         #region GetProductModel
         public async Task<GetProductModelsParameterResult> GetProductModels(int productBrandId)
         {

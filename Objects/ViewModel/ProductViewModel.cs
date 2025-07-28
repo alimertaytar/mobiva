@@ -26,6 +26,8 @@ namespace Objects.ViewModel
         public int CriticalStock { get; set; }
         public string ProductNote { get; set; }
         public int CreateUserId { get; set; }
+        public System.DateTime CreateDate { get; set; }
+        public bool ActiveFlg { get; set; }
 
         public ProductDetailViewModel ProductDetail { get; set; }
     }

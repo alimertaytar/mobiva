@@ -8,6 +8,9 @@
     var productStatuses = ViewBag.ProductStatusList as List<SelectListItem>;
     var productBrands = ViewBag.ProductBrandList as List<SelectListItem>;
     var productModels = ViewBag.ProductModelList as List<SelectListItem>;
+    var productColors = ViewBag.ProductColorList as List<SelectListItem>;
+    var buyingCustomers = ViewBag.BuyingCustomerList as List<SelectListItem>;
+    var sellingCustomers = ViewBag.SellingCustomerList as List<SelectListItem>;
     var dealers = ViewBag.DealersList as List<SelectListItem>;
 }
 
@@ -85,7 +88,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Marka</label>
-                                            @Html.DropDownListFor(m => m.ProductDetail.ProductBrandId, productBrands, "-- Seçiniz --", new { @class = "form-control", id = "ProductBrandId" })
+                                            @Html.DropDownListFor(m => m.ProductDetail.ProductBrandId, productBrands, "-- Seçiniz --", new { @class = "form-control"})
                                         </div>
                                     </div>
 
@@ -93,7 +96,14 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Model</label>
-                                            @Html.DropDownListFor(m => m.ProductDetail.ProductModelId, productModels, "-- Seçiniz --", new { @class = "form-control", id = "ProductModelId" })
+                                            @Html.DropDownListFor(m => m.ProductDetail.ProductModelId, productModels, "-- Seçiniz --", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <!-- Color -->
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Ürün Rengi</label>
+                                            @Html.DropDownListFor(m => m.ProductDetail.ProductColorId, productColors, "-- Seçiniz --", new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="col-md-4 ProductTypeSubId">
@@ -106,6 +116,19 @@
                                         <div class="form-group">
                                             <label>Ürün Durumu</label>
                                             @Html.DropDownListFor(m => m.ProductStatusId, productStatuses, "-- Seçiniz --", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Alış Müşteri</label>
+                                            @Html.DropDownListFor(m => m.ProductDetail.CustomerIdBuying, buyingCustomers, "-- Seçiniz --", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Satış Müşteri</label>
+                                            @Html.DropDownListFor(m => m.ProductDetail.CustomerIdSelling, sellingCustomers, "-- Seçiniz --", new { @class = "form-control"})
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -157,6 +180,46 @@
                                     </div>
                                 </div>
 
+                                <h4 class="form-section"><i class="la la-cogs"></i> Teknik Özellikler</h4>
+
+                                <div class="row">
+                                    <div class="col-6 col-sm-4 col-md-2">
+                                        <div class="form-group">
+                                            <label>Dahili Hafıza (GB)</label>
+                                            @Html.TextBoxFor(m => m.ProductDetail.InternalMemoryGB, new { @class = "form-control", placeholder = "Örn: 128" })
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-md-2">
+                                        <div class="form-group">
+                                            <label>RAM (GB)</label>
+                                            @Html.TextBoxFor(m => m.ProductDetail.RamGB, new { @class = "form-control", placeholder = "Örn: 6" })
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-md-2">
+                                        <div class="form-group">
+                                            <label>Kozmetik Durum (%)</label>
+                                            @Html.TextBoxFor(m => m.ProductDetail.CosmicConditionPercentage, new { @class = "form-control", type = "number", min = "0", max = "100", step = "1", placeholder = "Örn: 85" })
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-md-2">
+                                        <div class="form-group">
+                                            <label>Batarya (mAh)</label>
+                                            @Html.TextBoxFor(m => m.ProductDetail.BatteryMah, new { @class = "form-control", placeholder = "Örn: 4000" })
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-md-2">
+                                        <div class="form-group">
+                                            <label>Batarya Sağlığı (%)</label>
+                                            @Html.TextBoxFor(m => m.ProductDetail.BatteryPercentage, new { @class = "form-control", type = "number", min = "0", max = "100", step = "1", placeholder = "Örn: 90" })
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-4 col-md-2">
+                                        <div class="form-group">
+                                            <label>Garanti Bitiş Tarihi</label>
+                                            @Html.TextBoxFor(m => m.ProductDetail.WarrantyEndDate, new { @class = "form-control", type = "date" })
+                                        </div>
+                                    </div>
+                                </div>
 
 
 
@@ -180,13 +243,12 @@
                                 </div>
                             </div>
 
-                            <div class="form-actions d-flex justify-content-between">
-                                <button type="submit" class="btn btn-success">
-                                    <i class="la la-check-square-o"></i> Kaydet
-                                </button>
-                                <a href="/Inventory" class="btn btn-light">
-                                    <i class="la la-times"></i> İptal
-                                </a>
+                            <h4 class="form-section"><i class="ft-check-circle"></i> Durum</h4>
+                            <div class="form-group">
+                                <div class="custom-control custom-switch">
+                                    @Html.CheckBoxFor(m => m.ActiveFlg, new { @class = "custom-control-input", id = "ActiveFlgSwitch" })
+                                    <label class="custom-control-label" for="ActiveFlgSwitch">Ürün Aktif Mi?</label>
+                                </div>
                             </div>
 
                         </form>
@@ -211,8 +273,17 @@
             $("#ProductIMEI").prop("disabled", false);
             $("#StockNumber").prop("disabled", false);
             $("#CriticalStock").prop("disabled", false);
-            $("#ProductBrandId").prop("disabled", false);
-            $("#ProductModelId").prop("disabled", false);
+            $("#ProductDetail_ProductBrandId").prop("disabled", false);
+            $("#ProductDetail_ProductModelId").prop("disabled", false);
+            $("#ProductDetail_ProductColorId").prop("disabled", false);
+            $("#ProductDetail_CustomerIdBuying").prop("disabled", false);
+            $("#ProductDetail_CustomerIdSelling").prop("disabled", false);
+            $("#ProductDetail_InternalMemoryGB").prop("disabled", false);
+            $("#ProductDetail_RamGB").prop("disabled", false);
+            $("#ProductDetail_CosmicConditionPercentage").prop("disabled", false);
+            $("#ProductDetail_BatteryMah").prop("disabled", false);
+            $("#ProductDetail_BatteryPercentage").prop("disabled", false);
+            $("#ProductDetail_WarrantyEndDate").prop("disabled", false);
 
             // Koşullara göre bazı alanları gizle
             //Telefon
@@ -238,8 +309,19 @@
                 $("#ProductStatusId").val("4");
                 $("#ProductStatusId").prop("disabled", true);
                 $("#ProductIMEI").prop("disabled", true);
-                $("#ProductBrandId").prop("disabled", true);
-                $("#ProductModelId").prop("disabled", true);
+                $("#ProductDetail_ProductBrandId").prop("disabled", true);
+                $("#ProductDetail_ProductModelId").prop("disabled", true);
+                $("#ProductDetail_ProductColorId").prop("disabled", true);
+                $("#ProductDetail_CustomerIdBuying").prop("disabled", true);
+                $("#ProductDetail_CustomerIdSelling").prop("disabled", true);
+
+
+                $("#ProductDetail_InternalMemoryGB").prop("disabled", true);
+                $("#ProductDetail_RamGB").prop("disabled", true);
+                $("#ProductDetail_CosmicConditionPercentage").prop("disabled", true);
+                $("#ProductDetail_BatteryMah").prop("disabled", true);
+                $("#ProductDetail_BatteryPercentage").prop("disabled", true);
+                $("#ProductDetail_WarrantyEndDate").prop("disabled", true);
             }
         }
 
@@ -252,9 +334,9 @@
         });
 
 
-        $("#ProductBrandId").change(function () {
+        $("#ProductDetail_ProductBrandId").change(function () {
             var brandId = $(this).val();
-            $("#ProductModelId").empty().append('<option value="">Yükleniyor...</option>');
+            $("#ProductDetail_ProductModelId").empty().append('<option value="">Yükleniyor...</option>');
 
             if (brandId) {
                 $.getJSON("/Inventory/GetProductModelById", { brandId: brandId }, function (data) {
@@ -262,10 +344,10 @@
                     $.each(data, function (i, model) {
                         options += '<option value="' + model.Value + '">' + model.Text + '</option>';
                     });
-                    $("#ProductModelId").html(options);
+                    $("#ProductDetail_ProductModelId").html(options);
                 });
             } else {
-                $("#ProductModelId").html('<option value="">-- Seçiniz --</option>');
+                $("#ProductDetail_ProductModelId").html('<option value="">-- Seçiniz --</option>');
             }
         });
 
