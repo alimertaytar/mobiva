@@ -4,6 +4,7 @@ using Objects.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -13,9 +14,13 @@ namespace dealer.mobiva.Controllers
     public class InventoryController : DefaultController
     {
         // GET: Inventory
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var model = new InventoryViewModel();
+            var dealerId = SessionManager.CurrentDealer?.Id ?? 0;
+            var apiService = new ApiService();
+            model.GetProductsInventoryByDealerId = await apiService.GetProductsInventoryByDealerId(dealerId);
+            return View(model);
         }
 
         public async Task<ActionResult> ProductEdit(int id = 0, int productTypeId = 0)

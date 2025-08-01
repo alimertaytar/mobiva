@@ -30,5 +30,6 @@ namespace Objects.ViewModel
         public bool ActiveFlg { get; set; }
 
         public ProductDetailViewModel ProductDetail { get; set; }
+
     }
 }

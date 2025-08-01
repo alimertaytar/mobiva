@@ -1,7 +1,13 @@
-﻿@{
+﻿@model Objects.ViewModel.InventoryViewModel
+
+@{
     ViewBag.Title = "Stok";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var productsSummary = Model.GetProductsInventoryByDealerId.GetProductsSummaryByDealerId;
+    var productsSummaryDetail = Model.GetProductsInventoryByDealerId.GetProductsSummaryDetailByDealerId;
 }
+
+<link rel="stylesheet" type="text/css" href="/Content/app-assets/vendors/css/cryptocoins/cryptocoins.css">
 
 <div class="content-body">
     <div class="row">
@@ -10,7 +16,7 @@
                 <div class="card-content collapse show">
                     <div class="card-body">
                         <div class="btn-group mr-1 mb-1">
-                            <button type="button" class="btn btn-success btn-min-width dropdown-toggle loadingOverlayOff" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Yeni Ürün Ekle</button>
+                            <button type="button" class="btn btn-info btn-min-width dropdown-toggle loadingOverlayOff" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Yeni Ürün Ekle</button>
                             <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 41px, 0px);">
                                 <a class="dropdown-item" href="@Url.Action("ProductEdit", "Inventory", new { id = 0, productTypeId = 3 })">
                                     <i class="la la-mobile mr-1"></i> Telefon
@@ -39,42 +45,33 @@
                                 <tr>
                                     <td></td>
                                     <td>Adet</td>
-                                    <td class="text-danger">Alış</td>
-                                    <td class="text-success">Satış</td>
+                                    <td class="text-danger">Alış $</td>
+                                    <td class="text-danger">Alış ₺</td>
+                                    <td class="text-success">Satış ₺</td>
+                                    <td class="text-info">Potansiyel Kar ₺</td>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>Sıfır Cihaz</td>
-                                    <td>2</td>
-                                    <td class="text-danger">200 ₺</td>
-                                    <td class="text-success">500 ₺</td>
-                                </tr>
-                                <tr>
-                                    <td>İkinci El</td>
-                                    <td>3</td>
-                                    <td class="text-danger">150 ₺</td>
-                                    <td class="text-success">300 ₺</td>
-                                </tr>
-                                <tr>
-                                    <td>Temlik</td>
-                                    <td>1</td>
-                                    <td class="text-danger">100 ₺</td>
-                                    <td class="text-success">150 ₺</td>
-                                </tr>
-                                <tr>
-                                    <td>Aksesuar</td>
-                                    <td>1</td>
-                                    <td class="text-danger">10 ₺</td>
-                                    <td class="text-success">100 ₺</td>
-                                </tr>
+                                @foreach (var item in productsSummary)
+                                {
+                                    <tr>
+                                        <td>@item.Name</td>
+                                        <td>@item.TotalCount</td>
+                                        <td class="text-danger">@item.TotalPurchasePriceUSD $ </td>
+                                        <td class="text-danger">@item.TotalPurchasePriceTL ₺ </td>
+                                        <td class="text-success">@item.TotalSellingPriceTL ₺</td>
+                                        <td class="text-info">@(item.TotalSellingPriceTL - item.TotalPurchasePriceTL) ₺</td>
+                                    </tr>
+                                }
                             </tbody>
                             <tfoot>
                                 <tr class="table-light font-weight-bold">
                                     <th class="text-center">Toplam</th>
-                                    <td>7</td>
-                                    <td class="text-danger">460 ₺</td>
-                                    <td class="text-success">1050 ₺</td>
+                                    <td>@productsSummary.Sum(x => x.TotalCount)</td>
+                                    <td class="text-danger">@productsSummary.Sum(x => x.TotalPurchasePriceUSD) $</td>
+                                    <td class="text-danger">@productsSummary.Sum(x => x.TotalPurchasePriceTL) ₺</td>
+                                    <td class="text-success">@productsSummary.Sum(x => x.TotalSellingPriceTL) ₺</td>
+                                    <td class="text-info">@(productsSummary.Sum(x => x.TotalSellingPriceTL) - productsSummary.Sum(x => x.TotalPurchasePriceTL) ) ₺</td>
                                 </tr>
                             </tfoot>
                         </table>
@@ -84,4 +81,33 @@
             </div>
         </div>
     </div>
+
+    <section id="minimal-statistics-bg-2">
+        <div class="row">
+            <div class="col-12">
+                <p>Mobiva, operasyonel mükemmellik ve tam entegrasyon vizyonuyla bu özeti hazırladı.</p>
+            </div>
+        </div>
+
+       
+        <!-- Crypto Stats 3 -->
+        <div id="crypto-stats-3" class="row">
+            @foreach (var item in productsSummaryDetail)
+            {
+                <div class="col-xl-3 col-md-6 col-12">
+                    <div class="card crypto-card-3 bg-info">
+                        <div class="card-content">
+                            <div class="card-body cc XRP pb-1">
+                                <h4 class="text-white mb-3">@item.BrandName</h4>
+                                <h6 class="text-white mb-1">Adet - @item.Total</h6>
+                                <h4 class="text-white">Maliyet - @item.TotalPurchasePriceTL ₺</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+          
+        </div>
+    </section>
 </div>

@@ -156,6 +156,8 @@
     <Compile Include="ApiModel\GetProductModelsParameter.cs" />
     <Compile Include="ApiModel\GetDealersByAppUserIdParameterResult.cs" />
     <Compile Include="ApiModel\GetProductModelsParameterResult.cs" />
+    <Compile Include="ApiModel\GetProductsInventoryByDealerIdParameter.cs" />
+    <Compile Include="ApiModel\GetProductsInventoryByDealerIdParameterResult.cs" />
     <Compile Include="ApiModel\GetProductsParameter.cs" />
     <Compile Include="ApiModel\GetProductsParameterResult.cs" />
     <Compile Include="ApiModel\GetProductStatusByIdParameter.cs" />
@@ -252,6 +254,12 @@
     <Compile Include="DealerAppUser.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetProductsSummaryByDealerId_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="GetProductsSummaryDetailByDealerId_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -330,6 +338,7 @@
     <Compile Include="ViewModel\CustomerOrderViewModel.cs" />
     <Compile Include="ViewModel\CustomerViewModel.cs" />
     <Compile Include="ViewModel\DealerViewModel.cs" />
+    <Compile Include="ViewModel\InventoryViewModel.cs" />
     <Compile Include="ViewModel\ProductBrandViewModel.cs" />
     <Compile Include="ViewModel\ProductDetailViewModel.cs" />
     <Compile Include="ViewModel\ProductDocumentTypeViewModel.cs" />

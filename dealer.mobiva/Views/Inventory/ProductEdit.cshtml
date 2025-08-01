@@ -88,7 +88,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Marka</label>
-                                            @Html.DropDownListFor(m => m.ProductDetail.ProductBrandId, productBrands, "-- Seçiniz --", new { @class = "form-control"})
+                                            @Html.DropDownListFor(m => m.ProductDetail.ProductBrandId, productBrands, "-- Seçiniz --", new { @class = "form-control" })
                                         </div>
                                     </div>
 
@@ -128,7 +128,7 @@
                                     <div class="col-md-4">
                                         <div class="form-group">
                                             <label>Satış Müşteri</label>
-                                            @Html.DropDownListFor(m => m.ProductDetail.CustomerIdSelling, sellingCustomers, "-- Seçiniz --", new { @class = "form-control"})
+                                            @Html.DropDownListFor(m => m.ProductDetail.CustomerIdSelling, sellingCustomers, "-- Seçiniz --", new { @class = "form-control" })
                                         </div>
                                     </div>
                                     <div class="col-md-4">
@@ -251,6 +251,16 @@
                                 </div>
                             </div>
 
+
+
+                            <div class="form-actions d-flex justify-content-between">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="la la-check-square-o"></i> Kaydet
+                                </button>
+                                <a href="/Inventory" class="btn btn-light">
+                                    <i class="la la-times"></i> İptal
+                                </a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -288,18 +298,21 @@
             // Koşullara göre bazı alanları gizle
             //Telefon
             if (productTypeId === 3) {
+                $("#ProductStatusId").val("");
                 $("#ProductTypeSubId").prop("disabled", true);
                 $("#StockNumber").prop("disabled", true);
                 $("#CriticalStock").prop("disabled", true);
             }
             //Tablet
             if (productTypeId === 4) {
+                $("#ProductStatusId").val("");
                 $("#ProductTypeSubId").prop("disabled", true);
                 $("#StockNumber").prop("disabled", true);
                 $("#CriticalStock").prop("disabled", true);
             }
             //Giyilebilir Teknoloji
             if (productTypeId === 5) {
+                $("#ProductStatusId").val("");
                 $("#ProductTypeSubId").prop("disabled", true);
                 $("#StockNumber").prop("disabled", true);
                 $("#CriticalStock").prop("disabled", true);

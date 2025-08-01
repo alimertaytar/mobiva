@@ -12,6 +12,8 @@ namespace Objects
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class DbManager : DbContext
     {
@@ -52,5 +54,23 @@ namespace Objects
         public virtual DbSet<TechnicalService> TechnicalService { get; set; }
         public virtual DbSet<TechnicalServiceHistory> TechnicalServiceHistory { get; set; }
         public virtual DbSet<TechnicalServiceStatus> TechnicalServiceStatus { get; set; }
+    
+        public virtual ObjectResult<GetProductsSummaryByDealerId_Result> GetProductsSummaryByDealerId(Nullable<int> dealerId)
+        {
+            var dealerIdParameter = dealerId.HasValue ?
+                new ObjectParameter("DealerId", dealerId) :
+                new ObjectParameter("DealerId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsSummaryByDealerId_Result>("GetProductsSummaryByDealerId", dealerIdParameter);
+        }
+    
+        public virtual ObjectResult<GetProductsSummaryDetailByDealerId_Result> GetProductsSummaryDetailByDealerId(Nullable<int> dealerId)
+        {
+            var dealerIdParameter = dealerId.HasValue ?
+                new ObjectParameter("DealerId", dealerId) :
+                new ObjectParameter("DealerId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsSummaryDetailByDealerId_Result>("GetProductsSummaryDetailByDealerId", dealerIdParameter);
+        }
     }
 }

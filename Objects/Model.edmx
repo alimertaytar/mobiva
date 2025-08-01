@@ -818,6 +818,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="GetProductsSummaryByDealerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DealerId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="GetProductsSummaryDetailByDealerId" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="DealerId" Type="int" Mode="In" />
+        </Function>
         <EntityContainer Name="ModelStoreContainer">
           <EntitySet Name="AppUser" EntityType="Self.AppUser" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AppUserToDo" EntityType="Self.AppUserToDo" Schema="dbo" store:Type="Tables" />
@@ -1207,6 +1213,12 @@
             <End Role="TechnicalServiceStatus" EntitySet="TechnicalServiceStatus" />
             <End Role="TechnicalServiceHistory" EntitySet="TechnicalServiceHistory" />
           </AssociationSet>
+          <FunctionImport Name="GetProductsSummaryByDealerId" ReturnType="Collection(Model.GetProductsSummaryByDealerId_Result)">
+          <Parameter Name="DealerId" Mode="In" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="GetProductsSummaryDetailByDealerId" ReturnType="Collection(Model.GetProductsSummaryDetailByDealerId_Result)">
+          <Parameter Name="DealerId" Mode="In" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="AppUser">
           <Key>
@@ -2103,6 +2115,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="GetProductsSummaryByDealerId_Result">
+          <Property Type="String" Name="Name" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="TotalCount" Nullable="false" />
+          <Property Type="Decimal" Name="TotalPurchasePriceTL" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalPurchasePriceUSD" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalSellingPriceTL" Nullable="false" Precision="38" Scale="2" />
+          <Property Type="Decimal" Name="TotalMinSellingPriceTL" Nullable="false" Precision="38" Scale="2" />
+        </ComplexType>
+        <ComplexType Name="GetProductsSummaryDetailByDealerId_Result">
+          <Property Type="Int32" Name="ProductBrandId" Nullable="true" />
+          <Property Type="String" Name="BrandName" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Logo" Nullable="true" MaxLength="150" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+          <Property Type="Decimal" Name="TotalPurchasePriceTL" Nullable="false" Precision="38" Scale="2" />
+        </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2457,6 +2484,29 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsSummaryByDealerId" FunctionName="Model.Store.GetProductsSummaryByDealerId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.GetProductsSummaryByDealerId_Result">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="TotalCount" ColumnName="TotalCount" />
+                <ScalarProperty Name="TotalPurchasePriceTL" ColumnName="TotalPurchasePriceTL" />
+                <ScalarProperty Name="TotalPurchasePriceUSD" ColumnName="TotalPurchasePriceUSD" />
+                <ScalarProperty Name="TotalSellingPriceTL" ColumnName="TotalSellingPriceTL" />
+                <ScalarProperty Name="TotalMinSellingPriceTL" ColumnName="TotalMinSellingPriceTL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="GetProductsSummaryDetailByDealerId" FunctionName="Model.Store.GetProductsSummaryDetailByDealerId">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Model.GetProductsSummaryDetailByDealerId_Result">
+                <ScalarProperty Name="ProductBrandId" ColumnName="ProductBrandId" />
+                <ScalarProperty Name="BrandName" ColumnName="BrandName" />
+                <ScalarProperty Name="Logo" ColumnName="Logo" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="TotalPurchasePriceTL" ColumnName="TotalPurchasePriceTL" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

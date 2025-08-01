@@ -287,6 +287,12 @@ namespace dealer.mobiva.Helpers
             return await PostAsync<GetProductByIdParameterResult>($"{ApiUrl}/api/Product/GetProductById", param);
         }
 
+        public async Task<GetProductsInventoryByDealerIdParameterResult> GetProductsInventoryByDealerId(int dealerId)
+        {
+            var param = new GetProductsInventoryByDealerIdParameter { DealerId = dealerId };
+            return await PostAsync<GetProductsInventoryByDealerIdParameterResult>($"{ApiUrl}/api/Product/GetProductsInventoryByDealerId", param);
+        }
+
         public async Task<SaveProductParameterResult> SaveProduct(ProductViewModel model)
         {
             var param = new SaveProductParameter { Product = model };

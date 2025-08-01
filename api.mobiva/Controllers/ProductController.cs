@@ -105,7 +105,7 @@ namespace api.mobiva.Controllers
 
                 if (opResult.Success)
                 {
-                    if(body.Product.ProductDetail == null)
+                    if (body.Product.ProductDetail == null)
                     {
                         body.Product.ProductDetail = new ProductDetailViewModel();
                     }
@@ -128,6 +128,34 @@ namespace api.mobiva.Controllers
 
             return result;
         }
+
+        #endregion
+
+        #region GetProductsInventoryByDealerId
+        [HttpPost("GetProductsInventoryByDealerId")]
+        public async Task<GetProductsInventoryByDealerIdParameterResult> GetProductsInventoryByDealerId([FromBody] GetProductsInventoryByDealerIdParameter body)
+        {
+            var result = new GetProductsInventoryByDealerIdParameterResult();
+
+            try
+            {
+                var parameters = new Dictionary<string, object>{
+                    { "@DealerId", body.DealerId }};
+
+                result.GetProductsSummaryByDealerId = await _helper.ExecuteStoredProcedureAsync<GetProductsSummaryByDealerId_Result>("GetProductsSummaryByDealerId", parameters);
+                result.GetProductsSummaryDetailByDealerId = await _helper.ExecuteStoredProcedureAsync<GetProductsSummaryDetailByDealerId_Result>("GetProductsSummaryDetailByDealerId", parameters);
+                result.Result = true;
+                result.Message = "Success";
+            }
+            catch (Exception ex)
+            {
+                result.Result = false;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
 
         #endregion
     }

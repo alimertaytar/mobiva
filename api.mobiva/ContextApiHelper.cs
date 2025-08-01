@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.Common;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -219,6 +222,77 @@ namespace api.mobiva
         {
             return await _context.Set<T>().Where(filter).ToListAsync();
         }
+
+        public async Task<List<T>> ExecuteStoredProcedureAsync<T>(string storedProcedure, Dictionary<string, object> parameters = null) where T : class, new()
+        {
+            try
+            {
+                var conn = _context.Database.GetDbConnection();
+                await using var command = conn.CreateCommand();
+
+                command.CommandText = storedProcedure;
+                command.CommandType = CommandType.StoredProcedure;
+
+                if (parameters != null)
+                {
+                    foreach (var param in parameters)
+                    {
+                        var dbParam = command.CreateParameter();
+                        dbParam.ParameterName = param.Key;
+                        dbParam.Value = param.Value ?? DBNull.Value;
+                        command.Parameters.Add(dbParam);
+                    }
+                }
+
+                if (conn.State != ConnectionState.Open)
+                    await conn.OpenAsync();
+
+                var result = new List<T>();
+                await using var reader = await command.ExecuteReaderAsync();
+
+                var props = typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+                while (await reader.ReadAsync())
+                {
+                    var item = new T();
+                    foreach (var prop in props)
+                    {
+                        if (!reader.HasColumn(prop.Name) || reader[prop.Name] is DBNull) continue;
+
+                        var value = reader[prop.Name];
+
+                        // Nullable mı kontrol et
+                        var targetType = Nullable.GetUnderlyingType(prop.PropertyType) ?? prop.PropertyType;
+
+                        // Convert et ve ata
+                        var safeValue = Convert.ChangeType(value, targetType);
+                        prop.SetValue(item, safeValue);
+                    }
+
+                    result.Add(item);
+                }
+
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                var errorLog = new LogEntry
+                {
+                    Timestamp = DateTime.Now,
+                    Operation = "SP_EXECUTE_ERROR",
+                    Entity = typeof(T).Name,
+                    Error = GetFormattedExceptionMessage(ex, typeof(T).Name)
+                };
+
+                await LogToJsonFileAsync(errorLog);
+
+                return new List<T>(); // Boş döner, exception yukarıya atılmaz
+            }
+        }
+
+
+
         private async Task LogToJsonFileAsync(LogEntry logEntry)
         {
             var fileName = Path.Combine(_logDirectory, $"log-{DateTime.Now:yyyy-MM-dd}.json");
@@ -268,6 +342,18 @@ namespace api.mobiva
             public string Property { get; set; }
             public string OldValue { get; set; }
             public string NewValue { get; set; }
+        }
+    }
+    public static class DataReaderExtensions
+    {
+        public static bool HasColumn(this DbDataReader reader, string columnName)
+        {
+            for (int i = 0; i < reader.FieldCount; i++)
+            {
+                if (reader.GetName(i).Equals(columnName, StringComparison.OrdinalIgnoreCase))
+                    return true;
+            }
+            return false;
         }
     }
 
