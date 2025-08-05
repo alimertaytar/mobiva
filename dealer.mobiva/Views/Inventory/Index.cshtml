@@ -89,39 +89,63 @@
             </div>
         </div>
 
-       <style>
-           .card-brand-logo {
-               position: absolute;
-               bottom: 10px;
-               right: 4px;
-               height: 100px;
-               width: 100px;
-               opacity: 0.3;
-               pointer-events: none;
-               z-index: 1;
-           }
-       </style>
+        <style>
+            .card-brand-logo {
+                position: absolute;
+                bottom: 10px;
+                right: 4px;
+                height: 90px;
+                width: 80px;
+                opacity: 0.3;
+                pointer-events: none;
+                z-index: 1;
+            }
+
+            .card-brand-logo-accessories {
+                position: absolute;
+                height: 100%;
+                width: 100%;
+                opacity: 0.3;
+                pointer-events: none;
+                z-index: 1;
+            }
+        </style>
         <!-- Crypto Stats 3 -->
         <div id="crypto-stats-3" class="row">
             @foreach (var item in productsSummaryDetail)
             {
                 <div class="col-xl-3 col-md-6 col-12">
                     <div class="card crypto-card-3 bg-info position-relative overflow-hidden">
-                        <div class="card-content">
-                            <div class="card-body cc pb-1">
-                                <h4 class="text-white mb-3">@item.BrandName</h4>
-                                <h6 class="text-white mb-1">Adet - @item.Total</h6>
-                                <h4 class="text-white">Maliyet - @item.TotalPurchasePriceTL ₺</h4>
-                            </div>
-                        </div>
 
-                        <img src="@item.Logo" alt="@item.BrandName Logo" class="card-brand-logo" />
+
+                        @if (item.ProductBrandId == 0)
+                        {
+                            <div class="card-content">
+                                <div class="card-body cc pb-1">
+                                    <h4 class="text-white mb-3"><b>@item.BrandName</b></h4>
+                                    <h6 class="text-white mb-1"><b>Adet - @item.Total</b></h6>
+                                    <h4 class="text-white"><b>Maliyet - @item.TotalPurchasePriceTL ₺</b></h4>
+                                </div>
+                            </div>
+                            <img src="@item.Logo" alt="@item.BrandName Logo" class="card-brand-logo-accessories" />
+                        }
+                        else
+                        {
+                            <div class="card-content">
+                                <div class="card-body cc pb-1">
+                                    <h4 class="text-white mb-3">@item.BrandName</h4>
+                                    <h6 class="text-white mb-1">Adet - @item.Total</h6>
+                                    <h4 class="text-white">Maliyet - @item.TotalPurchasePriceTL ₺</h4>
+                                </div>
+                            </div>
+                            <img src="@item.Logo" alt="@item.BrandName Logo" class="card-brand-logo" />
+                        }
                     </div>
 
                 </div>
             }
 
-          
+
         </div>
     </section>
 </div>
