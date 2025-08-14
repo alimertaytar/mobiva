@@ -49,12 +49,18 @@ namespace api.mobiva.Controllers
                 var entity = await _helper.GetByIdAsync<AppUser>(param.Id);
 
                 if (entity != null && entity.ActiveFlg)
+                {
                     result.AppUser = ObjectHelper.Map<AppUser, AppUserViewModel>(entity);
-
-                result.Result = true;
-                result.Message = "Success";
+                    result.Result = true;
+                    result.Message = "Success";
+                }
+                else
+                {
+                    result.Result = false;
+                    result.Message = "Sistemde kayıt bulunamadı veya kullanıcı pasif.";
+                }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 result.Result = false;
                 result.Message = ex.Message;
@@ -69,7 +75,7 @@ namespace api.mobiva.Controllers
 
         #region GetAppUserLogin
         [HttpPost("GetAppUserLogin")]
-        public async Task<GetAppUserLoginParameterResult> GetAppUserById([FromBody] GetAppUserLoginParameter param)
+        public async Task<GetAppUserLoginParameterResult> GetAppUserLogin([FromBody] GetAppUserLoginParameter param)
         {
             var result = new GetAppUserLoginParameterResult();
 
