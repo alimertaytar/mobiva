@@ -198,5 +198,18 @@ namespace dealer.mobiva.Controllers
 
             return Json(models, JsonRequestBehavior.AllowGet);
         }
+
+
+        public async Task<ActionResult> Products (int productBrandId)
+        {
+            var model = new InventoryViewModel();
+            var apiService = new ApiService();
+            var productBrand = await apiService.GetProductBrandById(productBrandId);
+            model.ProductBrandName = productBrand.ProductBrand.Name;
+            var dealerId = SessionManager.CurrentDealer?.Id ?? 0;
+            model.GetProductsInventoryByDealerId = await apiService.GetProductsInventoryByDealerId(dealerId, productBrandId);
+            return View(model);
+        }
+
     }
 }

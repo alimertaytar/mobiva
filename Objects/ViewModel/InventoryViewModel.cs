@@ -10,5 +10,6 @@ namespace Objects.ViewModel
     public class InventoryViewModel
     {
         public GetProductsInventoryByDealerIdParameterResult GetProductsInventoryByDealerId { get; set; }
+        public string ProductBrandName { get; set; }
     }
 }

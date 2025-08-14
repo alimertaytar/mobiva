@@ -55,22 +55,43 @@ namespace Objects
         public virtual DbSet<TechnicalServiceHistory> TechnicalServiceHistory { get; set; }
         public virtual DbSet<TechnicalServiceStatus> TechnicalServiceStatus { get; set; }
     
-        public virtual ObjectResult<GetProductsSummaryByDealerId_Result> GetProductsSummaryByDealerId(Nullable<int> dealerId)
+        public virtual ObjectResult<GetProductsSummaryByDealerId_Result> GetProductsSummaryByDealerId(Nullable<int> dealerId, Nullable<int> productBrandId)
         {
             var dealerIdParameter = dealerId.HasValue ?
                 new ObjectParameter("DealerId", dealerId) :
                 new ObjectParameter("DealerId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsSummaryByDealerId_Result>("GetProductsSummaryByDealerId", dealerIdParameter);
+            var productBrandIdParameter = productBrandId.HasValue ?
+                new ObjectParameter("ProductBrandId", productBrandId) :
+                new ObjectParameter("ProductBrandId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsSummaryByDealerId_Result>("GetProductsSummaryByDealerId", dealerIdParameter, productBrandIdParameter);
         }
     
-        public virtual ObjectResult<GetProductsSummaryDetailByDealerId_Result> GetProductsSummaryDetailByDealerId(Nullable<int> dealerId)
+        public virtual ObjectResult<GetProductsSummaryDetailByDealerId_Result> GetProductsSummaryDetailByDealerId(Nullable<int> dealerId, Nullable<int> productBrandId)
         {
             var dealerIdParameter = dealerId.HasValue ?
                 new ObjectParameter("DealerId", dealerId) :
                 new ObjectParameter("DealerId", typeof(int));
     
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsSummaryDetailByDealerId_Result>("GetProductsSummaryDetailByDealerId", dealerIdParameter);
+            var productBrandIdParameter = productBrandId.HasValue ?
+                new ObjectParameter("ProductBrandId", productBrandId) :
+                new ObjectParameter("ProductBrandId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsSummaryDetailByDealerId_Result>("GetProductsSummaryDetailByDealerId", dealerIdParameter, productBrandIdParameter);
+        }
+    
+        public virtual ObjectResult<GetProductsByDealerId_Result> GetProductsByDealerId(Nullable<int> dealerId, Nullable<int> productBrandId)
+        {
+            var dealerIdParameter = dealerId.HasValue ?
+                new ObjectParameter("DealerId", dealerId) :
+                new ObjectParameter("DealerId", typeof(int));
+    
+            var productBrandIdParameter = productBrandId.HasValue ?
+                new ObjectParameter("ProductBrandId", productBrandId) :
+                new ObjectParameter("ProductBrandId", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<GetProductsByDealerId_Result>("GetProductsByDealerId", dealerIdParameter, productBrandIdParameter);
         }
     }
 }

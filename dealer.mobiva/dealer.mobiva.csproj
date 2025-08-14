@@ -6866,6 +6866,7 @@
     <Content Include="Views\CustomerOrders\CustomerOrderEdit.cshtml" />
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\Inventory\ProductEdit.cshtml" />
+    <Content Include="Views\Inventory\Products.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

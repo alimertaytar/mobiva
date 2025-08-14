@@ -140,10 +140,14 @@ namespace api.mobiva.Controllers
             try
             {
                 var parameters = new Dictionary<string, object>{
-                    { "@DealerId", body.DealerId }};
+                    { "@DealerId", body.DealerId }, { "@ProductBrandId", body.ProductBrandId } };
 
                 result.GetProductsSummaryByDealerId = await _helper.ExecuteStoredProcedureAsync<GetProductsSummaryByDealerId_Result>("GetProductsSummaryByDealerId", parameters);
                 result.GetProductsSummaryDetailByDealerId = await _helper.ExecuteStoredProcedureAsync<GetProductsSummaryDetailByDealerId_Result>("GetProductsSummaryDetailByDealerId", parameters);
+                if(body.ProductBrandId > 0)
+                {
+                    result.GetProductsByDealerId = await _helper.ExecuteStoredProcedureAsync<GetProductsByDealerId_Result>("GetProductsByDealerId", parameters);
+                }
                 result.Result = true;
                 result.Message = "Success";
             }
@@ -158,5 +162,6 @@ namespace api.mobiva.Controllers
 
 
         #endregion
+
     }
 }

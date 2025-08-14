@@ -10,9 +10,7 @@ namespace Objects.ApiModel
     {
         public List<GetProductsSummaryByDealerId_Result> GetProductsSummaryByDealerId { get; set; }
         public List<GetProductsSummaryDetailByDealerId_Result> GetProductsSummaryDetailByDealerId { get; set; }
-
-       
-
+        public List<GetProductsByDealerId_Result> GetProductsByDealerId { get; set; }
     }
 
 }

@@ -287,9 +287,9 @@ namespace dealer.mobiva.Helpers
             return await PostAsync<GetProductByIdParameterResult>($"{ApiUrl}/api/Product/GetProductById", param);
         }
 
-        public async Task<GetProductsInventoryByDealerIdParameterResult> GetProductsInventoryByDealerId(int dealerId)
+        public async Task<GetProductsInventoryByDealerIdParameterResult> GetProductsInventoryByDealerId(int dealerId, int productBrandId = 0)
         {
-            var param = new GetProductsInventoryByDealerIdParameter { DealerId = dealerId };
+            var param = new GetProductsInventoryByDealerIdParameter { DealerId = dealerId, ProductBrandId = productBrandId };
             return await PostAsync<GetProductsInventoryByDealerIdParameterResult>($"{ApiUrl}/api/Product/GetProductsInventoryByDealerId", param);
         }
 

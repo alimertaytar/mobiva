@@ -254,6 +254,9 @@
     <Compile Include="DealerAppUser.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
+    <Compile Include="GetProductsByDealerId_Result.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="GetProductsSummaryByDealerId_Result.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>

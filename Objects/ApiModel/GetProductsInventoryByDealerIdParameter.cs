@@ -9,5 +9,6 @@ namespace Objects.ApiModel
     public class GetProductsInventoryByDealerIdParameter
     {
         public int DealerId { get; set; }
+        public int ProductBrandId { get; set; }
     }
 }
