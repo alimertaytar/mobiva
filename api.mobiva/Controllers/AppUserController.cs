@@ -13,6 +13,7 @@ namespace api.mobiva.Controllers
     [ApiController]
     public class AppUserController : ControllerBase
     {
+        //Test Ali Mert
         private readonly ContextApi _context;
         private readonly ContextApiHelper _helper;
 
