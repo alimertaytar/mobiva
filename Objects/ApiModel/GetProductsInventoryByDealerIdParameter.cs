@@ -10,5 +10,6 @@ namespace Objects.ApiModel
     {
         public int DealerId { get; set; }
         public int ProductBrandId { get; set; }
+        public bool IsProductList { get; set; }
     }
 }

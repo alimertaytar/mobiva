@@ -144,7 +144,7 @@ namespace api.mobiva.Controllers
 
                 result.GetProductsSummaryByDealerId = await _helper.ExecuteStoredProcedureAsync<GetProductsSummaryByDealerId_Result>("GetProductsSummaryByDealerId", parameters);
                 result.GetProductsSummaryDetailByDealerId = await _helper.ExecuteStoredProcedureAsync<GetProductsSummaryDetailByDealerId_Result>("GetProductsSummaryDetailByDealerId", parameters);
-                if(body.ProductBrandId > 0)
+                if(body.IsProductList)
                 {
                     result.GetProductsByDealerId = await _helper.ExecuteStoredProcedureAsync<GetProductsByDealerId_Result>("GetProductsByDealerId", parameters);
                 }

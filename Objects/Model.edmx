@@ -2153,6 +2153,11 @@
           <Property Type="String" Name="ProductStatus" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="ProductNote" Nullable="true" MaxLength="500" />
           <Property Type="DateTime" Name="CreateDate" Nullable="false" Precision="23" />
+          <Property Type="Decimal" Name="PurchasePriceUSD" Nullable="false" Precision="18" Scale="2" />
+          <Property Type="Int32" Name="StockNumber" Nullable="false" />
+          <Property Type="String" Name="ProductIMEI" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="ProductColor" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="InternalMemoryGB" Nullable="true" MaxLength="50" />
         </ComplexType>
         </Schema>
     </edmx:ConceptualModels>
@@ -2544,6 +2549,11 @@
                 <ScalarProperty Name="ProductStatus" ColumnName="ProductStatus" />
                 <ScalarProperty Name="ProductNote" ColumnName="ProductNote" />
                 <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="PurchasePriceUSD" ColumnName="PurchasePriceUSD" />
+                <ScalarProperty Name="StockNumber" ColumnName="StockNumber" />
+                <ScalarProperty Name="ProductIMEI" ColumnName="ProductIMEI" />
+                <ScalarProperty Name="ProductColor" ColumnName="ProductColor" />
+                <ScalarProperty Name="InternalMemoryGB" ColumnName="InternalMemoryGB" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -23,5 +23,10 @@ namespace Objects
         public string ProductStatus { get; set; }
         public string ProductNote { get; set; }
         public System.DateTime CreateDate { get; set; }
+        public decimal PurchasePriceUSD { get; set; }
+        public int StockNumber { get; set; }
+        public string ProductIMEI { get; set; }
+        public string ProductColor { get; set; }
+        public string InternalMemoryGB { get; set; }
     }
 }

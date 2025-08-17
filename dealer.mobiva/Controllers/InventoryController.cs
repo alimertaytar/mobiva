@@ -157,6 +157,10 @@ namespace dealer.mobiva.Controllers
             {
                 model.CreateUserId = appUser.Id;
                 model.CreateDate = DateTime.Now;
+                if(model.ProductDetail.ProductBrandId == 0)
+                {
+                    model.StockNumber = 1;
+                }
             }
 
 
@@ -200,14 +204,15 @@ namespace dealer.mobiva.Controllers
         }
 
 
-        public async Task<ActionResult> Products (int productBrandId)
+        public async Task<ActionResult> Products (int productBrandId = 0)
         {
             var model = new InventoryViewModel();
             var apiService = new ApiService();
             var productBrand = await apiService.GetProductBrandById(productBrandId);
             model.ProductBrandName = productBrand.ProductBrand.Name;
+            model.ProductBrandId = productBrandId;
             var dealerId = SessionManager.CurrentDealer?.Id ?? 0;
-            model.GetProductsInventoryByDealerId = await apiService.GetProductsInventoryByDealerId(dealerId, productBrandId);
+            model.GetProductsInventoryByDealerId = await apiService.GetProductsInventoryByDealerId(dealerId, productBrandId, true);
             return View(model);
         }
 

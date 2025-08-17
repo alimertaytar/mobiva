@@ -11,5 +11,6 @@ namespace Objects.ViewModel
     {
         public GetProductsInventoryByDealerIdParameterResult GetProductsInventoryByDealerId { get; set; }
         public string ProductBrandName { get; set; }
+        public int ProductBrandId { get; set; }
     }
 }

@@ -4,6 +4,10 @@
     ViewBag.Title = Model.ProductBrandName + " Ürünleri";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var productsSummary = Model.GetProductsInventoryByDealerId.GetProductsSummaryByDealerId;
+    if (Model.ProductBrandId == 0) //Aksesuar
+    {
+        productsSummary = productsSummary.Where(x => x.Name == "Aksesuar").ToList();
+    }
     var productsSummaryDetail = Model.GetProductsInventoryByDealerId.GetProductsSummaryDetailByDealerId;
     var products = Model.GetProductsInventoryByDealerId.GetProductsByDealerId;
 }
@@ -112,46 +116,49 @@
             }
         </style>
         <!-- Crypto Stats 3 -->
-        <div id="crypto-stats-3" class="row">
-            @foreach (var item in productsSummaryDetail)
-            {
-                <div class="col-xl-3 col-md-6 col-12">
-                    <div class="card crypto-card-3 bg-info position-relative overflow-hidden">
 
 
-                        @if (item.ProductBrandId == 0)
-                        {
-                            <div class="card-content">
-                                <a href="@Url.Action("Products", "Inventory", new { productBrandId = 0 })">
-                                    <div class="card-body cc pb-1">
-                                        <h4 class="text-white mb-3"><b>@item.BrandName</b></h4>
-                                        <h6 class="text-white mb-1"><b>Adet - @item.Total</b></h6>
-                                        <h4 class="text-white"><b>Maliyet - @item.TotalPurchasePriceTL ₺</b></h4>
-                                    </div>
-                                </a>
+        <div class="row">
+            <div class="col-12">
+
+                <div class="card">
+                    <div class="card-content">
+                        <div class="card-body card-dashboard">
+                            <div class="table-responsive">
+                                <table class="table table-bordered table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Ürün Id</th>
+                                            <th>Adı</th>
+                                            <th class="text-center">Alış</th>
+                                            <th class="text-center">Alış USD</th>
+                                            <th class="text-center">Satış</th>
+                                            <th class="text-center">Stok Sayısı</th>
+                                            <th class="text-center">Oluşturma Tarihi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in products)
+                                        {
+                                            <tr>
+                                                <td>@item.Id</td>
+                                                <td>@item.Name</td>
+                                                <td class="text-center">@item.PurchasePriceTL</td>
+                                                <td class="text-center">@item.PurchasePriceUSD</td>
+                                                <td class="text-center">@item.SellingPriceTL</td>
+                                                <td class="text-center">@item.StockNumber</td>
+                                                <td class="text-center">@item.CreateDate</td>
+
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
-                            <img src="@item.Logo" alt="@item.BrandName Logo" class="card-brand-logo-accessories" />
-                        }
-                        else
-                        {
 
-                            <div class="card-content">
-                                <a href="@Url.Action("Products", "Inventory", new { productBrandId = item.ProductBrandId })">
-                                    <div class="card-body cc pb-1">
-                                        <h4 class="text-white mb-3">@item.BrandName</h4>
-                                        <h6 class="text-white mb-1">Adet - @item.Total</h6>
-                                        <h4 class="text-white">Maliyet - @item.TotalPurchasePriceTL ₺</h4>
-                                    </div>
-                                </a>
-                            </div>
-                            <img src="@item.Logo" alt="@item.BrandName Logo" class="card-brand-logo" />
-                        }
+                        </div>
                     </div>
-
                 </div>
-            }
-
-
+            </div>
         </div>
     </section>
 </div>
